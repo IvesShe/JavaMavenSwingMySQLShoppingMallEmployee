@@ -11,7 +11,7 @@ public interface EmployeeDao {
 	
 	// 查詢員工
 	List<Employee> selectAll();
-	List<Employee> selectUsernameAndPassword(String Username,String password);
+	List<Employee> selectUsernameAndPassword(String username,String password);
 	List<Employee> selectById(int id);
 	List<Employee> selectByUsername(String username);
 	

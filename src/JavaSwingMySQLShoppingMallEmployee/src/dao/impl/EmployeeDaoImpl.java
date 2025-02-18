@@ -150,13 +150,13 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	}
 
 	@Override
-	public List<Employee> selectUsernameAndPassword(String Username, String password) {
+	public List<Employee> selectUsernameAndPassword(String username, String password) {
 		String sql = "select * from employee where username=? and password=?";
 		List<Employee> employeeList = new ArrayList<>();
 		
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setString(1, Username);
+			preparedStatement.setString(1, username);
 			preparedStatement.setString(2, password);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while(resultSet.next())
