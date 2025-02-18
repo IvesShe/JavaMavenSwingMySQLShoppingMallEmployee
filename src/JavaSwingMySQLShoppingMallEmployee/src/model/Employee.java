@@ -85,6 +85,12 @@ public class Employee implements Serializable{
 		this.phone = phone;
 		this.address = address;
 	}
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", employeeNo=" + employeeNo + ", username=" + username + ", password=" + password
+				+ ", name=" + name + ", phone=" + phone + ", address=" + address + ", createdAt=" + createdAt
+				+ ", updatedAt=" + updatedAt + "]";
+	}
 	
 	
 	

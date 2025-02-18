@@ -293,6 +293,17 @@ public class EmployeeManagerUI extends JFrame {
 				if(!textFieldEmployeeNo.getText().isEmpty())
 				{
 					employeeNo = textFieldEmployeeNo.getText();
+					String valMessage = Tool.validateEmployeeNo(employeeNo);
+					if(!valMessage.equals("true")) {
+						JOptionPane.showMessageDialog(null, valMessage, "錯誤", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					
+					if(new EmployeeServiceImpl().isEmployeeNoBeenUse(employeeNo))
+					{	// 員工編號已被使用
+						JOptionPane.showMessageDialog(null, "員工編號已存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					employee.setEmployeeNo(employeeNo);
 				}				
 				

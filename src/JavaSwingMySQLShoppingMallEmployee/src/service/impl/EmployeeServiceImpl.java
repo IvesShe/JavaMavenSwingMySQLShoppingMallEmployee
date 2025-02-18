@@ -81,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee findById(int id) {
 		List<Employee> employeeList = employeeDaoImpl.selectById(id);
 		
-		return employeeList.get(0);
+		return employeeList.size() > 0 ? employeeList.get(0):null;
 	}
 
 	@Override
