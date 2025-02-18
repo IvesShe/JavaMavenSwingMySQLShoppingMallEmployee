@@ -13,7 +13,7 @@ public class DbConnection {
 	
 	public static Connection getDB()
 	{
-		String url = "jdbc:mysql://localhost:3306/shopping_mall";
+		String url = "jdbc:mysql://localhost:3306/shopping";
 		String user = "root";
 		String password = "1234";
 		Connection conn = null;
