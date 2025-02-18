@@ -74,23 +74,29 @@ public class EmployeeDaoImpl implements EmployeeDao{
 //			System.out.println(show);
 //		}
 		
-		List<Employee> employeeList = new EmployeeDaoImpl().selectByUsername("tom123");
-		for(Employee e:employeeList)
-		{
-			String show =String.format(
-				    "id: %-5d EmployeeNo: %-6s Name: %-10s Username: %-10s Password: %-10s Phone: %-10s Address: %-10s 建立時間: %s 更新時間: %s",
-				    e.getId(),
-				    e.getEmployeeNo(),
-				    e.getName(),
-				    e.getUsername(),
-				    e.getPassword(),
-				    e.getPhone(),
-				    e.getAddress(),
-				    Tool.formatTimestamp(e.getCreatedAt()),
-				    Tool.formatTimestamp(e.getUpdatedAt())
-				);
-			System.out.println(show);
-		}
+//		List<Employee> employeeList = new EmployeeDaoImpl().selectByUsername("tom123");
+//		for(Employee e:employeeList)
+//		{
+//			String show =String.format(
+//				    "id: %-5d EmployeeNo: %-6s Name: %-10s Username: %-10s Password: %-10s Phone: %-10s Address: %-10s 建立時間: %s 更新時間: %s",
+//				    e.getId(),
+//				    e.getEmployeeNo(),
+//				    e.getName(),
+//				    e.getUsername(),
+//				    e.getPassword(),
+//				    e.getPhone(),
+//				    e.getAddress(),
+//				    Tool.formatTimestamp(e.getCreatedAt()),
+//				    Tool.formatTimestamp(e.getUpdatedAt())
+//				);
+//			System.out.println(show);
+//		}
+		
+//		Employee employee = new EmployeeDaoImpl().selectById(1).get(0);
+//		employee.setName("Tom123");
+//		new EmployeeDaoImpl().update(employee);
+		
+		new EmployeeDaoImpl().delete(1);
 
 	}
 
@@ -238,13 +244,34 @@ public class EmployeeDaoImpl implements EmployeeDao{
 
 	@Override
 	public void update(Employee employee) {
-		// TODO Auto-generated method stub
+		String sql = "update employee set employee_no=?,name=?,username=?,password=?,phone=?,address=? where id=?";
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, employee.getEmployeeNo());
+			preparedStatement.setString(2, employee.getName());
+			preparedStatement.setString(3, employee.getUsername());
+			preparedStatement.setString(4, employee.getPassword());
+			preparedStatement.setString(5, employee.getPhone());
+			preparedStatement.setString(6, employee.getAddress());
+			preparedStatement.setInt(7, employee.getId());
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 
 	@Override
 	public void delete(int id) {
-		// TODO Auto-generated method stub
+		String sql = "delete from employee where id=?";
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
