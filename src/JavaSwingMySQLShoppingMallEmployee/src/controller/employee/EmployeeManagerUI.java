@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import model.Employee;
 import model.Member;
@@ -24,6 +25,8 @@ import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 
 public class EmployeeManagerUI extends JFrame {
 
@@ -38,6 +41,7 @@ public class EmployeeManagerUI extends JFrame {
 	private JTextField textFieldEmployeeNo;
 	private JTextField textFieldPhone;
 	private JTextField textFieldAddress;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -60,7 +64,7 @@ public class EmployeeManagerUI extends JFrame {
 	 */
 	public EmployeeManagerUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 866, 650);
+		setBounds(100, 100, 866, 832);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -365,5 +369,24 @@ public class EmployeeManagerUI extends JFrame {
 		textFieldAddress.setBounds(499, 89, 109, 23);
 		panel_1.add(textFieldAddress);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(17, 630, 810, 137);
+		contentPane.add(scrollPane_1);
+		
+		 // 定義欄位標題
+        String[] columnNames = {"ID", "編號", "使用者帳號", "名字", "電話", "地址"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+		table = new JTable(model);
+		scrollPane_1.setColumnHeaderView(table);
+		
+		// 設定欄位寬度
+        table.getColumnModel().getColumn(0).setPreferredWidth(50);  // ID
+        table.getColumnModel().getColumn(1).setPreferredWidth(80);  // 編號
+        table.getColumnModel().getColumn(2).setPreferredWidth(120); // 使用者帳號
+        table.getColumnModel().getColumn(3).setPreferredWidth(100); // 名字
+        table.getColumnModel().getColumn(4).setPreferredWidth(120); // 電話
+        table.getColumnModel().getColumn(5).setPreferredWidth(200); // 地址
+        
+     
 	}
 }
