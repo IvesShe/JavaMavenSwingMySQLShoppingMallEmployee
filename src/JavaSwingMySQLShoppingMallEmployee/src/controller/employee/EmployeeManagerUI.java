@@ -8,9 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import model.Employee;
-import model.Member;
 import service.impl.EmployeeServiceImpl;
-import service.impl.ShopOrderServiceImpl;
 import util.FileUtils;
 import util.Tool;
 
@@ -22,14 +20,12 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
 public class EmployeeManagerUI extends JFrame {
@@ -69,7 +65,7 @@ public class EmployeeManagerUI extends JFrame {
 	 */
 	public EmployeeManagerUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 866, 832);
+		setBounds(100, 100, 866, 650);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -150,10 +146,6 @@ public class EmployeeManagerUI extends JFrame {
 		lblNewLabel_3.setFont(new Font("新細明體", Font.BOLD, 18));
 		lblNewLabel_3.setBounds(25, 10, 92, 23);
 		panel_1_1.add(lblNewLabel_3);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(25, 164, 772, 81);
-		panel_1_1.add(scrollPane);
 		
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);
@@ -245,6 +237,8 @@ public class EmployeeManagerUI extends JFrame {
 		btnSelect.setFont(new Font("新細明體", Font.PLAIN, 18));
 		btnSelect.setBounds(119, 10, 119, 23);
 		panel_1_1.add(btnSelect);
+		
+		
 		
 		JButton btnUpdate = new JButton("修改");
 		btnUpdate.addMouseListener(new MouseAdapter() {
@@ -376,61 +370,49 @@ public class EmployeeManagerUI extends JFrame {
 		textFieldAddress.setBounds(499, 89, 109, 23);
 		panel_1.add(textFieldAddress);
 		
-		////////////////////////////
 		
-		// **🔹 表格標題**
-        String[] columnNames = {"ID", "編號", "員工帳號","員工密碼", "名字", "電話", "地址"};
+		// JTable輸出		
+		// 表格標題
+        String[] columnNames = {"ID", "編號", "員工帳號","員工密碼", "名字", "電話", "地址", "修改時間", "建立時間"};
         model = new DefaultTableModel(columnNames, 0);
         table = new JTable(model);
         
-        // **🔹 設定欄位寬度**
+        // 設定欄位寬度
         table.getColumnModel().getColumn(0).setPreferredWidth(40);  // ID
         table.getColumnModel().getColumn(1).setPreferredWidth(60);  // 編號
-        table.getColumnModel().getColumn(2).setPreferredWidth(100); // 員工帳號
-        table.getColumnModel().getColumn(3).setPreferredWidth(100); // 員工密碼
-        table.getColumnModel().getColumn(4).setPreferredWidth(100); // 名字
+        table.getColumnModel().getColumn(2).setPreferredWidth(120); // 員工帳號
+        table.getColumnModel().getColumn(3).setPreferredWidth(120); // 員工密碼
+        table.getColumnModel().getColumn(4).setPreferredWidth(120); // 名字
         table.getColumnModel().getColumn(5).setPreferredWidth(120); // 電話
-        table.getColumnModel().getColumn(6).setPreferredWidth(200); // 地址
+        table.getColumnModel().getColumn(6).setPreferredWidth(120); // 地址
+        table.getColumnModel().getColumn(7).setPreferredWidth(200); // 
+        table.getColumnModel().getColumn(8).setPreferredWidth(200); // 
         
-        // **🔹 設定表格不可編輯**
-        table.setDefaultEditor(Object.class, null);
+        // 設定表格不可編輯
+        table.setDefaultEditor(Object.class, null);               
 
-        // **🔹 加入 JScrollPane（滾動條）**
+        // 加入 JScrollPane（滾動條）
         JScrollPane scrollPaneTable = new JScrollPane(table);
-        scrollPaneTable.setBounds(11, 573, 822, 169);
-        contentPane.add(scrollPaneTable, BorderLayout.CENTER);
-
-        // **🔹 按鈕「載入資料」**
-        JButton btnLoadData = new JButton("載入員工資料");
-        contentPane.add(btnLoadData, BorderLayout.SOUTH);
-
-        // **🔹 按鈕事件：點擊後載入員工數據**
-        btnLoadData.addActionListener(e -> loadTableData(getEmployeeData()));
+        scrollPaneTable.setBounds(12, 45, 795, 200);
+        panel_1_1.add(scrollPaneTable, BorderLayout.CENTER);               
      
 	}
 	
-	// **🔹 取得 List<Employee> 數據**
-    private List<Employee> getEmployeeData() {
-        List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee("e021", "emp001","123", "王小明", "0912-345-678", "台北市信義區"));
-        employees.add(new Employee("e022", "emp002","123", "陳大同", "0922-888-999", "新北市板橋區"));
-        employees.add(new Employee("e023", "emp003","123", "李美麗", "0987-654-321", "台中市西屯區"));
-//        employees.add(new Employee(4, "E004", "emp004", "張建宏", "0933-112-233", "高雄市左營區"));
-        return employees;
-    }
     
- // **🔹 載入 List 到 JTable**
+	// 載入 List 到 JTable
     private void loadTableData(List<Employee> employees) {
         model.setRowCount(0); // 清空表格
-        for (Employee emp : employees) {
+        for (Employee e : employees) {
             model.addRow(new Object[]{
-                emp.getId(),
-                emp.getEmployeeNo(),
-                emp.getUsername(),
-                emp.getPassword(),
-                emp.getName(),
-                emp.getPhone(),
-                emp.getAddress()
+                e.getId(),
+                e.getEmployeeNo(),
+                e.getUsername(),
+                e.getPassword(),
+                e.getName(),
+                e.getPhone(),
+                e.getAddress(),
+                Tool.formatTimestamp(e.getCreatedAt()),
+                Tool.formatTimestamp(e.getUpdatedAt())
             });
         }
     }
