@@ -27,6 +27,8 @@ DROP TABLE IF EXISTS `consumer`;
 CREATE TABLE `consumer` (
   `id` int NOT NULL AUTO_INCREMENT,
   `consumer_no` varchar(45) DEFAULT NULL,
+  `username` varchar(45) DEFAULT NULL,
+  `password` varchar(45) DEFAULT NULL,
   `consumer_name` varchar(45) DEFAULT NULL,
   `phone` varchar(45) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
@@ -54,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-18 14:08:10
+-- Dump completed on 2025-02-18 22:18:49
