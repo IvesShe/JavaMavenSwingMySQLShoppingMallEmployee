@@ -99,3 +99,8 @@ java -jar OrderAppV500.jar
 # Model
 <h3> 原始碼在src資料夾，僅供參考</h1>
 ## Member
+
+# 參考資料
+
+https://www.w3schools.com/sql/sql_foreignkey.asp
+
