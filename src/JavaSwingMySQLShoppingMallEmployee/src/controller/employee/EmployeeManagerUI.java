@@ -35,7 +35,7 @@ public class EmployeeManagerUI extends JFrame {
 	private static EmployeeServiceImpl employeeServiceImpl = new EmployeeServiceImpl();
 	private Employee employee = (Employee)FileUtils.read("employee.txt");
 	private JTextField textFieldUpateId;
-	private JTextField textFieldEmployeeId;
+	private JTextField textFieldEmployeeNo;
 	private JTextField textFieldPhone;
 	private JTextField textFieldAddress;
 
@@ -177,6 +177,12 @@ public class EmployeeManagerUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
+				if(!employee.getUsername().equals("admin")) 
+				{	// admin帳號才有刪除的權限
+					JOptionPane.showMessageDialog(null, "此帳號無權限刪除。", "錯誤", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
 				if (textFieldDeleteId.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "ID不能為空，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -187,9 +193,10 @@ public class EmployeeManagerUI extends JFrame {
 				}
 				
 				int id = Integer.parseInt(textFieldDeleteId.getText());
-				employeeServiceImpl.addEmployee(employee);
+				employeeServiceImpl.delteEmployee(id);
 				
-				JOptionPane.showMessageDialog(null,  "訂單刪除成功", "完成",
+				
+				JOptionPane.showMessageDialog(null,  "刪除成功", "完成",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -197,24 +204,30 @@ public class EmployeeManagerUI extends JFrame {
 		btnDelete.setBounds(249, 51, 119, 23);
 		panel_1_2.add(btnDelete);
 		
+		JLabel lblAdmin = new JLabel("admin帳號才有刪除的權限");
+		lblAdmin.setForeground(new Color(255, 128, 0));
+		lblAdmin.setFont(new Font("新細明體", Font.BOLD, 16));
+		lblAdmin.setBackground(Color.WHITE);
+		lblAdmin.setBounds(133, 10, 644, 23);
+		panel_1_2.add(lblAdmin);
+		
 		JButton btnSelect = new JButton("查詢");
 		btnSelect.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				textAreaOutput.setText(porderServiceImpl.AllPorder());
 				
 				
 				if(!employee.getUsername().equals("admin")) 
 				{	// 一般帳號只能查到自己的資料
-//					textAreaOutput.setText(employeeServiceImpl(employee.getUsername()));
+					textAreaOutput.setText(employeeServiceImpl.findByUsername(employee.getUsername()));
 				}
 				else
 				{	// admin帳號可以查到所有的資料
-//					textAreaOutput.setText(employeeServiceImpl.AllShopOrder());
+					textAreaOutput.setText(employeeServiceImpl.AllEmployee());
 				}
-//				
+	
 				
-				JOptionPane.showMessageDialog(null,  "訂單查詢成功", "完成",
+				JOptionPane.showMessageDialog(null,  "查詢成功", "完成",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -235,39 +248,65 @@ public class EmployeeManagerUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "ID不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				if (textFieldName.getText().isEmpty() && textFieldPassword.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "1號餐與2號餐至少一者有值才需要修改，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-					return;
-				}				
-				if (!Tool.isNumeric(textFieldName.getText())) {
-					JOptionPane.showMessageDialog(null, "1號餐不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				if (!Tool.isNumeric(textFieldPassword.getText())) {
-					JOptionPane.showMessageDialog(null, "2號餐不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				
+//				if (textFieldName.getText().isEmpty() && textFieldPassword.getText().isEmpty()) {
+//					JOptionPane.showMessageDialog(null, "1號餐與2號餐至少一者有值才需要修改，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}				
+//				if (!Tool.isNumeric(textFieldName.getText())) {
+//					JOptionPane.showMessageDialog(null, "1號餐不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+//				if (!Tool.isNumeric(textFieldPassword.getText())) {
+//					JOptionPane.showMessageDialog(null, "2號餐不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
 				
 				int id = Integer.parseInt(textFieldUpateId.getText());
+				Employee employee = employeeServiceImpl.findById(id);
+				if(employee == null) {
+					JOptionPane.showMessageDialog(null, "此ID員工不存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				
-				
-				Integer meal1 = null;
-				Integer meal2 = null;
-				// meal不為空才取值
+				String name = null;
+				String password = null;
+				String employeeNo = null;
+				String phone = null;
+				String address = null;						
+
+				// 不為空才取值
 				if(!textFieldName.getText().isEmpty())
 				{
-					meal1 = Integer.parseInt(textFieldName.getText());
+					name = textFieldName.getText();
+					employee.setName(name);
 				}
 				if(!textFieldPassword.getText().isEmpty())
 				{
-					meal2 = Integer.parseInt(textFieldPassword.getText());
+					password = textFieldPassword.getText();
+					employee.setPassword(password);
+				}	
+				if(!textFieldEmployeeNo.getText().isEmpty())
+				{
+					employeeNo = textFieldEmployeeNo.getText();
+					employee.setEmployeeNo(employeeNo);
 				}				
 				
+				if(!textFieldPhone.getText().isEmpty())
+				{
+					phone = textFieldPhone.getText();
+					employee.setPhone(phone);
+				}				
+				
+				if(!textFieldAddress.getText().isEmpty())
+				{
+					address = textFieldAddress.getText();
+					employee.setAddress(address);
+				}				
+				
+				employeeServiceImpl.updateEmployee(employee);
 				
 				
-//				employeeServiceImpl.updateShopOrder(meal1, meal2,  id);
-				JOptionPane.showMessageDialog(null,  "訂單修改成功", "完成",
+				JOptionPane.showMessageDialog(null,  "修改成功", "完成",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
@@ -293,13 +332,13 @@ public class EmployeeManagerUI extends JFrame {
 		lblAdminadmin.setBounds(122, 9, 644, 23);
 		panel_1.add(lblAdminadmin);
 		
-		textFieldEmployeeId = new JTextField();
-		textFieldEmployeeId.setFont(new Font("新細明體", Font.PLAIN, 18));
-		textFieldEmployeeId.setColumns(10);
-		textFieldEmployeeId.setBounds(89, 89, 109, 22);
-		panel_1.add(textFieldEmployeeId);
+		textFieldEmployeeNo = new JTextField();
+		textFieldEmployeeNo.setFont(new Font("新細明體", Font.PLAIN, 18));
+		textFieldEmployeeNo.setColumns(10);
+		textFieldEmployeeNo.setBounds(89, 89, 109, 22);
+		panel_1.add(textFieldEmployeeNo);
 		
-		JLabel lblNewLabel_1_3_1 = new JLabel("員工ID");
+		JLabel lblNewLabel_1_3_1 = new JLabel("編號");
 		lblNewLabel_1_3_1.setFont(new Font("新細明體", Font.PLAIN, 18));
 		lblNewLabel_1_3_1.setBounds(25, 89, 64, 23);
 		panel_1.add(lblNewLabel_1_3_1);

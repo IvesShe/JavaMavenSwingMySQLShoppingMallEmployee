@@ -1,12 +1,15 @@
 package service.impl;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import dao.impl.EmployeeDaoImpl;
 import model.Employee;
 import model.ShopOrder;
 import service.EmployeeService;
+import util.Tool;
 
 public class EmployeeServiceImpl implements EmployeeService {
 	
@@ -45,8 +48,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public String AllEmployee() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Employee> employeeList = employeeDaoImpl.selectAll();
+		String show = "";
+		
+		for(Employee e:employeeList)
+		{
+			show += String.format(
+				    "id: %-5d EmployeeNo: %-6s Name: %-10s Username: %-10s Password: %-10s Phone: %-10s Address: %-10s 建立時間: %s 更新時間: %s",
+				    e.getId(),
+				    e.getEmployeeNo(),
+				    e.getName(),
+				    e.getUsername(),
+				    e.getPassword(),
+				    e.getPhone(),
+				    e.getAddress(),
+				    Tool.formatTimestamp(e.getCreatedAt()),
+				    Tool.formatTimestamp(e.getUpdatedAt())
+				);
+			show += "\n";
+		}
+		
+		return show+"";
 	}
 
 	@Override
@@ -57,26 +79,46 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Employee findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Employee> employeeList = employeeDaoImpl.selectById(id);
+		
+		return employeeList.get(0);
 	}
 
 	@Override
 	public String findByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Employee> employeeList = employeeDaoImpl.selectByUsername(username);
+		String show = "";
+		
+		for(Employee e:employeeList)
+		{
+			show += String.format(
+				    "id: %-5d EmployeeNo: %-6s Name: %-10s Username: %-10s Password: %-10s Phone: %-10s Address: %-10s 建立時間: %s 更新時間: %s",
+				    e.getId(),
+				    e.getEmployeeNo(),
+				    e.getName(),
+				    e.getUsername(),
+				    e.getPassword(),
+				    e.getPhone(),
+				    e.getAddress(),
+				    Tool.formatTimestamp(e.getCreatedAt()),
+				    Tool.formatTimestamp(e.getUpdatedAt())
+				);
+			show += "\n";
+		}
+		
+		return show+"";
 	}
 
 	@Override
 	public void updateEmployee(Employee employee) {
-		// TODO Auto-generated method stub
 		
+		employeeDaoImpl.update(employee);
 	}
 
 	@Override
 	public void delteEmployee(int id) {
-		// TODO Auto-generated method stub
 		
+		employeeDaoImpl.delete(id);
 	}
 
 	@Override

@@ -187,6 +187,7 @@ public class EmployeeRegisterUI extends JFrame {
 				textFieldAddress.setText("");
 				textFieldPhone.setText("");
 				textVerificationCode.setText("");
+				textFieldEmployeeNo.setText("");
 			
 			}
 		});

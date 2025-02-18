@@ -35,6 +35,7 @@ public class EmployeeAddUI extends JFrame {
 	private JTextField textFieldAddress;
 	private JTextField textFieldPhone;
 	private JTextField textFieldEmployeeNo;
+	private Employee employee = (Employee)FileUtils.read("employee.txt");
 
 	/**
 	 * Launch the application.
@@ -99,10 +100,10 @@ public class EmployeeAddUI extends JFrame {
 		panel.setBounds(0, 1, 854, 89);
 		contentPane.add(panel);
 
-		JLabel lblNewLabel_2 = new JLabel("新員工 註冊畫面");
+		JLabel lblNewLabel_2 = new JLabel("新增員工");
 		lblNewLabel_2.setForeground(Color.WHITE);
 		lblNewLabel_2.setFont(new Font("新細明體", Font.BOLD, 30));
-		lblNewLabel_2.setBounds(264, 12, 260, 64);
+		lblNewLabel_2.setBounds(314, 12, 142, 64);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblTimer = new JLabel("");
@@ -165,10 +166,10 @@ public class EmployeeAddUI extends JFrame {
 					Employee employee = new Employee(employeeNo,username,password,name,phone,address);
 					new EmployeeServiceImpl().addEmployee(employee);					
 	
-					JOptionPane.showMessageDialog(null, username + "註冊成功，將前往登入畫面。", "完成",
+					JOptionPane.showMessageDialog(null, username + "新增成功。", "完成",
 							JOptionPane.INFORMATION_MESSAGE);
-					new EmployeeLoginUI().setVisible(true);
-					dispose(); 
+//					new EmployeeLoginUI().setVisible(true);
+//					dispose(); 
 					
 				}
 			}
@@ -187,6 +188,7 @@ public class EmployeeAddUI extends JFrame {
 				textFieldAddress.setText("");
 				textFieldPhone.setText("");
 				textVerificationCode.setText("");
+				textFieldEmployeeNo.setText("");
 			
 			}
 		});
@@ -241,6 +243,13 @@ public class EmployeeAddUI extends JFrame {
 		
 		// 啟動clock
 		Clock.startAutoUpdateClock(lblTimer);
+		
+		JLabel lblMemberName = new JLabel("用戶: <dynamic>");
+		lblMemberName.setForeground(new Color(255, 255, 255));
+		lblMemberName.setBounds(14, 30, 298, 23);
+		panel.add(lblMemberName);
+		lblMemberName.setText("用戶: "+employee.getName());
+		lblMemberName.setFont(new Font("新細明體", Font.BOLD, 18));
 		
 		JLabel lblNewLabel_1_1_1_1 = new JLabel("帳號首字母需英文，長度最少5個字、最長12個字，只能包含英文字母和數字");
 		lblNewLabel_1_1_1_1.setForeground(new Color(255, 128, 0));
