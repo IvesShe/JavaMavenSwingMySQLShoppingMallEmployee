@@ -96,7 +96,25 @@ public class EmployeeDaoImpl implements EmployeeDao{
 //		employee.setName("Tom123");
 //		new EmployeeDaoImpl().update(employee);
 		
-		new EmployeeDaoImpl().delete(1);
+//		new EmployeeDaoImpl().delete(1);
+		
+//		List<Employee> employeeList = new EmployeeDaoImpl().selectByEmployeeNo("e003");
+//		for(Employee e:employeeList)
+//		{
+//			String show =String.format(
+//				    "id: %-5d EmployeeNo: %-6s Name: %-10s Username: %-10s Password: %-10s Phone: %-10s Address: %-10s 建立時間: %s 更新時間: %s",
+//				    e.getId(),
+//				    e.getEmployeeNo(),
+//				    e.getName(),
+//				    e.getUsername(),
+//				    e.getPassword(),
+//				    e.getPhone(),
+//				    e.getAddress(),
+//				    Tool.formatTimestamp(e.getCreatedAt()),
+//				    Tool.formatTimestamp(e.getUpdatedAt())
+//				);
+//			System.out.println(show);
+//		}
 
 	}
 
@@ -273,6 +291,36 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public List<Employee> selectByEmployeeNo(String employeeNo) {
+		String sql = "select * from employee where employee_no=? ";
+		List<Employee> employeeList = new ArrayList<>();
+		
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, employeeNo);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next())
+			{
+				Employee employee = new Employee();
+				employee.setEmployeeNo(resultSet.getString("employee_no"));
+				employee.setUsername(resultSet.getString("username"));
+				employee.setPassword(resultSet.getString("password"));
+				employee.setName(resultSet.getString("name"));
+				employee.setPhone(resultSet.getString("phone"));
+				employee.setAddress(resultSet.getString("address"));
+				employee.setCreatedAt(resultSet.getTimestamp("created_at"));
+				employee.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+				employee.setId(resultSet.getInt("id"));
+				employeeList.add(employee);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return employeeList;
 	}
 
 }

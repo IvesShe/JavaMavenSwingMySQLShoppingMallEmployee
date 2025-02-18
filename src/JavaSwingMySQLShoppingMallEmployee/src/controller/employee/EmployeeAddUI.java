@@ -23,7 +23,7 @@ import javax.swing.SwingConstants;
 
 import util.*;
 
-public class EmployeeRegisterUI extends JFrame {
+public class EmployeeAddUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -43,7 +43,7 @@ public class EmployeeRegisterUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EmployeeRegisterUI frame = new EmployeeRegisterUI();
+					EmployeeAddUI frame = new EmployeeAddUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,7 +55,7 @@ public class EmployeeRegisterUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EmployeeRegisterUI() {
+	public EmployeeAddUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 860, 761);
 		contentPane = new JPanel();
@@ -194,15 +194,15 @@ public class EmployeeRegisterUI extends JFrame {
 		btnNewButton_1.setBounds(387, 608, 214, 68);
 		contentPane.add(btnNewButton_1);
 
-		JButton btnLogin = new JButton("前往登入");
+		JButton btnLogin = new JButton("前往管理主頁");
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new EmployeeLoginUI().setVisible(true);
+				new EmployeeMainUI().setVisible(true);
 				dispose(); // 關閉登入視窗
 			}
 		});
-		btnLogin.setFont(new Font("新細明體", Font.BOLD, 30));
+		btnLogin.setFont(new Font("新細明體", Font.BOLD, 20));
 		btnLogin.setBounds(630, 609, 177, 50);
 		contentPane.add(btnLogin);
 

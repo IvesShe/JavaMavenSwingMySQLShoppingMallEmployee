@@ -6,8 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import model.Member;
-import service.impl.MemberServiceImpl;
+import model.Employee;
+import service.impl.EmployeeServiceImpl;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,7 +29,6 @@ public class EmployeeLoginUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField textUsername;
 	private JTextField textPassword;
-	private static String appTitle = "肯德德購物";
 	private JTextField textVerificationCode;
 	private String verificationCode;
 
@@ -56,9 +55,8 @@ public class EmployeeLoginUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 897, 652);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(64, 128, 128));
+		contentPane.setBackground(new Color(128, 128, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setTitle(appTitle + " 登入");
 
 		setContentPane(contentPane);//
 		contentPane.setLayout(null);
@@ -93,14 +91,14 @@ public class EmployeeLoginUI extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBackground(new Color(64, 128, 128));
+		panel.setBackground(new Color(128, 128, 128));
 		panel.setBounds(0, 1, 854, 108);
 		contentPane.add(panel);
 
-		JLabel lblNewLabel_2 = new JLabel("肯德德購物 登入畫面");
+		JLabel lblNewLabel_2 = new JLabel("員工 登入畫面");
 		lblNewLabel_2.setForeground(Color.WHITE);
 		lblNewLabel_2.setFont(new Font("新細明體", Font.BOLD, 30));
-		lblNewLabel_2.setBounds(219, 0, 305, 64);
+		lblNewLabel_2.setBounds(300, 0, 221, 64);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblTimer = new JLabel("");
@@ -132,21 +130,18 @@ public class EmployeeLoginUI extends JFrame {
 						return;
 					}
 					
-					Member member = new MemberServiceImpl().Login(username, password);					
-					if (member!=null) {
+					Employee employee = new EmployeeServiceImpl().Login(username, password);					
+					if (employee!=null) {
 						// 登入成功
-//						new ShopOrderMainUI().setVisible(true);
-						FileUtils.save(member, "member.txt");
+						FileUtils.save(employee, "employee.txt");
 						new EmployeeLoginSuccessUI().setVisible(true);
 						dispose(); 
 					} else {
 						// 登入失敗
-						new EmployeeLoginErrorUI().setVisible(true);
-						dispose(); 
-//						JOptionPane.showMessageDialog(null, "帳號或密碼錯誤，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "帳號或密碼錯誤，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+						return;
 					}
 				} catch (HeadlessException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} 
 			}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import dao.impl.EmployeeDaoImpl;
 import model.Employee;
+import model.ShopOrder;
 import service.EmployeeService;
 
 public class EmployeeServiceImpl implements EmployeeService {
@@ -40,6 +41,48 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public boolean isUsernameBeenUse(String username) {
 		
 		return !employeeDaoImpl.selectByUsername(username).isEmpty();
+	}
+
+	@Override
+	public String AllEmployee() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ShopOrder> findAllEmployee() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Employee findById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateEmployee(Employee employee) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delteEmployee(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isEmployeeNoBeenUse(String employeeNo) {
+		
+		return !employeeDaoImpl.selectByEmployeeNo(employeeNo).isEmpty();
 	}
 
 }

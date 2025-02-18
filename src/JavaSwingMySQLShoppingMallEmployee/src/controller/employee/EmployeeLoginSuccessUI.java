@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.shopOrder.ShopOrderMainUI;
-import model.Member;
+import model.Employee;
 import util.FileUtils;
 
 import javax.swing.JLabel;
@@ -22,7 +22,7 @@ public class EmployeeLoginSuccessUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Member member = (Member)FileUtils.read("member.txt");
+	private Employee employee = (Employee)FileUtils.read("employee.txt");
 
 	/**
 	 * Launch the application.
@@ -47,7 +47,7 @@ public class EmployeeLoginSuccessUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 420, 300);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(64, 128, 128));
+		contentPane.setBackground(new Color(128, 128, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -64,18 +64,18 @@ public class EmployeeLoginSuccessUI extends JFrame {
 		lblShowMessage.setBounds(10, 89, 392, 69);
 		contentPane.add(lblShowMessage);
 		
-		lblShowMessage.setText(member.getName()+" 歡迎您回來！");
+		lblShowMessage.setText(employee.getName()+" 歡迎您回來！");
 		
-		JButton btnGoPorder = new JButton("進入購物");
+		JButton btnGoPorder = new JButton("進入員工管理");
 		btnGoPorder.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new ShopOrderMainUI().setVisible(true);
+				new EmployeeMainUI().setVisible(true);
 				dispose();
 			}
 		});
 		btnGoPorder.setFont(new Font("新細明體", Font.PLAIN, 20));
-		btnGoPorder.setBounds(135, 167, 137, 31);
+		btnGoPorder.setBounds(123, 167, 170, 31);
 		contentPane.add(btnGoPorder);
 	}
 

@@ -14,6 +14,7 @@ public interface EmployeeDao {
 	List<Employee> selectUsernameAndPassword(String username,String password);
 	List<Employee> selectById(int id);
 	List<Employee> selectByUsername(String username);
+	List<Employee> selectByEmployeeNo(String employeeNo);
 	
 	// 更新員工
 	void update(Employee employee);
