@@ -189,7 +189,13 @@ public class EmployeeManagerUI extends JFrame {
 					return;
 				}
 				
+				
 				int id = Integer.parseInt(textFieldDeleteId.getText());
+				Employee employee = employeeServiceImpl.findById(id);
+				if(employee == null) {
+					JOptionPane.showMessageDialog(null, "此ID員工不存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				employeeServiceImpl.delteEmployee(id);
 				
 				
