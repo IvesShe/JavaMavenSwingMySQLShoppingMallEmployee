@@ -72,9 +72,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<ShopOrder> findAllEmployee() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Employee> findAllEmployee() {
+		List<Employee> employeeList = employeeDaoImpl.selectAll();
+		return employeeList;
 	}
 
 	@Override
@@ -85,28 +85,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public String findByUsername(String username) {
+	public List<Employee> findByUsername(String username) {
 		List<Employee> employeeList = employeeDaoImpl.selectByUsername(username);
-		String show = "";
-		
-		for(Employee e:employeeList)
-		{
-			show += String.format(
-				    "id: %-5d EmployeeNo: %-6s Name: %-10s Username: %-10s Password: %-10s Phone: %-10s Address: %-10s 建立時間: %s 更新時間: %s",
-				    e.getId(),
-				    e.getEmployeeNo(),
-				    e.getName(),
-				    e.getUsername(),
-				    e.getPassword(),
-				    e.getPhone(),
-				    e.getAddress(),
-				    Tool.formatTimestamp(e.getCreatedAt()),
-				    Tool.formatTimestamp(e.getUpdatedAt())
-				);
-			show += "\n";
-		}
-		
-		return show+"";
+		return employeeList;
+//		String show = "";
+//		
+//		for(Employee e:employeeList)
+//		{
+//			show += String.format(
+//				    "id: %-5d EmployeeNo: %-6s Name: %-10s Username: %-10s Password: %-10s Phone: %-10s Address: %-10s 建立時間: %s 更新時間: %s",
+//				    e.getId(),
+//				    e.getEmployeeNo(),
+//				    e.getName(),
+//				    e.getUsername(),
+//				    e.getPassword(),
+//				    e.getPhone(),
+//				    e.getAddress(),
+//				    Tool.formatTimestamp(e.getCreatedAt()),
+//				    Tool.formatTimestamp(e.getUpdatedAt())
+//				);
+//			show += "\n";
+//		}
+//		
+//		return show+"";
 	}
 
 	@Override

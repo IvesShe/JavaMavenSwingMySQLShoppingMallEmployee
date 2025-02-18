@@ -18,9 +18,9 @@ public interface EmployeeService {
 		
 	// 查詢員工
 	String AllEmployee();
-	List<ShopOrder> findAllEmployee();
+	List<Employee> findAllEmployee();
 	Employee findById(int id);
-	String findByUsername(String username);
+	List<Employee> findByUsername(String username);
 	
 	// 修改員工
 	void updateEmployee(Employee employee);

@@ -14,6 +14,7 @@ import service.impl.ShopOrderServiceImpl;
 import util.FileUtils;
 import util.Tool;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,6 +25,9 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -42,6 +46,7 @@ public class EmployeeManagerUI extends JFrame {
 	private JTextField textFieldPhone;
 	private JTextField textFieldAddress;
 	private JTable table;
+	private DefaultTableModel model;
 
 	/**
 	 * Launch the application.
@@ -147,12 +152,8 @@ public class EmployeeManagerUI extends JFrame {
 		panel_1_1.add(lblNewLabel_3);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(25, 46, 772, 199);
+		scrollPane.setBounds(25, 164, 772, 81);
 		panel_1_1.add(scrollPane);
-		
-		
-		JTextArea textAreaOutput = new JTextArea();
-		scrollPane.setViewportView(textAreaOutput);
 		
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);
@@ -220,15 +221,21 @@ public class EmployeeManagerUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				
+				List<Employee> employeeList = new ArrayList<>();
 				if(!employee.getUsername().equals("admin")) 
 				{	// 一般帳號只能查到自己的資料
-					textAreaOutput.setText(employeeServiceImpl.findByUsername(employee.getUsername()));
+//					textAreaOutput.setText(employeeServiceImpl.findByUsername(employee.getUsername()));
+					employeeList = employeeServiceImpl.findByUsername(employee.getUsername());
+					
 				}
 				else
 				{	// admin帳號可以查到所有的資料
-					textAreaOutput.setText(employeeServiceImpl.AllEmployee());
+//					textAreaOutput.setText(employeeServiceImpl.AllEmployee());
+					employeeList = employeeServiceImpl.findAllEmployee();
+					
 				}
+				loadTableData(employeeList);
+//				List<Employee> employeeList = employeeServiceImpl.findAllEmployee();
 	
 				
 				JOptionPane.showMessageDialog(null,  "查詢成功", "完成",
@@ -369,24 +376,62 @@ public class EmployeeManagerUI extends JFrame {
 		textFieldAddress.setBounds(499, 89, 109, 23);
 		panel_1.add(textFieldAddress);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(17, 630, 810, 137);
-		contentPane.add(scrollPane_1);
+		////////////////////////////
 		
-		 // 定義欄位標題
-        String[] columnNames = {"ID", "編號", "使用者帳號", "名字", "電話", "地址"};
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-		table = new JTable(model);
-		scrollPane_1.setColumnHeaderView(table);
-		
-		// 設定欄位寬度
-        table.getColumnModel().getColumn(0).setPreferredWidth(50);  // ID
-        table.getColumnModel().getColumn(1).setPreferredWidth(80);  // 編號
-        table.getColumnModel().getColumn(2).setPreferredWidth(120); // 使用者帳號
-        table.getColumnModel().getColumn(3).setPreferredWidth(100); // 名字
-        table.getColumnModel().getColumn(4).setPreferredWidth(120); // 電話
-        table.getColumnModel().getColumn(5).setPreferredWidth(200); // 地址
+		// **🔹 表格標題**
+        String[] columnNames = {"ID", "編號", "員工帳號","員工密碼", "名字", "電話", "地址"};
+        model = new DefaultTableModel(columnNames, 0);
+        table = new JTable(model);
         
+        // **🔹 設定欄位寬度**
+        table.getColumnModel().getColumn(0).setPreferredWidth(40);  // ID
+        table.getColumnModel().getColumn(1).setPreferredWidth(60);  // 編號
+        table.getColumnModel().getColumn(2).setPreferredWidth(100); // 員工帳號
+        table.getColumnModel().getColumn(3).setPreferredWidth(100); // 員工密碼
+        table.getColumnModel().getColumn(4).setPreferredWidth(100); // 名字
+        table.getColumnModel().getColumn(5).setPreferredWidth(120); // 電話
+        table.getColumnModel().getColumn(6).setPreferredWidth(200); // 地址
+        
+        // **🔹 設定表格不可編輯**
+        table.setDefaultEditor(Object.class, null);
+
+        // **🔹 加入 JScrollPane（滾動條）**
+        JScrollPane scrollPaneTable = new JScrollPane(table);
+        scrollPaneTable.setBounds(11, 573, 822, 169);
+        contentPane.add(scrollPaneTable, BorderLayout.CENTER);
+
+        // **🔹 按鈕「載入資料」**
+        JButton btnLoadData = new JButton("載入員工資料");
+        contentPane.add(btnLoadData, BorderLayout.SOUTH);
+
+        // **🔹 按鈕事件：點擊後載入員工數據**
+        btnLoadData.addActionListener(e -> loadTableData(getEmployeeData()));
      
 	}
+	
+	// **🔹 取得 List<Employee> 數據**
+    private List<Employee> getEmployeeData() {
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee("e021", "emp001","123", "王小明", "0912-345-678", "台北市信義區"));
+        employees.add(new Employee("e022", "emp002","123", "陳大同", "0922-888-999", "新北市板橋區"));
+        employees.add(new Employee("e023", "emp003","123", "李美麗", "0987-654-321", "台中市西屯區"));
+//        employees.add(new Employee(4, "E004", "emp004", "張建宏", "0933-112-233", "高雄市左營區"));
+        return employees;
+    }
+    
+ // **🔹 載入 List 到 JTable**
+    private void loadTableData(List<Employee> employees) {
+        model.setRowCount(0); // 清空表格
+        for (Employee emp : employees) {
+            model.addRow(new Object[]{
+                emp.getId(),
+                emp.getEmployeeNo(),
+                emp.getUsername(),
+                emp.getPassword(),
+                emp.getName(),
+                emp.getPhone(),
+                emp.getAddress()
+            });
+        }
+    }
 }
