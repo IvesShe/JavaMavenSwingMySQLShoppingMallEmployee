@@ -55,7 +55,8 @@ public class ShopOrderAddUI extends JFrame {
 	private static ProductServiceImpl productServiceImpl = new ProductServiceImpl();
 	private static List<String> productMenuList = new ArrayList<>();
 	private static List<String> employeeMenuList = new ArrayList<>();
-	private JList<String> jListproductList;
+	private JList<String> jListProductList;
+	private JList<String> jListEmployeeList;
 	private static String selectedProduct=null;
 	
 	ShopOrder o = null;
@@ -151,7 +152,7 @@ public class ShopOrderAddUI extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBackground(new Color(128, 128, 128));
-		panel_1.setBounds(43, 87, 420, 455);
+		panel_1.setBounds(43, 87, 661, 455);
 		contentPane.add(panel_1);
 
 		JLabel lblNewLabel_1 = new JLabel("姓名：");
@@ -174,7 +175,7 @@ public class ShopOrderAddUI extends JFrame {
 		textFieldMeal1.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldMeal1.setFont(new Font("新細明體", Font.BOLD, 30));
 		textFieldMeal1.setColumns(10);
-		textFieldMeal1.setBounds(219, 284, 106, 60);
+		textFieldMeal1.setBounds(104, 327, 106, 60);
 		panel_1.add(textFieldMeal1);
 
 		JPanel panel_1_1 = new JPanel();
@@ -196,7 +197,7 @@ public class ShopOrderAddUI extends JFrame {
 //		panel_1.add(lblMealNo2Price);
 		
 		JTextArea textAreaOutput = new JTextArea();
-		textAreaOutput.setBounds(8, 24, 506, 340);
+		textAreaOutput.setBounds(245, 24, 269, 340);
 		panel_1_1.add(textAreaOutput);
 		
 		// 是否為VIP會員 按鍵
@@ -213,20 +214,20 @@ public class ShopOrderAddUI extends JFrame {
 		vipMember.setBackground(new Color(128, 128, 128));
 		vipMember.setForeground(new Color(255, 0, 0));
 		vipMember.setFont(new Font("新細明體", Font.BOLD, 30));
-		vipMember.setBounds(30, 367, 272, 53);
+		vipMember.setBounds(30, 396, 272, 53);
 		panel_1.add(vipMember);
 
 		textReceivedAmount = new JTextField();
 		textReceivedAmount.setHorizontalAlignment(SwingConstants.CENTER);
 		textReceivedAmount.setFont(new Font("新細明體", Font.BOLD, 30));
 		textReceivedAmount.setColumns(10);
-		textReceivedAmount.setBounds(726, 469, 286, 60);
+		textReceivedAmount.setBounds(726, 487, 286, 60);
 		contentPane.add(textReceivedAmount);
 
 		JLabel lblNewLabel_1_2_2 = new JLabel("請輸入收款金額：");
 		lblNewLabel_1_2_2.setForeground(Color.WHITE);
-		lblNewLabel_1_2_2.setFont(new Font("新細明體", Font.BOLD, 30));
-		lblNewLabel_1_2_2.setBounds(474, 483, 290, 38);
+		lblNewLabel_1_2_2.setFont(new Font("新細明體", Font.BOLD, 20));
+		lblNewLabel_1_2_2.setBounds(727, 444, 290, 38);
 		contentPane.add(lblNewLabel_1_2_2);
 
 		// 1號餐+ 按鍵
@@ -249,7 +250,7 @@ public class ShopOrderAddUI extends JFrame {
 			}
 		});
 		btnMeal1Plus.setFont(new Font("新細明體", Font.BOLD, 20));
-		btnMeal1Plus.setBounds(341, 291, 56, 52);
+		btnMeal1Plus.setBounds(226, 334, 56, 52);
 		panel_1.add(btnMeal1Plus);
 
 		// 1號餐- 按鍵
@@ -274,7 +275,7 @@ public class ShopOrderAddUI extends JFrame {
 			}
 		});
 		btnMeal1Sub.setFont(new Font("新細明體", Font.BOLD, 20));
-		btnMeal1Sub.setBounds(148, 290, 56, 52);
+		btnMeal1Sub.setBounds(33, 333, 56, 52);
 		panel_1.add(btnMeal1Sub);
 		
 		
@@ -370,7 +371,7 @@ public class ShopOrderAddUI extends JFrame {
 			}
 		});
 		btnChange.setFont(new Font("新細明體", Font.BOLD, 20));
-		btnChange.setBounds(1042, 475, 118, 52);
+		btnChange.setBounds(1042, 493, 118, 52);
 		contentPane.add(btnChange);
 		
 		// 登出 按鍵
@@ -456,15 +457,15 @@ public class ShopOrderAddUI extends JFrame {
 //        String[] products = {"鍵盤", "滑鼠", "搖桿", "滑鼠2", "搖桿2", "滑鼠3", "搖桿3"};
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(146, 70, 254, 201);
+		scrollPane_1.setBounds(31, 113, 254, 201);
 		panel_1.add(scrollPane_1);
-		jListproductList = new JList<>(this.productMenuList.toArray(new String[0]));
-		jListproductList.setFont(new Font("新細明體", Font.PLAIN, 28));
-		scrollPane_1.setViewportView(jListproductList);
-		jListproductList.addMouseListener(new MouseAdapter() {
+		jListProductList = new JList<>(this.productMenuList.toArray(new String[0]));
+		jListProductList.setFont(new Font("新細明體", Font.PLAIN, 28));
+		scrollPane_1.setViewportView(jListProductList);
+		jListProductList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				selectedProduct = jListproductList.getSelectedValue();
+				selectedProduct = jListProductList.getSelectedValue();
                 if (selectedProduct != null) {
                     JOptionPane.showMessageDialog(null, 
                         "你選擇了：" + selectedProduct, 
@@ -472,12 +473,42 @@ public class ShopOrderAddUI extends JFrame {
                 }
 			}
 		});
-		jListproductList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jListProductList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("產品：");
 		lblNewLabel_1_1.setForeground(Color.WHITE);
-		lblNewLabel_1_1.setFont(new Font("新細明體", Font.BOLD, 30));
+		lblNewLabel_1_1.setFont(new Font("新細明體", Font.BOLD, 20));
 		lblNewLabel_1_1.setBounds(30, 67, 163, 38);
 		panel_1.add(lblNewLabel_1_1);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("服務人員：");
+		lblNewLabel_1_1_1.setForeground(Color.WHITE);
+		lblNewLabel_1_1_1.setFont(new Font("新細明體", Font.BOLD, 20));
+		lblNewLabel_1_1_1.setBounds(334, 68, 163, 38);
+		panel_1.add(lblNewLabel_1_1_1);
+		
+//		JScrollPane scrollPane = new JScrollPane();
+//		scrollPane.setBounds(328, 113, 254, 201);
+//		panel_1.add(scrollPane);
+		
+		JScrollPane scrollPane_1_1 = new JScrollPane();
+		scrollPane_1_1.setBounds(328, 113, 254, 201);
+//		scrollPane_1_1.setViewportView(scrollPane_1_1);
+		panel_1.add(scrollPane_1_1);
+		jListEmployeeList = new JList<>(this.productMenuList.toArray(new String[0]));
+		jListEmployeeList.setFont(new Font("新細明體", Font.PLAIN, 28));
+		scrollPane_1_1.setViewportView(jListEmployeeList);
+		jListEmployeeList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectedProduct = jListEmployeeList.getSelectedValue();
+                if (selectedProduct != null) {
+                    JOptionPane.showMessageDialog(null, 
+                        "你選擇了：" + selectedProduct, 
+                        "員工資訊", JOptionPane.INFORMATION_MESSAGE);
+                }
+			}
+		});
+		jListEmployeeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
 }
