@@ -93,7 +93,7 @@ public class Tool {
         return "true";
     }
     
- // 利用正則判斷所註冊的顧客編號
+    // 利用正則判斷所註冊的顧客編號
     public static String validateConsumerNo(String consumerId) {
 
         String regex = "^c[0-9]{3}$";  // e001~e999
@@ -102,6 +102,20 @@ public class Tool {
 
         if (!matcher.matches()) {
             return "顧客編號 格式錯誤。";
+        }
+
+        return "true";
+    }
+    
+    // 利用正則判斷所新增的產品編號
+    public static String validateProductNo(String productId) {
+
+        String regex = "^p[0-9]{3}$";  // e001~e999
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(productId);
+
+        if (!matcher.matches()) {
+            return "產品編號 格式錯誤。";
         }
 
         return "true";
