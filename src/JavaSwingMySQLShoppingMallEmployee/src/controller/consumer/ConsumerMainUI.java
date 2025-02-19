@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import controller.member.LoginUI;
 import controller.shopOrder.ShopOrderAddUI;
 import controller.shopOrder.ShopOrderManagerUI;
 import model.Consumer;

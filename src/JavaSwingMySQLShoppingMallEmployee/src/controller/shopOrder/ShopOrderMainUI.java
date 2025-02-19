@@ -7,9 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.app.AppMainUI;
-import controller.member.LoginUI;
+import controller.consumer.ConsumerLoginUI;
+import controller.employee.EmployeeLoginUI;
 import model.Employee;
-import model.Member;
 import model.Consumer;
 import util.FileUtils;
 
@@ -101,7 +101,14 @@ public class ShopOrderMainUI extends JFrame {
 		btnLogout.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new LoginUI().setVisible(true);
+				if(AppMainUI.getIsEmployee())
+				{
+					new EmployeeLoginUI().setVisible(true);
+				}
+				else
+				{
+					new ConsumerLoginUI().setVisible(true);
+				}
 				dispose();
 			}
 		});
