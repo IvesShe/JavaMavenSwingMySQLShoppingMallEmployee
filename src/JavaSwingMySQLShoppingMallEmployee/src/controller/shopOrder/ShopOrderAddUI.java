@@ -37,6 +37,8 @@ import model.*;
 import service.impl.EmployeeServiceImpl;
 import service.impl.ProductServiceImpl;
 import service.impl.ShopOrderServiceImpl;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class ShopOrderAddUI extends JFrame {
@@ -60,6 +62,7 @@ public class ShopOrderAddUI extends JFrame {
 	private static String selectedProduct=null;
 	
 	ShopOrder o = null;
+	public ShopOrderAddUI self = this;
 	
 
 
@@ -71,10 +74,7 @@ public class ShopOrderAddUI extends JFrame {
 			public void run() {
 				try {
 					ShopOrderAddUI frame = new ShopOrderAddUI();
-					frame.setVisible(true);			
-//					Clock.startAutoUpdateClock(lblTimer);
-					ShopOrderAddUI.getProductData();
-					
+					frame.setVisible(true);								
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -107,15 +107,18 @@ public class ShopOrderAddUI extends JFrame {
 		outputText = showOrder;
 		output.setText(showOrder);	
 	}
-	
+		
+
 	// 獲取產品資料
-	private static void getProductData()
+	private void getProductData()
 	{
 		List<Product> allProduct = productServiceImpl.findAllProduct();
 		for(Product p:allProduct)
 		{
 			productMenuList.add(p.getName());
 		}
+		jListProductList.setListData(productMenuList.toArray(new String[0]));
+		
 		for(String p:productMenuList)
 		{
 			System.out.println("productName:"+p+"\n");
@@ -123,10 +126,18 @@ public class ShopOrderAddUI extends JFrame {
 	}
 	
 	
+	
+	
 	/**
 	 * Create the frame.
 	 */
 	public ShopOrderAddUI() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				self.getProductData();
+			}
+		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1218, 604);
 		contentPane = new JPanel();
@@ -304,6 +315,7 @@ public class ShopOrderAddUI extends JFrame {
 				textFieldMeal1.setText("");
 				textReceivedAmount.setText("");
 				textAreaOutput.setText("");
+				self.getProductData();
 			}
 		});
 		btnReset.setFont(new Font("新細明體", Font.BOLD, 20));
