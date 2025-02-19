@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `shop_order`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `shop_order` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `porder_no` varchar(45) DEFAULT NULL,
+  `shop_order_no` varchar(45) DEFAULT NULL,
   `product_no` varchar(45) DEFAULT NULL,
   `employee_no` varchar(45) DEFAULT NULL,
   `customer_no` varchar(45) DEFAULT NULL,
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-19 16:23:48
+-- Dump completed on 2025-02-19 20:12:20
