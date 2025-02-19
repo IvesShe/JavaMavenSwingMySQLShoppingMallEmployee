@@ -80,11 +80,11 @@ public class Tool {
     }
     
     // 利用正則判斷所註冊的員工編號
-    public static String validateEmployeeNo(String employeeId) {
+    public static String validateEmployeeNo(String employeeNo) {
 
         String regex = "^e[0-9]{3}$";  // e001~e999
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(employeeId);
+        Matcher matcher = pattern.matcher(employeeNo);
 
         if (!matcher.matches()) {
             return "員工編號 格式錯誤。";
@@ -94,11 +94,11 @@ public class Tool {
     }
     
     // 利用正則判斷所註冊的顧客編號
-    public static String validateConsumerNo(String consumerId) {
+    public static String validateConsumerNo(String consumerNo) {
 
         String regex = "^c[0-9]{3}$";  // e001~e999
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(consumerId);
+        Matcher matcher = pattern.matcher(consumerNo);
 
         if (!matcher.matches()) {
             return "顧客編號 格式錯誤。";
@@ -108,11 +108,25 @@ public class Tool {
     }
     
     // 利用正則判斷所新增的產品編號
-    public static String validateProductNo(String productId) {
+    public static String validateProductNo(String productNo) {
 
         String regex = "^p[0-9]{3}$";  // e001~e999
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(productId);
+        Matcher matcher = pattern.matcher(productNo);
+
+        if (!matcher.matches()) {
+            return "產品編號 格式錯誤。";
+        }
+
+        return "true";
+    }
+    
+    // 利用正則判斷所新增的訂單編號
+    public static String validateShopOrderNo(String shopOrderNo) {
+
+        String regex = "^p[0-9]{3}$";  // e001~e999
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(shopOrderNo);
 
         if (!matcher.matches()) {
             return "產品編號 格式錯誤。";

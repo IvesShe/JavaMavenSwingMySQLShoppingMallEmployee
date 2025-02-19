@@ -13,14 +13,15 @@ public interface ShopOrderService {
 	String AllShopOrder();
 	List<ShopOrder> findAllShopOrder();
 	ShopOrder findById(int id);
-	String findByUsername(String Username);
+	String findByShopOrderNo(String shopOrderNo);
 	
 	// 改
 	void updateShopOrder(ShopOrder shopOrder);
-	void updateShopOrder(Integer meal1,Integer meal2,int id);
-	void updateShopOrder(String name,int id);
 	
 	// 刪
 	void delteShopOrder(int id);
+	
+	// 查詢訂單編號是否被使用
+	boolean isShopOrderNoBeenUse(String username);	
 
 }

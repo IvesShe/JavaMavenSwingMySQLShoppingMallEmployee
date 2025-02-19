@@ -55,30 +55,30 @@ public class ShopOrderServiceImpl implements ShopOrderService{
 
 	@Override
 	public String AllShopOrder() {
-		List<ShopOrder> allShopOrder = shopOrderDaoImpl.selectAll();
-		StringBuilder show = new StringBuilder();
 		
-		allShopOrder
-		.stream()
-		.forEach((shopOrder)->{
-			int sum = shopOrder.getMealNo1() * ShopOrder.getMealNo1Price() +
-			          shopOrder.getMealNo2() * ShopOrder.getMealNo2Price();
+		List<ShopOrder> allShopOrder = shopOrderDaoImpl.selectAll();
+		String show="";
+		for(ShopOrder shopOrder:allShopOrder)
+		{
+			int sum = 0;//shopOrder.getMealNo1() * ShopOrder.getMealNo1Price() +
+			          //shopOrder.getMealNo2() * ShopOrder.getMealNo2Price();
 
 			NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.TAIWAN); // 使用千分位格式
 			String formattedSum = currencyFormat.format(sum); // 轉換總價
 
-			show.append(String.format(
-			    "訂單編號：%-5d 客戶帳號：%-14s  1號餐：%3d 份  2號餐：%3d 份  總價：%10s 元  更新時間：%s  建立時間：%s%n",
-			    shopOrder.getId(),
-			    shopOrder.getName(),
-			    shopOrder.getMealNo1(),
-			    shopOrder.getMealNo2(),
-			    formattedSum,  // 加入逗號格式的總價			    
-			    Tool.formatTimestamp(shopOrder.getUpdatedAt()),
-			    Tool.formatTimestamp(shopOrder.getCreatedAt())
-			));
-		});
-		return show+"";
+			show += String.format(
+				    "id: %-5d Name: %-10s ShopOrderNo: %-6s ProductNo: %-6s EmployeeNo: %-6s CustomerNo: %-6s Amount: %-6d 建立時間: %s 更新時間: %s",
+				    shopOrder.getId(),
+				    shopOrder.getShopOrderNo(),
+				    shopOrder.getProductNo(),
+				    shopOrder.getEmployeeNo(),
+				    shopOrder.getCustomerNo(),
+				    shopOrder.getAmount(),
+				    Tool.formatTimestamp(shopOrder.getCreatedAt()),
+				    Tool.formatTimestamp(shopOrder.getUpdatedAt())
+				);								
+		}
+		return show;
 	}
 
 	@Override
@@ -98,26 +98,6 @@ public class ShopOrderServiceImpl implements ShopOrderService{
 		shopOrderDaoImpl.update(shopOrder);
 	}
 
-	@Override
-	public void updateShopOrder(Integer meal1, Integer meal2, int id) {
-		ShopOrder shopOrder = shopOrderDaoImpl.selectById(id);
-		if(meal1!=null) 
-		{
-			shopOrder.setMealNo1(meal1);
-		}
-		if(meal2!=null) 
-		{
-			shopOrder.setMealNo2(meal2);
-		}
-		shopOrderDaoImpl.update(shopOrder);		
-	}
-
-	@Override
-	public void updateShopOrder(String name, int id) {
-		ShopOrder shopOrder = shopOrderDaoImpl.selectById(id);
-		shopOrder.setName(name);
-		shopOrderDaoImpl.update(shopOrder);		
-	}
 
 	@Override
 	public void delteShopOrder(int id) {
@@ -126,32 +106,36 @@ public class ShopOrderServiceImpl implements ShopOrderService{
 	}
 
 	@Override
-	public String findByUsername(String Username) {
-		System.out.println(Username);
-		List<ShopOrder> allShopOrder = shopOrderDaoImpl.selectByUsername(Username);
+	public String findByShopOrderNo(String shopOrderNo) {
+		List<ShopOrder> allShopOrder = shopOrderDaoImpl.selectByShopOrderNo(shopOrderNo);
 		String show="";
 		for(ShopOrder shopOrder:allShopOrder)
 		{
-//			import java.text.NumberFormat;
-//			import java.util.Locale;
-			int sum = shopOrder.getMealNo1() * ShopOrder.getMealNo1Price() +
-			          shopOrder.getMealNo2() * ShopOrder.getMealNo2Price();
+			int sum = 0;//shopOrder.getMealNo1() * ShopOrder.getMealNo1Price() +
+			          //shopOrder.getMealNo2() * ShopOrder.getMealNo2Price();
 
 			NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.TAIWAN); // 使用千分位格式
 			String formattedSum = currencyFormat.format(sum); // 轉換總價
 
 			show += String.format(
-			    "訂單編號：%-5d 客戶帳號：%-14s  1號餐：%3d 份  2號餐：%3d 份  總價：%10s 元  更新時間：%s  建立時間：%s%n",
-			    shopOrder.getId(),
-			    shopOrder.getName(),
-			    shopOrder.getMealNo1(),
-			    shopOrder.getMealNo2(),
-			    formattedSum,  // 加入逗號格式的總價			    
-			    Tool.formatTimestamp(shopOrder.getUpdatedAt()),
-			    Tool.formatTimestamp(shopOrder.getCreatedAt())
-			);
+				    "id: %-5d Name: %-10s ShopOrderNo: %-6s ProductNo: %-6s EmployeeNo: %-6s CustomerNo: %-6s Amount: %-6d 建立時間: %s 更新時間: %s",
+				    shopOrder.getId(),
+				    shopOrder.getShopOrderNo(),
+				    shopOrder.getProductNo(),
+				    shopOrder.getEmployeeNo(),
+				    shopOrder.getCustomerNo(),
+				    shopOrder.getAmount(),
+				    Tool.formatTimestamp(shopOrder.getCreatedAt()),
+				    Tool.formatTimestamp(shopOrder.getUpdatedAt())
+				);								
 		}
 		return show;
+	}
+	
+	@Override
+	public boolean isShopOrderNoBeenUse(String shopOrderNo) {
+		
+		return !shopOrderDaoImpl.selectByShopOrderNo(shopOrderNo).isEmpty();
 	}
 
 }

@@ -11,7 +11,7 @@ public interface ShopOrderDao {
 	// 查
 	List<ShopOrder> selectAll();
 	ShopOrder selectById(int id);
-	List<ShopOrder> selectByUsername(String username);
+	List<ShopOrder> selectByShopOrderNo(String shopOrderNo);
 	
 	// 更新
 	void update(ShopOrder porder);

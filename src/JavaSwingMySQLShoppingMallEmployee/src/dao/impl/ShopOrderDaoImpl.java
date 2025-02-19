@@ -25,11 +25,13 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 		for(ShopOrder shopOrder:allShopOrder)
 		{
 			System.out.println(String.format(
-				    "id: %-5d Name: %-10s MealNo1: %-3d MealNo2: %-3d 建立時間: %s 更新時間: %s",
+				    "id: %-5d Name: %-10s ShopOrderNo: %-6s ProductNo: %-6s EmployeeNo: %-6s CustomerNo: %-6s Amount: %-6d 建立時間: %s 更新時間: %s",
 				    shopOrder.getId(),
-				    shopOrder.getName(),
-				    shopOrder.getMealNo1(),
-				    shopOrder.getMealNo2(),
+				    shopOrder.getShopOrderNo(),
+				    shopOrder.getProductNo(),
+				    shopOrder.getEmployeeNo(),
+				    shopOrder.getCustomerNo(),
+				    shopOrder.getAmount(),
 				    Tool.formatTimestamp(shopOrder.getCreatedAt()),
 				    Tool.formatTimestamp(shopOrder.getUpdatedAt())
 				));
@@ -39,12 +41,14 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 
 	@Override
 	public void add(ShopOrder shopOrder) {
-		String sql = "insert into shop_order(name,meal1,meal2) values(?,?,?);";
+		String sql = "insert into shop_order(shop_order_no,product_no,employee_no,customer_no,amount) values(?,?,?,?,?);";
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setString(1, shopOrder.getName());
-			preparedStatement.setInt(2, shopOrder.getMealNo1());
-			preparedStatement.setInt(3, shopOrder.getMealNo2());
+			preparedStatement.setString(1, shopOrder.getShopOrderNo());
+			preparedStatement.setString(2, shopOrder.getProductNo());
+			preparedStatement.setString(3, shopOrder.getEmployeeNo());
+			preparedStatement.setString(4, shopOrder.getCustomerNo());
+			preparedStatement.setInt(5, shopOrder.getAmount());
 			preparedStatement.executeLargeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -64,9 +68,11 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 			{
 				ShopOrder shopOrder = new ShopOrder();
 				shopOrder.setId(resultSet.getInt("id"));
-				shopOrder.setName(resultSet.getString("name"));
-				shopOrder.setMealNo1(resultSet.getInt("meal1"));
-				shopOrder.setMealNo2(resultSet.getInt("meal2"));
+				shopOrder.setShopOrderNo(resultSet.getString("shop_order_no"));
+				shopOrder.setProductNo(resultSet.getString("product_no"));
+				shopOrder.setEmployeeNo(resultSet.getString("employee_no"));
+				shopOrder.setCustomerNo(resultSet.getString("customer_no"));
+				shopOrder.setAmount(resultSet.getInt("amount"));
 				shopOrder.setCreatedAt(resultSet.getTimestamp("created_at"));
 				shopOrder.setUpdatedAt(resultSet.getTimestamp("updated_at"));
 				allShopOrder.add(shopOrder);
@@ -90,9 +96,11 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 			{
 				ShopOrder shopOrder = new ShopOrder();
 				shopOrder.setId(resultSet.getInt("id"));
-				shopOrder.setName(resultSet.getString("name"));
-				shopOrder.setMealNo1(resultSet.getInt("meal1"));
-				shopOrder.setMealNo2(resultSet.getInt("meal2"));
+				shopOrder.setShopOrderNo(resultSet.getString("shop_order_no"));
+				shopOrder.setProductNo(resultSet.getString("product_no"));
+				shopOrder.setEmployeeNo(resultSet.getString("employee_no"));
+				shopOrder.setCustomerNo(resultSet.getString("customer_no"));
+				shopOrder.setAmount(resultSet.getInt("amount"));
 				shopOrder.setCreatedAt(resultSet.getTimestamp("created_at"));
 				shopOrder.setUpdatedAt(resultSet.getTimestamp("updated_at"));
 				allShopOrder.add(shopOrder);
@@ -107,13 +115,14 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 
 	@Override
 	public void update(ShopOrder shopOrder) {
-		String  sql = "update shop_order set name=?,meal1=?,meal2=? where id=?;";
+		String  sql = "update shop_order set shop_order_no=?,product_no=?,employee_no=?,customer_no=?,amount=? where id=?;";
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setString(1, shopOrder.getName());
-			preparedStatement.setInt(2, shopOrder.getMealNo1());
-			preparedStatement.setInt(3, shopOrder.getMealNo2());
-			preparedStatement.setInt(4, shopOrder.getId());
+			preparedStatement.setString(1, shopOrder.getShopOrderNo());
+			preparedStatement.setString(2, shopOrder.getProductNo());
+			preparedStatement.setString(3, shopOrder.getEmployeeNo());
+			preparedStatement.setString(4, shopOrder.getCustomerNo());
+			preparedStatement.setInt(5, shopOrder.getAmount());
 			preparedStatement.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -137,20 +146,22 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 	}
 
 	@Override
-	public List<ShopOrder> selectByUsername(String username) {
-		String sql = "select * from shop_order where name=?";
+	public List<ShopOrder> selectByShopOrderNo(String shopOrderNo) {
+		String sql = "select * from shop_order where shop_order_no=?";
 		List<ShopOrder> allShopOrder = new ArrayList<>();
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setString(1,username);
+			preparedStatement.setString(1,shopOrderNo);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while(resultSet.next())
 			{
 				ShopOrder shopOrder = new ShopOrder();
 				shopOrder.setId(resultSet.getInt("id"));
-				shopOrder.setName(resultSet.getString("name"));
-				shopOrder.setMealNo1(resultSet.getInt("meal1"));
-				shopOrder.setMealNo2(resultSet.getInt("meal2"));
+				shopOrder.setShopOrderNo(resultSet.getString("shop_order_no"));
+				shopOrder.setProductNo(resultSet.getString("product_no"));
+				shopOrder.setEmployeeNo(resultSet.getString("employee_no"));
+				shopOrder.setCustomerNo(resultSet.getString("customer_no"));
+				shopOrder.setAmount(resultSet.getInt("amount"));
 				shopOrder.setCreatedAt(resultSet.getTimestamp("created_at"));
 				shopOrder.setUpdatedAt(resultSet.getTimestamp("updated_at"));
 				allShopOrder.add(shopOrder);

@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import controller.app.AppMainUI;
@@ -14,13 +15,18 @@ import controller.employee.EmployeeMainUI;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JList;
+
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -28,6 +34,8 @@ import javax.swing.JCheckBox;
 
 import util.*;
 import model.*;
+import service.impl.EmployeeServiceImpl;
+import service.impl.ProductServiceImpl;
 import service.impl.ShopOrderServiceImpl;
 
 
@@ -37,13 +45,18 @@ public class ShopOrderAddUI extends JFrame {
 	private JPanel contentPane;
 	private JTextField textName;
 	private JTextField textFieldMeal1;
-	private JTextField textFieldMeal2;
 	private static String appTitle = "肯德德購物";
 	private JTextField textReceivedAmount;
 	private String outputText;
 	private Employee employee = (Employee)FileUtils.read("employee.txt");
 	private Consumer consumer = (Consumer)FileUtils.read("consumer.txt");
 	private static ShopOrderServiceImpl shopOrderServiceImpl = new ShopOrderServiceImpl();
+	private static EmployeeServiceImpl employeeServiceImpl = new EmployeeServiceImpl();
+	private static ProductServiceImpl productServiceImpl = new ProductServiceImpl();
+	private static List<String> productMenuList = new ArrayList<>();
+	private static List<String> employeeMenuList = new ArrayList<>();
+	private JList<String> jListproductList;
+	private static String selectedProduct=null;
 	
 	ShopOrder o = null;
 	
@@ -59,6 +72,7 @@ public class ShopOrderAddUI extends JFrame {
 					ShopOrderAddUI frame = new ShopOrderAddUI();
 					frame.setVisible(true);			
 //					Clock.startAutoUpdateClock(lblTimer);
+					ShopOrderAddUI.getProductData();
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,7 +87,6 @@ public class ShopOrderAddUI extends JFrame {
 	private void handlerOK(JTextArea output,JCheckBox vipMember){		
 		String Name = textName.getText();
 		String mealNo1Price = textFieldMeal1.getText();
-		String mealNo2Price = textFieldMeal2.getText();
 		output.setText("");
 
 		if (Name.isEmpty()) {
@@ -86,25 +99,29 @@ public class ShopOrderAddUI extends JFrame {
 			mealNo1Price = "0";
 			textFieldMeal1.setText("0");
 		}
-		if (mealNo2Price.isEmpty()) {
-			mealNo2Price = "0";
-			textFieldMeal2.setText("0");
-		}
 
-		if (!Tool.isNumeric(mealNo1Price) || !Tool.isNumeric(mealNo2Price)) {
-			output.setText("數量不能輸入非數字或小於0，請重新輸入。");
-			JOptionPane.showMessageDialog(null, "數量不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-
-		o = new ShopOrder(Name, Integer.parseInt(mealNo1Price),
-				Integer.parseInt(mealNo2Price));
+//		o = new ShopOrder(Name, Integer.parseInt(mealNo1Price),
+//				Integer.parseInt(mealNo2Price));
 		String showOrder = o.showOrder(vipMember.isSelected());
 		outputText = showOrder;
 		output.setText(showOrder);	
 	}
 	
-
+	// 獲取產品資料
+	private static void getProductData()
+	{
+		List<Product> allProduct = productServiceImpl.findAllProduct();
+		for(Product p:allProduct)
+		{
+			productMenuList.add(p.getName());
+		}
+		for(String p:productMenuList)
+		{
+			System.out.println("productName:"+p+"\n");
+		}
+	}
+	
+	
 	/**
 	 * Create the frame.
 	 */
@@ -112,7 +129,7 @@ public class ShopOrderAddUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1218, 604);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(64, 128, 128));
+		contentPane.setBackground(new Color(128, 128, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setTitle(appTitle);
 
@@ -120,12 +137,12 @@ public class ShopOrderAddUI extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(64, 128, 128));
+		panel.setBackground(new Color(128, 128, 128));
 		panel.setBounds(20, -25, 1192, 117);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel(appTitle);
+		JLabel lblNewLabel = new JLabel("購物畫面");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setFont(new Font("新細明體", Font.BOLD, 32));
 		lblNewLabel.setBounds(436, 38, 179, 64);
@@ -133,29 +150,23 @@ public class ShopOrderAddUI extends JFrame {
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
-		panel_1.setBackground(new Color(64, 128, 128));
+		panel_1.setBackground(new Color(128, 128, 128));
 		panel_1.setBounds(43, 87, 420, 455);
 		contentPane.add(panel_1);
 
 		JLabel lblNewLabel_1 = new JLabel("姓名：");
 		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setFont(new Font("新細明體", Font.BOLD, 30));
-		lblNewLabel_1.setBounds(30, 34, 105, 38);
+		lblNewLabel_1.setBounds(30, 13, 105, 38);
 		panel_1.add(lblNewLabel_1);
-
-		JLabel lblNewLabel_1_2 = new JLabel("2號餐：");
-		lblNewLabel_1_2.setForeground(Color.WHITE);
-		lblNewLabel_1_2.setFont(new Font("新細明體", Font.BOLD, 30));
-		lblNewLabel_1_2.setBounds(30, 234, 133, 38);
-		panel_1.add(lblNewLabel_1_2);
 
 		textName = new JTextField();
 		String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
 		textName.setText(name);
 		textName.setEnabled(false);
 		textName.setHorizontalAlignment(SwingConstants.CENTER);
-		textName.setFont(new Font("新細明體", Font.BOLD, 30));
-		textName.setBounds(150, 22, 190, 60);
+		textName.setFont(new Font("新細明體", Font.BOLD, 20));
+		textName.setBounds(149, 10, 254, 42);
 		panel_1.add(textName);
 		textName.setColumns(10);
 
@@ -163,39 +174,26 @@ public class ShopOrderAddUI extends JFrame {
 		textFieldMeal1.setHorizontalAlignment(SwingConstants.CENTER);
 		textFieldMeal1.setFont(new Font("新細明體", Font.BOLD, 30));
 		textFieldMeal1.setColumns(10);
-		textFieldMeal1.setBounds(236, 113, 100, 60);
+		textFieldMeal1.setBounds(219, 284, 106, 60);
 		panel_1.add(textFieldMeal1);
-
-		textFieldMeal2 = new JTextField();
-		textFieldMeal2.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldMeal2.setFont(new Font("新細明體", Font.BOLD, 30));
-		textFieldMeal2.setColumns(10);
-		textFieldMeal2.setBounds(236, 225, 95, 60);
-		panel_1.add(textFieldMeal2);
-
-		JLabel lblNewLabel_1_2_1 = new JLabel("1號餐：");
-		lblNewLabel_1_2_1.setForeground(Color.WHITE);
-		lblNewLabel_1_2_1.setFont(new Font("新細明體", Font.BOLD, 30));
-		lblNewLabel_1_2_1.setBounds(30, 123, 132, 38);
-		panel_1.add(lblNewLabel_1_2_1);
 
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setLayout(null);
-		panel_1_1.setBackground(new Color(64, 128, 128));
-		panel_1_1.setBounds(513, 87, 678, 389);
+		panel_1_1.setBackground(new Color(128, 128, 128));
+		panel_1_1.setBounds(513, 66, 678, 389);
 		contentPane.add(panel_1_1);
 
-		JLabel lblMealNo1Price = new JLabel(ShopOrder.getMealNo1Price() + "/份");
-		lblMealNo1Price.setForeground(new Color(0, 0, 255));
-		lblMealNo1Price.setFont(new Font("新細明體", Font.BOLD, 20));
-		lblMealNo1Price.setBounds(32, 155, 105, 38);
-		panel_1.add(lblMealNo1Price);
-
-		JLabel lblMealNo2Price = new JLabel(ShopOrder.getMealNo2Price() + "/份");
-		lblMealNo2Price.setForeground(new Color(0, 0, 255));
-		lblMealNo2Price.setFont(new Font("新細明體", Font.BOLD, 20));
-		lblMealNo2Price.setBounds(30, 264, 105, 38);
-		panel_1.add(lblMealNo2Price);
+//		JLabel lblMealNo1Price = new JLabel(ShopOrder.getMealNo1Price() + "/份");
+//		lblMealNo1Price.setForeground(new Color(0, 0, 255));
+//		lblMealNo1Price.setFont(new Font("新細明體", Font.BOLD, 20));
+//		lblMealNo1Price.setBounds(32, 155, 105, 38);
+//		panel_1.add(lblMealNo1Price);
+//
+//		JLabel lblMealNo2Price = new JLabel(ShopOrder.getMealNo2Price() + "/份");
+//		lblMealNo2Price.setForeground(new Color(0, 0, 255));
+//		lblMealNo2Price.setFont(new Font("新細明體", Font.BOLD, 20));
+//		lblMealNo2Price.setBounds(30, 264, 105, 38);
+//		panel_1.add(lblMealNo2Price);
 		
 		JTextArea textAreaOutput = new JTextArea();
 		textAreaOutput.setBounds(8, 24, 506, 340);
@@ -212,10 +210,10 @@ public class ShopOrderAddUI extends JFrame {
 				}
 			}
 		});
-		vipMember.setBackground(new Color(64, 128, 128));
+		vipMember.setBackground(new Color(128, 128, 128));
 		vipMember.setForeground(new Color(255, 0, 0));
 		vipMember.setFont(new Font("新細明體", Font.BOLD, 30));
-		vipMember.setBounds(32, 322, 272, 53);
+		vipMember.setBounds(30, 367, 272, 53);
 		panel_1.add(vipMember);
 
 		textReceivedAmount = new JTextField();
@@ -251,7 +249,7 @@ public class ShopOrderAddUI extends JFrame {
 			}
 		});
 		btnMeal1Plus.setFont(new Font("新細明體", Font.BOLD, 20));
-		btnMeal1Plus.setBounds(347, 120, 56, 52);
+		btnMeal1Plus.setBounds(341, 291, 56, 52);
 		panel_1.add(btnMeal1Plus);
 
 		// 1號餐- 按鍵
@@ -276,59 +274,11 @@ public class ShopOrderAddUI extends JFrame {
 			}
 		});
 		btnMeal1Sub.setFont(new Font("新細明體", Font.BOLD, 20));
-		btnMeal1Sub.setBounds(168, 119, 56, 52);
+		btnMeal1Sub.setBounds(148, 290, 56, 52);
 		panel_1.add(btnMeal1Sub);
 		
-		// 2號餐+ 按鍵
-		JButton btnMeal2Plus = new JButton("+");
-		btnMeal2Plus.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				String mealNo2Price = textFieldMeal2.getText();
-				// 空值自動補0、非數字或小於0也補0
-				if (mealNo2Price.isEmpty() || !Tool.isNumeric(mealNo2Price)) {
-					mealNo2Price = "0";
-					textFieldMeal2.setText("0");
-				}
-				// 小於0設為0
-				textFieldMeal2.setText(Integer.parseInt(mealNo2Price) + 1 + "");
-
-				// 若訂單已成立，數據有變動，作即時更新
-				if(!textAreaOutput.getText().isEmpty()) {
-					handlerOK(textAreaOutput,vipMember);	
-				}
-			}
-		});
-		btnMeal2Plus.setFont(new Font("新細明體", Font.BOLD, 20));
-		btnMeal2Plus.setBounds(341, 229, 56, 52);
-		panel_1.add(btnMeal2Plus);
 		
-		// 2號餐- 按鍵
-		JButton btnMeal2Sub = new JButton("-");
-		btnMeal2Sub.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				String mealNo2Price = textFieldMeal2.getText();
-				// 空值自動補0、非數字或小於0也補0
-				if (mealNo2Price.isEmpty() || !Tool.isNumeric(mealNo2Price)) {
-					mealNo2Price = "0";
-					textFieldMeal2.setText("0");
-				}
-				// 小於0設為0
-				Integer count = Integer.parseInt(mealNo2Price) - 1;
-				count = count < 0 ? 0 : count;
-				textFieldMeal2.setText(count + "");
-
-				// 若訂單已成立，數據有變動，作即時更新
-				if(!textAreaOutput.getText().isEmpty()) {
-					handlerOK(textAreaOutput,vipMember);	
-				}
-			}
-			
-		});
-		btnMeal2Sub.setFont(new Font("新細明體", Font.BOLD, 20));
-		btnMeal2Sub.setBounds(170, 228, 56, 52);
-		panel_1.add(btnMeal2Sub);
+		
 		
 		
 
@@ -351,7 +301,6 @@ public class ShopOrderAddUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				//textName.setText("");
 				textFieldMeal1.setText("");
-				textFieldMeal2.setText("");
 				textReceivedAmount.setText("");
 				textAreaOutput.setText("");
 			}
@@ -395,7 +344,7 @@ public class ShopOrderAddUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String receivedAmount = textReceivedAmount.getText();
-				int sum = vipMember.isSelected()? (int)(o.getSum() * 0.9):o.getSum();
+				int sum = 0;//vipMember.isSelected()? (int)(o.getSum() * 0.9):o.getSum();
 				
 				if (receivedAmount.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "收款金額不能為空，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
@@ -441,8 +390,8 @@ public class ShopOrderAddUI extends JFrame {
 				
 				int meal1 = Integer.parseInt(textFieldMeal1.getText());
 				
-				int meal2 = Integer.parseInt(textFieldMeal2.getText());
-				ShopOrder shopOrder = new ShopOrder(name,meal1,meal2);
+				
+				ShopOrder shopOrder = null;//new ShopOrder(name,meal1,meal2);
 				
 				shopOrderServiceImpl.addShopOrder(shopOrder);
 				JOptionPane.showMessageDialog(null,  "提交訂單成功", "完成",
@@ -483,16 +432,52 @@ public class ShopOrderAddUI extends JFrame {
 		// 啟動clock
 		Clock.startAutoUpdateClock(lblTimer);
 		
-		JButton btnBack = new JButton("回訂單主頁");
+		JButton btnBack = new JButton("回管理主頁");
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new ShopOrderMainUI().setVisible(true);
+				if(AppMainUI.getIsEmployee())
+				{
+					new EmployeeMainUI().setVisible(true);
+				}
+				else
+				{
+					new ConsumerMainUI().setVisible(true);
+				}
 				dispose();
 			}
 		});
 		btnBack.setFont(new Font("新細明體", Font.BOLD, 20));
 		btnBack.setBounds(844, 60, 157, 30);
 		panel.add(btnBack);
+		
+		////////////////
+		// **🔹 產品列表**
+//        String[] products = {"鍵盤", "滑鼠", "搖桿", "滑鼠2", "搖桿2", "滑鼠3", "搖桿3"};
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(146, 70, 254, 201);
+		panel_1.add(scrollPane_1);
+		jListproductList = new JList<>(this.productMenuList.toArray(new String[0]));
+		jListproductList.setFont(new Font("新細明體", Font.PLAIN, 28));
+		scrollPane_1.setViewportView(jListproductList);
+		jListproductList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				selectedProduct = jListproductList.getSelectedValue();
+                if (selectedProduct != null) {
+                    JOptionPane.showMessageDialog(null, 
+                        "你選擇了：" + selectedProduct, 
+                        "產品資訊", JOptionPane.INFORMATION_MESSAGE);
+                }
+			}
+		});
+		jListproductList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("產品：");
+		lblNewLabel_1_1.setForeground(Color.WHITE);
+		lblNewLabel_1_1.setFont(new Font("新細明體", Font.BOLD, 30));
+		lblNewLabel_1_1.setBounds(30, 67, 163, 38);
+		panel_1.add(lblNewLabel_1_1);
 	}
 }

@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import controller.shopOrder.ShopOrderMainUI;
 import model.Consumer;
 import util.FileUtils;
 
