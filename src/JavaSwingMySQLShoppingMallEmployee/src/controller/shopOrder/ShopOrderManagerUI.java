@@ -68,7 +68,7 @@ public class ShopOrderManagerUI extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
-		panel_1.setBackground(new Color(64, 128, 128));
+		panel_1.setBackground(new Color(128, 128, 128));
 		panel_1.setBounds(10, 345, 822, 86);
 		contentPane.add(panel_1);
 		
@@ -103,7 +103,7 @@ public class ShopOrderManagerUI extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
-		panel.setBackground(new Color(64, 128, 128));
+		panel.setBackground(new Color(128, 128, 128));
 		panel.setBounds(10, 10, 822, 60);
 		contentPane.add(panel);
 		
@@ -136,7 +136,7 @@ public class ShopOrderManagerUI extends JFrame {
 		panel_1_1.setBounds(10, 80, 822, 255);
 		contentPane.add(panel_1_1);
 		panel_1_1.setLayout(null);
-		panel_1_1.setBackground(new Color(64, 128, 128));
+		panel_1_1.setBackground(new Color(128, 128, 128));
 		
 		JLabel lblNewLabel_3 = new JLabel("查詢訂單");
 		lblNewLabel_3.setFont(new Font("新細明體", Font.BOLD, 18));
@@ -153,7 +153,7 @@ public class ShopOrderManagerUI extends JFrame {
 		
 		JPanel panel_1_2 = new JPanel();
 		panel_1_2.setLayout(null);
-		panel_1_2.setBackground(new Color(64, 128, 128));
+		panel_1_2.setBackground(new Color(128, 128, 128));
 		panel_1_2.setBounds(10, 453, 822, 86);
 		contentPane.add(panel_1_2);
 		

@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.member.LoginUI;
 import controller.product.ProductAddUI;
+import controller.product.ProductManagerUI;
 import controller.shopOrder.ShopOrderManagerUI;
 import model.Employee;
 import util.FileUtils;
@@ -127,6 +128,13 @@ public class EmployeeMainUI extends JFrame {
 		btnAdd_1.setFont(new Font("新細明體", Font.PLAIN, 20));
 		
 		JButton btnManager_1 = new JButton("修改產品資料");
+		btnManager_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new ProductManagerUI().setVisible(true);
+				dispose();
+			}
+		});
 		btnManager_1.setBounds(217, 77, 134, 41);
 		panel_1.add(btnManager_1);
 		btnManager_1.setFont(new Font("新細明體", Font.PLAIN, 14));
