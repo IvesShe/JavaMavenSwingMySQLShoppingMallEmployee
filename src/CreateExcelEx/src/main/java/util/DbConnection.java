@@ -32,5 +32,27 @@ public class DbConnection {
 		
 		return conn;
 	}
+	
+	public static Connection getDB3()
+	{
+		String url = "jdbc:mysql://localhost:3306/testdb";
+		String user = "root";
+		String password = "1234";
+		Connection conn = null;
+		
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(url, user, password);
+		} catch (ClassNotFoundException e) {
+			System.out.println("no Driver");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.out.println("no connection");
+			e.printStackTrace();
+		}
+		
+		return conn;
+	}
 
 }
