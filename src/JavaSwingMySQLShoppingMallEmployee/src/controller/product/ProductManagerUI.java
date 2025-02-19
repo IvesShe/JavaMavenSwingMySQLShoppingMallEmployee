@@ -13,7 +13,6 @@ import controller.employee.EmployeeMainUI;
 import model.Consumer;
 import model.Employee;
 import model.Product;
-import model.Product;
 import service.impl.ProductServiceImpl;
 import util.FileUtils;
 import util.Tool;

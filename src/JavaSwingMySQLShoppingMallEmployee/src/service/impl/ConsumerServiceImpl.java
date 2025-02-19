@@ -1,13 +1,10 @@
 package service.impl;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import dao.impl.ConsumerDaoImpl;
 import model.Consumer;
-import model.ShopOrder;
 import service.ConsumerService;
 import util.Tool;
 

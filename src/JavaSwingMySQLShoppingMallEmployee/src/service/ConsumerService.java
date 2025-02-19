@@ -3,7 +3,6 @@ package service;
 import java.util.List;
 
 import model.Consumer;
-import model.ShopOrder;
 
 public interface ConsumerService {
 	// 新增員工

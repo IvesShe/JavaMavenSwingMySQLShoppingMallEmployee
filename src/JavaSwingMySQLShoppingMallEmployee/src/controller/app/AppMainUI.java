@@ -8,8 +8,6 @@ import javax.swing.border.EmptyBorder;
 
 import controller.consumer.ConsumerLoginUI;
 import controller.employee.EmployeeLoginUI;
-import model.Consumer;
-import util.FileUtils;
 
 import javax.swing.JButton;
 import java.awt.Font;

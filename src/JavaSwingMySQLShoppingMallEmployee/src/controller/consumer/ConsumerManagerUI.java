@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import model.Consumer;
-import model.Consumer;
 import service.impl.ConsumerServiceImpl;
 import util.FileUtils;
 import util.Tool;

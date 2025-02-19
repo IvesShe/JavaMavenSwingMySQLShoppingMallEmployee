@@ -9,7 +9,6 @@ import java.util.List;
 
 import dao.EmployeeDao;
 import model.Employee;
-import util.Tool;
 
 public class EmployeeDaoImpl implements EmployeeDao{
 

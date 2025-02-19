@@ -9,7 +9,6 @@ import java.util.List;
 
 import dao.ConsumerDao;
 import model.Consumer;
-import util.Tool;
 
 public class ConsumerDaoImpl implements ConsumerDao{
 

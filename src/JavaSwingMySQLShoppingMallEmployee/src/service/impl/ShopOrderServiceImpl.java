@@ -64,7 +64,7 @@ public class ShopOrderServiceImpl implements ShopOrderService{
 			          //shopOrder.getMealNo2() * ShopOrder.getMealNo2Price();
 
 			NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.TAIWAN); // 使用千分位格式
-			String formattedSum = currencyFormat.format(sum); // 轉換總價
+			String formattedSum = "0";//currencyFormat.format(sum); // 轉換總價
 
 			show += String.format(
 				    "id: %-5d Name: %-10s ShopOrderNo: %-6s ProductNo: %-6s EmployeeNo: %-6s CustomerNo: %-6s Amount: %-6d 建立時間: %s 更新時間: %s",
@@ -115,7 +115,7 @@ public class ShopOrderServiceImpl implements ShopOrderService{
 			          //shopOrder.getMealNo2() * ShopOrder.getMealNo2Price();
 
 			NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.TAIWAN); // 使用千分位格式
-			String formattedSum = currencyFormat.format(sum); // 轉換總價
+			String formattedSum = "0";//currencyFormat.format(sum); // 轉換總價
 
 			show += String.format(
 				    "id: %-5d Name: %-10s ShopOrderNo: %-6s ProductNo: %-6s EmployeeNo: %-6s CustomerNo: %-6s Amount: %-6d 建立時間: %s 更新時間: %s",

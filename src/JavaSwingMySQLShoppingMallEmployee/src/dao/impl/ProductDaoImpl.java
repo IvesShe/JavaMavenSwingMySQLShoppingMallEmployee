@@ -9,7 +9,6 @@ import java.util.List;
 
 import dao.ProductDao;
 import model.Product;
-import util.Tool;
 
 public class ProductDaoImpl implements ProductDao{
 
