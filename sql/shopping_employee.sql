@@ -35,7 +35,7 @@ CREATE TABLE `employee` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (2,'e003','tom123','123','湯姆','5','6','2025-02-18 17:54:50','2025-02-18 20:00:11'),(3,'e003','ives1234','123','ives4','1','2','2025-02-18 17:59:37','2025-02-18 17:59:37'),(5,'e003','ives12345','123','ives','','','2025-02-18 18:58:55','2025-02-18 18:58:55'),(6,'e013','ives1237','123','ives','555','6','2025-02-18 19:06:44','2025-02-18 19:06:44'),(7,'e001','admin','123','管理員','888','666','2025-02-18 19:10:48','2025-02-18 19:10:48'),(8,'e007','jay123','123','Jay','','','2025-02-18 19:18:10','2025-02-18 19:18:10'),(9,'e008','ming123','123','周小明','','','2025-02-18 19:20:29','2025-02-18 19:20:29'),(10,'e009','A3333','123','張三555','1111','666','2025-02-18 20:01:04','2025-02-18 20:01:40');
+INSERT INTO `employee` VALUES (2,'e003','tom123','123','湯姆','5','6','2025-02-18 17:54:50','2025-02-18 20:00:11'),(5,'e003','ives12345','123','ives','','','2025-02-18 18:58:55','2025-02-18 18:58:55'),(6,'e013','ives1237','123','ives','555','6','2025-02-18 19:06:44','2025-02-18 19:06:44'),(7,'e001','admin','123','管理員','888','666','2025-02-18 19:10:48','2025-02-18 19:10:48'),(8,'e019','jay123','123','小杰','334','台北','2025-02-18 19:18:10','2025-02-19 09:40:55'),(9,'e008','ming123','123','周小明','','','2025-02-18 19:20:29','2025-02-18 19:20:29'),(10,'e009','A3333','123','張三555','1111','666','2025-02-18 20:01:04','2025-02-18 20:01:40'),(11,'e021','anny123','123','安妮','5','6','2025-02-19 09:41:47','2025-02-19 09:42:19'),(12,'e010','ives123','123','員工艾米斯','888','666','2025-02-19 13:34:00','2025-02-19 14:23:29');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-18 22:18:49
+-- Dump completed on 2025-02-19 16:09:08

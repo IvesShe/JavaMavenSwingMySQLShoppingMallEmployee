@@ -35,7 +35,7 @@ CREATE TABLE `consumer` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +44,7 @@ CREATE TABLE `consumer` (
 
 LOCK TABLES `consumer` WRITE;
 /*!40000 ALTER TABLE `consumer` DISABLE KEYS */;
+INSERT INTO `consumer` VALUES (1,'c001','admin','123','顧客管理員','888','999','2025-02-19 13:33:05','2025-02-19 13:33:05'),(3,'c011','ives123','123','顧客艾米斯','8','7','2025-02-19 14:07:16','2025-02-19 14:23:09');
 /*!40000 ALTER TABLE `consumer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-18 22:18:49
+-- Dump completed on 2025-02-19 16:09:07
