@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.app.AppMainUI;
+import model.Consumer;
+import model.Employee;
 import model.Member;
 import service.impl.ShopOrderServiceImpl;
 import util.FileUtils;
@@ -31,7 +34,8 @@ public class ShopOrderManagerUI extends JFrame {
 	private JTextField textFieldMeal2;
 	private JTextField textFieldDeleteId;
 	private static ShopOrderServiceImpl shopOrderServiceImpl = new ShopOrderServiceImpl();
-	private Member member = (Member)FileUtils.read("member.txt");
+	private Employee employee = (Employee)FileUtils.read("employee.txt");
+	private Consumer consumer = (Consumer)FileUtils.read("consumer.txt");
 	private JTextField textFieldUpateId;
 
 	/**
@@ -122,7 +126,8 @@ public class ShopOrderManagerUI extends JFrame {
 		panel.add(btnBack);
 		
 		JLabel lblMemberName = new JLabel("");
-		lblMemberName.setText("用戶: "+member.getName());
+		String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
+		lblMemberName.setText("用戶: "+name);
 		lblMemberName.setFont(new Font("新細明體", Font.BOLD, 18));
 		lblMemberName.setBounds(22, 15, 298, 23);
 		panel.add(lblMemberName);
@@ -199,10 +204,10 @@ public class ShopOrderManagerUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 //				textAreaOutput.setText(porderServiceImpl.AllPorder());
 				
-				
-				if(!member.getUsername().equals("admin")) 
+				String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
+				if(!name.equals("admin")) 
 				{	// 一般帳號只能查到自己的訂單
-					textAreaOutput.setText(shopOrderServiceImpl.findByUsername(member.getUsername()));
+					textAreaOutput.setText(shopOrderServiceImpl.findByUsername(name));
 				}
 				else
 				{	// admin帳號可以查到所有的訂單

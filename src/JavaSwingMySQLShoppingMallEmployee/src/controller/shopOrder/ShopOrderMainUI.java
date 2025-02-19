@@ -6,8 +6,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.app.AppMainUI;
 import controller.member.LoginUI;
+import model.Employee;
 import model.Member;
+import model.Consumer;
 import util.FileUtils;
 
 import javax.swing.JButton;
@@ -21,7 +24,8 @@ public class ShopOrderMainUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Member member = (Member)FileUtils.read("member.txt");
+	private Employee employee = (Employee)FileUtils.read("employee.txt");
+	private Consumer consumer = (Consumer)FileUtils.read("consumer.txt");
 
 	/**
 	 * Launch the application.
@@ -87,7 +91,7 @@ public class ShopOrderMainUI extends JFrame {
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new AddShopOrderUI().setVisible(true);
+				new ShopOrderAddUI().setVisible(true);
 				dispose();
 			}
 		});
@@ -105,8 +109,9 @@ public class ShopOrderMainUI extends JFrame {
 		panel_1.add(btnLogout);
 		btnLogout.setFont(new Font("新細明體", Font.PLAIN, 30));
 		
+		String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
 		JLabel lblMemberName = new JLabel("用戶: <dynamic>");
-		lblMemberName.setText("用戶: "+member.getName());
+		lblMemberName.setText("用戶: "+ name);
 		lblMemberName.setFont(new Font("新細明體", Font.BOLD, 18));
 		lblMemberName.setBounds(6, 199, 298, 23);
 		panel_1.add(lblMemberName);

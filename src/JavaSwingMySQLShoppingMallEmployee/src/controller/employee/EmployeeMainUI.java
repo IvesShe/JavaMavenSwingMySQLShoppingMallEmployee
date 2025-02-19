@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.member.LoginUI;
+import controller.shopOrder.ShopOrderManagerUI;
 import model.Employee;
 import util.FileUtils;
 
@@ -16,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class EmployeeMainUI extends JFrame {
 
@@ -44,7 +46,7 @@ public class EmployeeMainUI extends JFrame {
 	 */
 	public EmployeeMainUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 358);
+		setBounds(100, 100, 450, 375);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(128, 128, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -58,18 +60,18 @@ public class EmployeeMainUI extends JFrame {
 		panel.setBounds(10, 10, 416, 60);
 		contentPane.add(panel);
 		
-		JLabel lblNewLabel_4 = new JLabel("管理主頁");
+		JLabel lblNewLabel_4 = new JLabel("員工管理主頁");
 		lblNewLabel_4.setFont(new Font("新細明體", Font.BOLD, 30));
-		lblNewLabel_4.setBounds(141, 10, 158, 40);
+		lblNewLabel_4.setBounds(104, 10, 201, 40);
 		panel.add(lblNewLabel_4);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBackground(new Color(128, 128, 128));
-		panel_1.setBounds(10, 77, 416, 232);
+		panel_1.setBounds(10, 77, 416, 263);
 		contentPane.add(panel_1);
 		
-		JButton btnManager = new JButton("管理");
+		JButton btnManager = new JButton("管理員工");
 		btnManager.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -77,21 +79,21 @@ public class EmployeeMainUI extends JFrame {
 				dispose();
 			}
 		});
-		btnManager.setFont(new Font("新細明體", Font.PLAIN, 30));
-		btnManager.setBounds(139, 79, 134, 41);
+		btnManager.setFont(new Font("新細明體", Font.PLAIN, 20));
+		btnManager.setBounds(217, 16, 134, 41);
 		panel_1.add(btnManager);
 		
-		JButton btnAdd = new JButton("新增");
-		btnAdd.setBounds(139, 17, 134, 41);
+		JButton btnAdd = new JButton("新增員工");
+		btnAdd.setBounds(56, 16, 134, 41);
 		panel_1.add(btnAdd);
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {				
 				new EmployeeAddUI().setVisible(true);
 				dispose();
 			}
 		});
-		btnAdd.setFont(new Font("新細明體", Font.PLAIN, 30));
+		btnAdd.setFont(new Font("新細明體", Font.PLAIN, 20));
 		
 		JButton btnLogout = new JButton("登出");
 		btnLogout.addMouseListener(new MouseAdapter() {
@@ -101,14 +103,36 @@ public class EmployeeMainUI extends JFrame {
 				dispose();
 			}
 		});
-		btnLogout.setBounds(139, 141, 134, 41);
+		btnLogout.setBounds(139, 199, 134, 41);
 		panel_1.add(btnLogout);
-		btnLogout.setFont(new Font("新細明體", Font.PLAIN, 30));
+		btnLogout.setFont(new Font("新細明體", Font.PLAIN, 20));
 		
 		JLabel lblMemberName = new JLabel("用戶: <dynamic>");
 		lblMemberName.setText("用戶: "+employee.getName());
 		lblMemberName.setFont(new Font("新細明體", Font.BOLD, 18));
-		lblMemberName.setBounds(6, 199, 298, 23);
+		lblMemberName.setBounds(6, 239, 298, 23);
 		panel_1.add(lblMemberName);
+		
+		JButton btnAdd_1 = new JButton("新增產品");
+		btnAdd_1.setBounds(56, 77, 134, 41);
+		panel_1.add(btnAdd_1);
+		btnAdd_1.setFont(new Font("新細明體", Font.PLAIN, 20));
+		
+		JButton btnManager_1 = new JButton("修改產品資料");
+		btnManager_1.setBounds(217, 77, 134, 41);
+		panel_1.add(btnManager_1);
+		btnManager_1.setFont(new Font("新細明體", Font.PLAIN, 14));
+		
+		JButton btnManager_1_1 = new JButton("修改訂單");
+		btnManager_1_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new ShopOrderManagerUI().setVisible(true);
+				dispose();
+			}
+		});
+		btnManager_1_1.setBounds(139, 139, 134, 41);
+		panel_1.add(btnManager_1_1);
+		btnManager_1_1.setFont(new Font("新細明體", Font.PLAIN, 20));
 	}
 }

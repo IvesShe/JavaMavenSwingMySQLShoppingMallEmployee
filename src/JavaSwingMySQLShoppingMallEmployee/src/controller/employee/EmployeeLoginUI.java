@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.app.AppMainUI;
 import model.Employee;
 import service.impl.EmployeeServiceImpl;
 
@@ -31,7 +32,7 @@ public class EmployeeLoginUI extends JFrame {
 	private JTextField textPassword;
 	private JTextField textVerificationCode;
 	private String verificationCode;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -108,6 +109,8 @@ public class EmployeeLoginUI extends JFrame {
 		lblTimer.setBounds(529, 12, 425, 38);
 		panel.add(lblTimer);
 
+		AppMainUI.setIsEmployee(true);
+		
 		JButton btnNewButton = new JButton("登入");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -172,7 +175,7 @@ public class EmployeeLoginUI extends JFrame {
 			}
 		});
 		btnRegister.setFont(new Font("新細明體", Font.BOLD, 30));
-		btnRegister.setBounds(654, 454, 182, 75);
+		btnRegister.setBounds(654, 422, 182, 44);
 		contentPane.add(btnRegister);
 
 		JLabel lblNewLabel_1_1 = new JLabel("驗證碼：");
@@ -217,6 +220,18 @@ public class EmployeeLoginUI extends JFrame {
 		lblAdminadmin.setBackground(Color.WHITE);
 		lblAdminadmin.setBounds(141, 163, 644, 23);
 		contentPane.add(lblAdminadmin);
+		
+		JButton btnapp = new JButton("前往APP主畫面");
+		btnapp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new AppMainUI().setVisible(true);
+				dispose();
+			}
+		});
+		btnapp.setFont(new Font("新細明體", Font.BOLD, 18));
+		btnapp.setBounds(654, 484, 182, 44);
+		contentPane.add(btnapp);
 
 	}
 }

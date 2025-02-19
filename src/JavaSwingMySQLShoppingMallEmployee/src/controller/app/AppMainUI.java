@@ -22,6 +22,7 @@ public class AppMainUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	public static Boolean isEmployee = false;
 //	private Consumer consumer = (Consumer)FileUtils.read("consumer.txt");
 
 	/**
@@ -39,6 +40,20 @@ public class AppMainUI extends JFrame {
 			}
 		});
 	}
+	
+	
+
+	public static Boolean getIsEmployee() {
+		return isEmployee;
+	}
+
+
+
+	public static void setIsEmployee(Boolean isEmployee) {
+		AppMainUI.isEmployee = isEmployee;
+	}
+
+
 
 	/**
 	 * Create the frame.
@@ -74,6 +89,7 @@ public class AppMainUI extends JFrame {
 		btnManager.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				AppMainUI.setIsEmployee(true);
 				new EmployeeLoginUI().setVisible(true);
 				dispose();
 			}
@@ -88,6 +104,7 @@ public class AppMainUI extends JFrame {
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				AppMainUI.setIsEmployee(false);
 				new ConsumerLoginUI().setVisible(true);
 				dispose();
 			}

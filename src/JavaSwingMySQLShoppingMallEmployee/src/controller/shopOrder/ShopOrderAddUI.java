@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.app.AppMainUI;
 import controller.member.LoginUI;
 
 import java.awt.Color;
@@ -27,7 +28,7 @@ import model.*;
 import service.impl.ShopOrderServiceImpl;
 
 
-public class AddShopOrderUI extends JFrame {
+public class ShopOrderAddUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -37,7 +38,8 @@ public class AddShopOrderUI extends JFrame {
 	private static String appTitle = "肯德德購物";
 	private JTextField textReceivedAmount;
 	private String outputText;
-	private Member member = (Member)FileUtils.read("member.txt");
+	private Employee employee = (Employee)FileUtils.read("employee.txt");
+	private Consumer consumer = (Consumer)FileUtils.read("consumer.txt");
 	private static ShopOrderServiceImpl shopOrderServiceImpl = new ShopOrderServiceImpl();
 	
 	ShopOrder o = null;
@@ -51,7 +53,7 @@ public class AddShopOrderUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddShopOrderUI frame = new AddShopOrderUI();
+					ShopOrderAddUI frame = new ShopOrderAddUI();
 					frame.setVisible(true);			
 //					Clock.startAutoUpdateClock(lblTimer);
 					
@@ -103,7 +105,7 @@ public class AddShopOrderUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddShopOrderUI() {
+	public ShopOrderAddUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1218, 604);
 		contentPane = new JPanel();
@@ -145,7 +147,8 @@ public class AddShopOrderUI extends JFrame {
 		panel_1.add(lblNewLabel_1_2);
 
 		textName = new JTextField();
-		textName.setText(member.getName());
+		String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
+		textName.setText(name);
 		textName.setEnabled(false);
 		textName.setHorizontalAlignment(SwingConstants.CENTER);
 		textName.setFont(new Font("新細明體", Font.BOLD, 30));
@@ -430,7 +433,7 @@ public class AddShopOrderUI extends JFrame {
 					return;
 				}
 				
-				String name = member.getUsername();
+				String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
 				
 				
 				int meal1 = Integer.parseInt(textFieldMeal1.getText());

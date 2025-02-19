@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.member.LoginUI;
+import controller.shopOrder.ShopOrderAddUI;
+import controller.shopOrder.ShopOrderManagerUI;
 import model.Consumer;
 import util.FileUtils;
 
@@ -16,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class ConsumerMainUI extends JFrame {
 
@@ -58,9 +61,9 @@ public class ConsumerMainUI extends JFrame {
 		panel.setBounds(10, 10, 416, 60);
 		contentPane.add(panel);
 		
-		JLabel lblNewLabel_4 = new JLabel("管理主頁");
+		JLabel lblNewLabel_4 = new JLabel("顧客管理主頁");
 		lblNewLabel_4.setFont(new Font("新細明體", Font.BOLD, 30));
-		lblNewLabel_4.setBounds(141, 10, 158, 40);
+		lblNewLabel_4.setBounds(109, 10, 193, 40);
 		panel.add(lblNewLabel_4);
 		
 		JPanel panel_1 = new JPanel();
@@ -69,7 +72,7 @@ public class ConsumerMainUI extends JFrame {
 		panel_1.setBounds(10, 77, 416, 232);
 		contentPane.add(panel_1);
 		
-		JButton btnManager = new JButton("管理");
+		JButton btnManager = new JButton("修改顧客資料");
 		btnManager.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -77,21 +80,26 @@ public class ConsumerMainUI extends JFrame {
 				dispose();
 			}
 		});
-		btnManager.setFont(new Font("新細明體", Font.PLAIN, 30));
-		btnManager.setBounds(139, 79, 134, 41);
+		btnManager.setFont(new Font("新細明體", Font.PLAIN, 14));
+		btnManager.setBounds(213, 16, 134, 41);
 		panel_1.add(btnManager);
 		
-		JButton btnAdd = new JButton("新增");
-		btnAdd.setBounds(139, 17, 134, 41);
+		JButton btnAdd = new JButton("新增顧客");
+		btnAdd.setBounds(57, 16, 134, 41);
 		panel_1.add(btnAdd);
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(!consumer.getUsername().equals("admin")) 
+				{	// admin帳號才有刪除的權限
+					JOptionPane.showMessageDialog(null, "此帳號無權限新增，需管理員權限。", "錯誤", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				new ConsumerAddUI().setVisible(true);
 				dispose();
 			}
 		});
-		btnAdd.setFont(new Font("新細明體", Font.PLAIN, 30));
+		btnAdd.setFont(new Font("新細明體", Font.PLAIN, 20));
 		
 		JButton btnLogout = new JButton("登出");
 		btnLogout.addMouseListener(new MouseAdapter() {
@@ -101,14 +109,38 @@ public class ConsumerMainUI extends JFrame {
 				dispose();
 			}
 		});
-		btnLogout.setBounds(139, 141, 134, 41);
+		btnLogout.setBounds(139, 145, 134, 41);
 		panel_1.add(btnLogout);
-		btnLogout.setFont(new Font("新細明體", Font.PLAIN, 30));
+		btnLogout.setFont(new Font("新細明體", Font.PLAIN, 20));
 		
 		JLabel lblMemberName = new JLabel("用戶: <dynamic>");
 		lblMemberName.setText("用戶: "+consumer.getName());
 		lblMemberName.setFont(new Font("新細明體", Font.BOLD, 18));
 		lblMemberName.setBounds(6, 199, 298, 23);
 		panel_1.add(lblMemberName);
+		
+		JButton btnAdd_1 = new JButton("新增訂單");
+		btnAdd_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new ShopOrderAddUI().setVisible(true);
+				dispose();
+			}
+		});
+		btnAdd_1.setFont(new Font("新細明體", Font.PLAIN, 20));
+		btnAdd_1.setBounds(56, 81, 134, 41);
+		panel_1.add(btnAdd_1);
+		
+		JButton btnManager_1 = new JButton("修改訂單");
+		btnManager_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new ShopOrderManagerUI().setVisible(true);
+				dispose();
+			}
+		});
+		btnManager_1.setFont(new Font("新細明體", Font.PLAIN, 20));
+		btnManager_1.setBounds(212, 81, 134, 41);
+		panel_1.add(btnManager_1);
 	}
 }
