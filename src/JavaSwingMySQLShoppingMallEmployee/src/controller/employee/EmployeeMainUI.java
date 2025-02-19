@@ -47,7 +47,7 @@ public class EmployeeMainUI extends JFrame {
 	 */
 	public EmployeeMainUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 375);
+		setBounds(100, 100, 450, 407);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(128, 128, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -69,7 +69,7 @@ public class EmployeeMainUI extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBackground(new Color(128, 128, 128));
-		panel_1.setBounds(10, 77, 416, 263);
+		panel_1.setBounds(10, 77, 416, 287);
 		contentPane.add(panel_1);
 		
 		JButton btnManager = new JButton("管理員工");
@@ -111,7 +111,7 @@ public class EmployeeMainUI extends JFrame {
 		JLabel lblMemberName = new JLabel("用戶: <dynamic>");
 		lblMemberName.setText("用戶: "+employee.getName());
 		lblMemberName.setFont(new Font("新細明體", Font.BOLD, 18));
-		lblMemberName.setBounds(6, 239, 298, 23);
+		lblMemberName.setBounds(6, 254, 298, 23);
 		panel_1.add(lblMemberName);
 		
 		JButton btnAdd_1 = new JButton("新增產品");
