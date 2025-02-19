@@ -6,8 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import model.Employee;
-import service.impl.EmployeeServiceImpl;
+import model.Consumer;
+import service.impl.ConsumerServiceImpl;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -34,7 +34,7 @@ public class ConsumerRegisterUI extends JFrame {
 	private JTextField textFieldName;
 	private JTextField textFieldAddress;
 	private JTextField textFieldPhone;
-	private JTextField textFieldEmployeeNo;
+	private JTextField textFieldConsumerNo;
 
 	/**
 	 * Launch the application.
@@ -119,7 +119,7 @@ public class ConsumerRegisterUI extends JFrame {
 				String username = textFieldUsername.getText();
 				String password = textFieldPassword.getText();
 				String inputVerificationCode = textVerificationCode.getText();
-				String employeeNo = textFieldEmployeeNo.getText();
+				String consumerNo = textFieldConsumerNo.getText();
 
 				// 輸入不能為空
 				if (username.isEmpty() || password.isEmpty()) {
@@ -139,19 +139,19 @@ public class ConsumerRegisterUI extends JFrame {
 					return;
 				}
 				
-				valMessage = Tool.validateEmployeeNo(employeeNo);
+				valMessage = Tool.validateConsumerNo(consumerNo);
 				if(!valMessage.equals("true")) {
 					JOptionPane.showMessageDialog(null, valMessage, "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
 				
-				if(new EmployeeServiceImpl().isEmployeeNoBeenUse(employeeNo))
+				if(new ConsumerServiceImpl().isConsumerNoBeenUse(consumerNo))
 				{	// 員工編號已被使用
 					JOptionPane.showMessageDialog(null, "顧客編號已存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				else if(new EmployeeServiceImpl().isUsernameBeenUse(username))
+				else if(new ConsumerServiceImpl().isUsernameBeenUse(username))
 				{	// 帳號已被使用
 					JOptionPane.showMessageDialog(null, "帳號已存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -162,8 +162,8 @@ public class ConsumerRegisterUI extends JFrame {
 					String address = textFieldAddress.getText();
 					String phone = textFieldPhone.getText();
 					
-					Employee employee = new Employee(employeeNo,username,password,name,phone,address);
-					new EmployeeServiceImpl().addEmployee(employee);					
+					Consumer consumer = new Consumer(consumerNo,username,password,name,phone,address);
+					new ConsumerServiceImpl().addConsumer(consumer);					
 	
 					JOptionPane.showMessageDialog(null, username + "註冊成功，將前往登入畫面。", "完成",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -187,7 +187,7 @@ public class ConsumerRegisterUI extends JFrame {
 				textFieldAddress.setText("");
 				textFieldPhone.setText("");
 				textVerificationCode.setText("");
-				textFieldEmployeeNo.setText("");
+				textFieldConsumerNo.setText("");
 			
 			}
 		});
@@ -291,11 +291,11 @@ public class ConsumerRegisterUI extends JFrame {
 		lblNewLabel_1_2_1.setBounds(232, 71, 77, 68);
 		contentPane.add(lblNewLabel_1_2_1);
 		
-		textFieldEmployeeNo = new JTextField();
-		textFieldEmployeeNo.setFont(new Font("Dialog", Font.PLAIN, 20));
-		textFieldEmployeeNo.setColumns(10);
-		textFieldEmployeeNo.setBounds(310, 87, 208, 46);
-		contentPane.add(textFieldEmployeeNo);
+		textFieldConsumerNo = new JTextField();
+		textFieldConsumerNo.setFont(new Font("Dialog", Font.PLAIN, 20));
+		textFieldConsumerNo.setColumns(10);
+		textFieldConsumerNo.setBounds(310, 87, 208, 46);
+		contentPane.add(textFieldConsumerNo);
 		
 		JLabel lblNewLabel_1_1_1_1_1 = new JLabel("格式：c005~c999");
 		lblNewLabel_1_1_1_1_1.setForeground(new Color(255, 128, 0));

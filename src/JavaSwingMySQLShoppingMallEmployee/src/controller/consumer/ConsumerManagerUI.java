@@ -8,8 +8,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import model.Consumer;
-import model.Employee;
-import service.impl.EmployeeServiceImpl;
+import model.Consumer;
+import service.impl.ConsumerServiceImpl;
 import util.FileUtils;
 import util.Tool;
 
@@ -36,10 +36,10 @@ public class ConsumerManagerUI extends JFrame {
 	private JTextField textFieldName;
 	private JTextField textFieldPassword;
 	private JTextField textFieldDeleteId;
-	private static EmployeeServiceImpl employeeServiceImpl = new EmployeeServiceImpl();
-	private Consumer consumer = (Consumer)FileUtils.read("employee.txt");
+	private static ConsumerServiceImpl consumerServiceImpl = new ConsumerServiceImpl();
+	private Consumer consumer = (Consumer)FileUtils.read("consumer.txt");
 	private JTextField textFieldUpateId;
-	private JTextField textFieldEmployeeNo;
+	private JTextField textFieldConsumerNo;
 	private JTextField textFieldPhone;
 	private JTextField textFieldAddress;
 	private JTable table;
@@ -192,12 +192,12 @@ public class ConsumerManagerUI extends JFrame {
 				
 				
 				int id = Integer.parseInt(textFieldDeleteId.getText());
-				Employee employee = employeeServiceImpl.findById(id);
-				if(employee == null) {
+				Consumer consumer = consumerServiceImpl.findById(id);
+				if(consumer == null) {
 					JOptionPane.showMessageDialog(null, "此ID顧客不存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				employeeServiceImpl.delteEmployee(id);
+				consumerServiceImpl.delteConsumer(id);
 				
 				
 				JOptionPane.showMessageDialog(null,  "刪除成功", "完成",
@@ -220,21 +220,21 @@ public class ConsumerManagerUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				List<Employee> employeeList = new ArrayList<>();
+				List<Consumer> consumerList = new ArrayList<>();
 				if(!consumer.getUsername().equals("admin")) 
 				{	// 一般帳號只能查到自己的資料
-//					textAreaOutput.setText(employeeServiceImpl.findByUsername(employee.getUsername()));
-					employeeList = employeeServiceImpl.findByUsername(consumer.getUsername());
+//					textAreaOutput.setText(consumerServiceImpl.findByUsername(consumer.getUsername()));
+					consumerList = consumerServiceImpl.findByUsername(consumer.getUsername());
 					
 				}
 				else
 				{	// admin帳號可以查到所有的資料
-//					textAreaOutput.setText(employeeServiceImpl.AllEmployee());
-					employeeList = employeeServiceImpl.findAllEmployee();
+//					textAreaOutput.setText(consumerServiceImpl.AllConsumer());
+					consumerList = consumerServiceImpl.findAllConsumer();
 					
 				}
-				loadTableData(employeeList);
-//				List<Employee> employeeList = employeeServiceImpl.findAllEmployee();
+				loadTableData(consumerList);
+//				List<Consumer> consumerList = consumerServiceImpl.findAllConsumer();
 	
 				
 				JOptionPane.showMessageDialog(null,  "查詢成功", "完成",
@@ -274,15 +274,15 @@ public class ConsumerManagerUI extends JFrame {
 //				}
 				
 				int id = Integer.parseInt(textFieldUpateId.getText());
-				Employee employee = employeeServiceImpl.findById(id);
-				if(employee == null) {
+				Consumer consumer = consumerServiceImpl.findById(id);
+				if(consumer == null) {
 					JOptionPane.showMessageDialog(null, "此ID員工不存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
 				String name = null;
 				String password = null;
-				String employeeNo = null;
+				String consumerNo = null;
 				String phone = null;
 				String address = null;						
 
@@ -290,43 +290,43 @@ public class ConsumerManagerUI extends JFrame {
 				if(!textFieldName.getText().isEmpty())
 				{
 					name = textFieldName.getText();
-					employee.setName(name);
+					consumer.setName(name);
 				}
 				if(!textFieldPassword.getText().isEmpty())
 				{
 					password = textFieldPassword.getText();
-					employee.setPassword(password);
+					consumer.setPassword(password);
 				}	
-				if(!textFieldEmployeeNo.getText().isEmpty())
+				if(!textFieldConsumerNo.getText().isEmpty())
 				{
-					employeeNo = textFieldEmployeeNo.getText();
-					String valMessage = Tool.validateEmployeeNo(employeeNo);
+					consumerNo = textFieldConsumerNo.getText();
+					String valMessage = Tool.validateConsumerNo(consumerNo);
 					if(!valMessage.equals("true")) {
 						JOptionPane.showMessageDialog(null, valMessage, "錯誤", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					
-					if(new EmployeeServiceImpl().isEmployeeNoBeenUse(employeeNo))
+					if(new ConsumerServiceImpl().isConsumerNoBeenUse(consumerNo))
 					{	// 員工編號已被使用
 						JOptionPane.showMessageDialog(null, "顧客編號已存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-					employee.setEmployeeNo(employeeNo);
+					consumer.setConsumerNo(consumerNo);
 				}				
 				
 				if(!textFieldPhone.getText().isEmpty())
 				{
 					phone = textFieldPhone.getText();
-					employee.setPhone(phone);
+					consumer.setPhone(phone);
 				}				
 				
 				if(!textFieldAddress.getText().isEmpty())
 				{
 					address = textFieldAddress.getText();
-					employee.setAddress(address);
+					consumer.setAddress(address);
 				}				
 				
-				employeeServiceImpl.updateEmployee(employee);
+				consumerServiceImpl.updateConsumer(consumer);
 				
 				
 				JOptionPane.showMessageDialog(null,  "修改成功", "完成",
@@ -355,11 +355,11 @@ public class ConsumerManagerUI extends JFrame {
 		lblAdminadmin.setBounds(122, 9, 644, 23);
 		panel_1.add(lblAdminadmin);
 		
-		textFieldEmployeeNo = new JTextField();
-		textFieldEmployeeNo.setFont(new Font("新細明體", Font.PLAIN, 18));
-		textFieldEmployeeNo.setColumns(10);
-		textFieldEmployeeNo.setBounds(89, 89, 109, 22);
-		panel_1.add(textFieldEmployeeNo);
+		textFieldConsumerNo = new JTextField();
+		textFieldConsumerNo.setFont(new Font("新細明體", Font.PLAIN, 18));
+		textFieldConsumerNo.setColumns(10);
+		textFieldConsumerNo.setBounds(89, 89, 109, 22);
+		panel_1.add(textFieldConsumerNo);
 		
 		JLabel lblNewLabel_1_3_1 = new JLabel("編號");
 		lblNewLabel_1_3_1.setFont(new Font("新細明體", Font.PLAIN, 18));
@@ -418,12 +418,12 @@ public class ConsumerManagerUI extends JFrame {
 	
     
 	// 載入 List 到 JTable
-    private void loadTableData(List<Employee> employees) {
+    private void loadTableData(List<Consumer> consumers) {
         model.setRowCount(0); // 清空表格
-        for (Employee e : employees) {
+        for (Consumer e : consumers) {
             model.addRow(new Object[]{
                 e.getId(),
-                e.getEmployeeNo(),
+                e.getConsumerNo(),
                 e.getUsername(),
                 e.getPassword(),
                 e.getName(),

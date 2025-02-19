@@ -93,6 +93,20 @@ public class Tool {
         return "true";
     }
     
+ // 利用正則判斷所註冊的顧客編號
+    public static String validateConsumerNo(String consumerId) {
+
+        String regex = "^c[0-9]{3}$";  // e001~e999
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(consumerId);
+
+        if (!matcher.matches()) {
+            return "顧客編號 格式錯誤。";
+        }
+
+        return "true";
+    }
+    
     // 格式化日期時間
     public static String formatTimestamp(Timestamp timestamp) {
         if (timestamp == null) {

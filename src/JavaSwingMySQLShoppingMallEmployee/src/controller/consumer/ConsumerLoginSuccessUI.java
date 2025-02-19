@@ -8,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 
 import controller.shopOrder.ShopOrderMainUI;
 import model.Consumer;
-import model.Employee;
 import util.FileUtils;
 
 import javax.swing.JLabel;

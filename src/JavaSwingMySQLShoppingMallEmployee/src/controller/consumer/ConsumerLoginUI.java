@@ -6,8 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import model.Employee;
-import service.impl.EmployeeServiceImpl;
+import model.Consumer;
+import service.impl.ConsumerServiceImpl;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -130,10 +130,10 @@ public class ConsumerLoginUI extends JFrame {
 						return;
 					}
 					
-					Employee employee = new EmployeeServiceImpl().Login(username, password);					
-					if (employee!=null) {
+					Consumer consumer = new ConsumerServiceImpl().Login(username, password);					
+					if (consumer!=null) {
 						// 登入成功
-						FileUtils.save(employee, "employee.txt");
+						FileUtils.save(consumer, "consumer.txt");
 						new ConsumerLoginSuccessUI().setVisible(true);
 						dispose(); 
 					} else {
