@@ -48,7 +48,7 @@ public class ShopOrderAddUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textName;
-	private JTextField textFieldMeal1;
+	private JTextField textFieldProductAmount;
 	private JTextField textReceivedAmount;
 	private String outputText;
 	private Employee employee = (Employee)FileUtils.read("employee.txt");
@@ -66,6 +66,7 @@ public class ShopOrderAddUI extends JFrame {
 	Map<String, String> allProductNoMap = new HashMap<>();
 	Map<String, String> allEmployeeMap = new HashMap<>();
 	Map<String, String> allEmployeeNoMap = new HashMap<>();
+	private Integer shopOrderSum=0;
 	
 	ShopOrder o = null;
 	public ShopOrderAddUI self = this;
@@ -93,7 +94,7 @@ public class ShopOrderAddUI extends JFrame {
 	 */
 	private void handlerOK(JTextArea output,JCheckBox vipMember){		
 		String Name = textName.getText();
-		String mealNo1Price = textFieldMeal1.getText();
+		String productAmount = textFieldProductAmount.getText();
 		output.setText("");
 
 		if (Name.isEmpty()) {
@@ -101,17 +102,31 @@ public class ShopOrderAddUI extends JFrame {
 			JOptionPane.showMessageDialog(null, "名字不能為空，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		// 空值自動補0
-		if (mealNo1Price.isEmpty()) {
-			mealNo1Price = "0";
-			textFieldMeal1.setText("0");
+		// 空值自動補1
+		if (productAmount.isEmpty()) {
+			productAmount = "1";
+			textFieldProductAmount.setText("1");
+		}
+		if (selectedProduct==null) {
+			output.setText("請先選擇產品。");
+			JOptionPane.showMessageDialog(null, "請先選擇產品。", "錯誤", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if (selectedEmployee==null) {
+			output.setText("請先選擇員工。");
+			JOptionPane.showMessageDialog(null, "請先選擇員工。", "錯誤", JOptionPane.ERROR_MESSAGE);
+			return;
 		}
 
+		Integer amount = Integer.parseInt(productAmount);
 //		o = new ShopOrder(Name, Integer.parseInt(mealNo1Price),
 //				Integer.parseInt(mealNo2Price));
-		String showOrder = o.showOrder(vipMember.isSelected());
-		outputText = showOrder;
-		output.setText(showOrder);	
+		String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
+		
+//		showShopOrder(String productName,Integer productAmount,String productPrice,String customerName,String employeeName,Boolean vipMember) 
+		outputText = Tool.showShopOrder(ShopOrderAddUI.selectedProduct,amount ,allProductMap.get(selectedProduct),name,ShopOrderAddUI.selectedEmployee,vipMember.isSelected()); 
+//		string showOrder = Tool.showShopOrder();
+		output.setText(outputText);	
 	}
 		
 
@@ -211,13 +226,13 @@ public class ShopOrderAddUI extends JFrame {
 		panel_Left.add(textName);
 		textName.setColumns(10);
 
-		textFieldMeal1 = new JTextField();
-		textFieldMeal1.setText("1");
-		textFieldMeal1.setHorizontalAlignment(SwingConstants.CENTER);
-		textFieldMeal1.setFont(new Font("新細明體", Font.BOLD, 24));
-		textFieldMeal1.setColumns(10);
-		textFieldMeal1.setBounds(104, 379, 106, 52);
-		panel_Left.add(textFieldMeal1);
+		textFieldProductAmount = new JTextField();
+		textFieldProductAmount.setText("1");
+		textFieldProductAmount.setHorizontalAlignment(SwingConstants.CENTER);
+		textFieldProductAmount.setFont(new Font("新細明體", Font.BOLD, 24));
+		textFieldProductAmount.setColumns(10);
+		textFieldProductAmount.setBounds(104, 379, 106, 52);
+		panel_Left.add(textFieldProductAmount);
 
 		JPanel panel_Right = new JPanel();
 		panel_Right.setLayout(null);
@@ -276,13 +291,13 @@ public class ShopOrderAddUI extends JFrame {
 		btnMeal1Plus.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String mealNo1Price = textFieldMeal1.getText();
+				String mealNo1Price = textFieldProductAmount.getText();
 				// 空值自動補0、非數字或小於0也補0
 				if (mealNo1Price.isEmpty() || !Tool.isNumeric(mealNo1Price)) {
 					mealNo1Price = "0";
-					textFieldMeal1.setText("0");
+					textFieldProductAmount.setText("0");
 				}
-				textFieldMeal1.setText(Integer.parseInt(mealNo1Price) + 1 + "");
+				textFieldProductAmount.setText(Integer.parseInt(mealNo1Price) + 1 + "");
 				
 				// 若訂單已成立，數據有變動，作即時更新
 				if(!textAreaOutput.getText().isEmpty()) {
@@ -299,15 +314,15 @@ public class ShopOrderAddUI extends JFrame {
 		btnMeal1Sub.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String mealNo1Price = textFieldMeal1.getText();
+				String mealNo1Price = textFieldProductAmount.getText();
 				// 空值自動補0、非數字或小於0也補0
 				if (mealNo1Price.isEmpty() || !Tool.isNumeric(mealNo1Price)) {
 					mealNo1Price = "0";
-					textFieldMeal1.setText("0");
+					textFieldProductAmount.setText("0");
 				}
 				Integer count = Integer.parseInt(mealNo1Price) - 1;
 				count = count < 0 ? 0 : count;
-				textFieldMeal1.setText(count + "");
+				textFieldProductAmount.setText(count + "");
 				
 				// 若訂單已成立，數據有變動，作即時更新
 				if(!textAreaOutput.getText().isEmpty()) {
@@ -342,7 +357,7 @@ public class ShopOrderAddUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//textName.setText("");
-				textFieldMeal1.setText("");
+				textFieldProductAmount.setText("1");
 				textReceivedAmount.setText("");
 				textAreaOutput.setText("");
 			}
@@ -430,7 +445,7 @@ public class ShopOrderAddUI extends JFrame {
 				String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
 				
 				
-				int meal1 = Integer.parseInt(textFieldMeal1.getText());
+				int meal1 = Integer.parseInt(textFieldProductAmount.getText());
 				
 				
 				ShopOrder shopOrder = null;//new ShopOrder(name,meal1,meal2);
@@ -518,6 +533,8 @@ public class ShopOrderAddUI extends JFrame {
                         "產品資訊", JOptionPane.INFORMATION_MESSAGE);
 //                    lblProductPrice
                     lblProductPrice.setText(allProductMap.get(selectedProduct)+"");
+                    
+                    handlerOK(textAreaOutput,vipMember);	
                 }
 			}
 		});
@@ -557,7 +574,9 @@ public class ShopOrderAddUI extends JFrame {
                     JOptionPane.showMessageDialog(null, 
                         "你選擇了：" + selectedEmployee +"\n員工姓名："+allEmployeeMap.get(selectedEmployee)+"\n員工編號："+allEmployeeNoMap.get(selectedEmployee), 
                         "員工資訊", JOptionPane.INFORMATION_MESSAGE);
+                    handlerOK(textAreaOutput,vipMember);
                 }
+                
 			}
 		});
 		jListEmployeeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

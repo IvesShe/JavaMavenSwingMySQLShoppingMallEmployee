@@ -138,4 +138,11 @@ public class ShopOrderServiceImpl implements ShopOrderService{
 		return !shopOrderDaoImpl.selectByShopOrderNo(shopOrderNo).isEmpty();
 	}
 
+	@Override
+	public String generateShopOrderNo() {
+		// 產生唯一的 shopOrderNo      
+        
+		return shopOrderDaoImpl.selectMaxShopOrderNo();
+	}
+
 }

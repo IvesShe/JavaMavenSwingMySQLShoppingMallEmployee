@@ -23,5 +23,8 @@ public interface ShopOrderService {
 	
 	// 查詢訂單編號是否被使用
 	boolean isShopOrderNoBeenUse(String username);	
+	
+	// 產生唯一的 shopOrderNo
+    String generateShopOrderNo();
 
 }

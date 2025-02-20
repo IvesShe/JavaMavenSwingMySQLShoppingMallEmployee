@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,22 +23,23 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 //		ShopOrder shopOrder = new ShopOrder("kk",115,9);
 //		new ShopOrderDaoImpl().add(shopOrder);
 		
-		List<ShopOrder> allShopOrder = new ShopOrderDaoImpl().selectAll();
-		for(ShopOrder shopOrder:allShopOrder)
-		{
-			System.out.println(String.format(
-				    "id: %-5d Name: %-10s ShopOrderNo: %-6s ProductNo: %-6s EmployeeNo: %-6s CustomerNo: %-6s Amount: %-6d 建立時間: %s 更新時間: %s",
-				    shopOrder.getId(),
-				    shopOrder.getShopOrderNo(),
-				    shopOrder.getProductNo(),
-				    shopOrder.getEmployeeNo(),
-				    shopOrder.getCustomerNo(),
-				    shopOrder.getAmount(),
-				    Tool.formatTimestamp(shopOrder.getCreatedAt()),
-				    Tool.formatTimestamp(shopOrder.getUpdatedAt())
-				));
-
-		}	
+//		List<ShopOrder> allShopOrder = new ShopOrderDaoImpl().selectAll();
+//		for(ShopOrder shopOrder:allShopOrder)
+//		{
+//			System.out.println(String.format(
+//				    "id: %-5d Name: %-10s ShopOrderNo: %-6s ProductNo: %-6s EmployeeNo: %-6s CustomerNo: %-6s Amount: %-6d 建立時間: %s 更新時間: %s",
+//				    shopOrder.getId(),
+//				    shopOrder.getShopOrderNo(),
+//				    shopOrder.getProductNo(),
+//				    shopOrder.getEmployeeNo(),
+//				    shopOrder.getCustomerNo(),
+//				    shopOrder.getAmount(),
+//				    Tool.formatTimestamp(shopOrder.getCreatedAt()),
+//				    Tool.formatTimestamp(shopOrder.getUpdatedAt())
+//				));
+//
+//		}	
+		System.out.println(new ShopOrderDaoImpl().selectMaxShopOrderNo());
 	}
 
 	@Override
@@ -172,6 +175,51 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 		}
 		
 		return allShopOrder;
+	}
+
+	@Override
+	public String selectMaxShopOrderNo() {
+		// 取得當前時間
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        String dateTime = now.format(formatter);
+        
+		String sql = "SELECT COUNT(*) FROM shop_order WHERE shop_order_no like ?";
+		
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, "SHOP" + dateTime + "%"); // 搜尋今天的訂單
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+		 	int count = 1;
+		    if (resultSet.next()) {
+		    	count = resultSet.getInt(1) + 1; // 訂單數 +1
+		    }
+		    // 產生訂單編號（SHOPYYYYMMDDHHMMSSXXXX）
+            return String.format("SHOP%s%04d", dateTime, count);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		
+//
+//		// 查詢今天已有的訂單數量
+////        String countSQL = "SELECT COUNT(*) FROM orders WHERE shopOrderNo LIKE ?";
+//        try (PreparedStatement countStmt = conn.prepareStatement(countSQL)) {
+//            countStmt.setString(1, "SHOP" + dateTime + "%"); // 搜尋今天的訂單
+//            ResultSet rs = countStmt.executeQuery();
+//            int count = 1;
+//            if (rs.next()) {
+//                count = rs.getInt(1) + 1; // 訂單數 +1
+//            }
+//
+//            // 產生訂單編號（SHOPYYYYMMDDHHMMSSXXXX）
+//            return String.format("SHOP%s%04d", dateTime, count);
+//        }
+		
+		
+		return null;
 	}
 
 }

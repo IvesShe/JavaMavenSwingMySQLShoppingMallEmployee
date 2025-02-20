@@ -12,6 +12,8 @@ public interface ShopOrderDao {
 	List<ShopOrder> selectAll();
 	ShopOrder selectById(int id);
 	List<ShopOrder> selectByShopOrderNo(String shopOrderNo);
+	String selectMaxShopOrderNo();
+//	String countSQL = "SELECT COUNT(*) FROM orders WHERE shopOrderNo LIKE ?";
 	
 	// 更新
 	void update(ShopOrder porder);

@@ -2,6 +2,8 @@ package util;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -144,6 +146,83 @@ public class Tool {
         return sdf.format(timestamp);
     }
     
-    
+    public static String showShopOrder(String productName,Integer productAmount,Integer productPrice,String customerName,String employeeName,Boolean vipMember) 
+    {
+		// 取得當前的系統時間
+	    LocalDateTime now = LocalDateTime.now();
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	    String currentTime = now.format(formatter);
+	    
+	    
+	    int sum = productPrice * productAmount;
+
+	    String outputMessage = String.format(
+	        "---------------------------------------------------------\n" +
+	        "訂單時間: %s\n" +  
+	        "您的名字是：%s\n" +
+	        "商品名稱：%s\n" + // 修正這裡，把 %d 改為 %s
+	        "數量：%d\n" +
+	        "成交金額：\n" +
+	        "%d 元 x %d   = %d 元",
+	        currentTime,  // 顯示當前時間
+	        customerName,
+	        productName,  // 這裡要用 %s
+	        productAmount,        
+	        productPrice, // 修正變數順序
+	        productAmount,  
+	        sum
+	    );
+
+		
+	    if (vipMember) {
+	        int discountAmount = (int) (sum * 0.1);  // 計算折扣金額（取整數）
+	        int finalAmount = (int) (sum * 0.9);  // 計算折後金額（取整數）
+
+	        outputMessage += String.format(
+	            "\n您是VIP會員，享有九折優惠\n" +
+	            "折扣金額：%d 元\n" +
+	            "實付金額：%d 元",
+	            discountAmount,  // 折扣金額
+	            finalAmount  // 最終支付金額
+	        );
+	    } else {
+	        outputMessage += "\n您是一般會員，無任何優惠";
+	    }
+	    outputMessage += "\n---------------------------------------------------------";
+	    
+//	    String outputMessage = String.format(
+//	            "---------------------------------------------------------\n" +
+//	            "訂單時間: %s\n" +  
+//	            "您的名字是：%s\n" +
+//	            "1號餐份數：%d\n" +
+//	            "2號餐份數：%d\n\n" +
+//	            "成交金額：\n" +
+//	            "1號餐 %d 元 x %d 份 + 2號餐 %d 元 x %d 份 = %d 元",
+//	            currentTime,  // 顯示當前時間
+//	            this.getName(),
+//	            this.getMealNo1(),
+//	            this.getMealNo2(),
+//	            ShopOrder.getMealNo1Price(),
+//	            this.getMealNo1(),
+//	            ShopOrder.getMealNo2Price(),
+//	            this.getMealNo2(),
+//	            this.getSum()
+//	    );
+//
+//	    if (vipMember) {
+//	        outputMessage += String.format(
+//	                "\n您是VIP會員，享有九折優惠\n" +
+//	                "折扣金額：%d 元\n" +
+//	                "實付金額：%d 元",
+//	                (this.getSum() - (int)(this.getSum() * 0.9)),
+//	                (int)(this.getSum() * 0.9)
+//	        );
+//	    } else {
+//	        outputMessage += "\n您是一般會員，無任何優惠";
+//	    }
+
+//	    outputMessage += "\n---------------------------------------------------------";
+	    return outputMessage;
+	}
 
 }
