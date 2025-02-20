@@ -175,7 +175,8 @@ public class EmployeeLoginUI extends JFrame {
 			}
 		});
 		btnRegister.setFont(new Font("新細明體", Font.BOLD, 30));
-		btnRegister.setBounds(654, 422, 182, 44);
+		btnRegister.setBounds(661, 250, 182, 44);
+		btnRegister.setVisible(false);
 		contentPane.add(btnRegister);
 
 		JLabel lblNewLabel_1_1 = new JLabel("驗證碼：");
@@ -223,7 +224,7 @@ public class EmployeeLoginUI extends JFrame {
 			}
 		});
 		btnapp.setFont(new Font("新細明體", Font.BOLD, 18));
-		btnapp.setBounds(654, 484, 182, 44);
+		btnapp.setBounds(654, 460, 182, 68);
 		contentPane.add(btnapp);
 
 	}
