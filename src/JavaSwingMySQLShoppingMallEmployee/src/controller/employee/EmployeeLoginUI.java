@@ -226,6 +226,12 @@ public class EmployeeLoginUI extends JFrame {
 		btnapp.setFont(new Font("新細明體", Font.BOLD, 18));
 		btnapp.setBounds(654, 460, 182, 68);
 		contentPane.add(btnapp);
+		
+		JLabel lblNewLabel_1_1_1_1 = new JLabel("管理員帳號admin、密碼123");
+		lblNewLabel_1_1_1_1.setForeground(new Color(255, 128, 0));
+		lblNewLabel_1_1_1_1.setFont(new Font("新細明體", Font.BOLD, 20));
+		lblNewLabel_1_1_1_1.setBounds(322, 258, 414, 68);
+		contentPane.add(lblNewLabel_1_1_1_1);
 
 	}
 }
