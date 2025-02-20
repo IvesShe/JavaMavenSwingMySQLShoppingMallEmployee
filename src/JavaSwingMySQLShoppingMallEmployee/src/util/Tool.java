@@ -126,7 +126,7 @@ public class Tool {
     // 利用正則判斷所新增的訂單編號
     public static String validateShopOrderNo(String shopOrderNo) {
 
-        String regex = "^p[0-9]{3}$";  // e001~e999
+        String regex = "^s[0-9]{3}$";  // e001~e999
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(shopOrderNo);
 
@@ -146,7 +146,7 @@ public class Tool {
         return sdf.format(timestamp);
     }
     
-    public static String showShopOrder(String productName,Integer productAmount,Integer productPrice,String customerName,String employeeName,Boolean vipMember) 
+    public static String showShopOrder(String shopOrderNo,String productName,Integer productAmount,Integer productPrice,String customerName,String employeeName,Boolean vipMember) 
     {
 		// 取得當前的系統時間
 	    LocalDateTime now = LocalDateTime.now();
@@ -158,12 +158,14 @@ public class Tool {
 
 	    String outputMessage = String.format(
 	        "---------------------------------------------------------\n" +
+	        "訂單編號: %s\n" + 
 	        "訂單時間: %s\n" +  
 	        "您的名字是：%s\n" +
 	        "商品名稱：%s\n" + // 修正這裡，把 %d 改為 %s
 	        "數量：%d\n" +
 	        "成交金額：\n" +
 	        "%d 元 x %d   = %d 元",
+	        shopOrderNo,
 	        currentTime,  // 顯示當前時間
 	        customerName,
 	        productName,  // 這裡要用 %s

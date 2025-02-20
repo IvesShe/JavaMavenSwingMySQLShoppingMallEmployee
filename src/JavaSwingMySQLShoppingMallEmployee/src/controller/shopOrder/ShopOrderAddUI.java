@@ -66,6 +66,9 @@ public class ShopOrderAddUI extends JFrame {
 	Map<String, String> allProductNoMap = new HashMap<>();
 	Map<String, String> allEmployeeMap = new HashMap<>();
 	Map<String, String> allEmployeeNoMap = new HashMap<>();
+	private String shopOrderNo=null;
+	JLabel lblShopOrderNo = new JLabel(shopOrderNo);
+	
 	private Integer shopOrderSum=0;
 	
 	ShopOrder o = null;
@@ -89,6 +92,7 @@ public class ShopOrderAddUI extends JFrame {
 		});
 	}
 	
+	
 	/**
 	 * 處理確認訂單
 	 */
@@ -96,6 +100,9 @@ public class ShopOrderAddUI extends JFrame {
 		String Name = textName.getText();
 		String productAmount = textFieldProductAmount.getText();
 		output.setText("");
+		
+		shopOrderNo = lblShopOrderNo.getText();
+		System.out.println(shopOrderNo);
 
 		if (Name.isEmpty()) {
 			output.setText("名字不能為空，請重新輸入。");
@@ -108,13 +115,13 @@ public class ShopOrderAddUI extends JFrame {
 			textFieldProductAmount.setText("1");
 		}
 		if (selectedProduct==null) {
-			output.setText("請先選擇產品。");
-			JOptionPane.showMessageDialog(null, "請先選擇產品。", "錯誤", JOptionPane.ERROR_MESSAGE);
+			output.setText("請選擇產品。");
+			JOptionPane.showMessageDialog(null, "請選擇產品。", null, JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		if (selectedEmployee==null) {
-			output.setText("請先選擇員工。");
-			JOptionPane.showMessageDialog(null, "請先選擇員工。", "錯誤", JOptionPane.ERROR_MESSAGE);
+			output.setText("請選擇服務人員。");
+			JOptionPane.showMessageDialog(null, "請選擇服務人員。", null, JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 
@@ -124,7 +131,7 @@ public class ShopOrderAddUI extends JFrame {
 		String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
 		
 //		showShopOrder(String productName,Integer productAmount,String productPrice,String customerName,String employeeName,Boolean vipMember) 
-		outputText = Tool.showShopOrder(ShopOrderAddUI.selectedProduct,amount ,allProductMap.get(selectedProduct),name,ShopOrderAddUI.selectedEmployee,vipMember.isSelected()); 
+		outputText = Tool.showShopOrder(shopOrderNo,ShopOrderAddUI.selectedProduct,amount ,allProductMap.get(selectedProduct),name,ShopOrderAddUI.selectedEmployee,vipMember.isSelected()); 
 //		string showOrder = Tool.showShopOrder();
 		output.setText(outputText);	
 	}
@@ -166,7 +173,11 @@ public class ShopOrderAddUI extends JFrame {
 			System.out.println("employeeName:"+e+"\n");
 		}
 	}
-	
+	// 從數據庫 產品編號
+	private void getShopOrderData()
+	{
+		self.lblShopOrderNo.setText(shopOrderServiceImpl.generateShopOrderNo());
+	}
 	
 	
 	
@@ -181,6 +192,7 @@ public class ShopOrderAddUI extends JFrame {
 				// 從數據庫 獲取JList資料
 				self.getProductData();
 				self.getEmployeeData();
+				self.getShopOrderData();				
 			}
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -212,7 +224,7 @@ public class ShopOrderAddUI extends JFrame {
 
 		JLabel lblNewLabel_1 = new JLabel("姓名：");
 		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("新細明體", Font.BOLD, 30));
+		lblNewLabel_1.setFont(new Font("新細明體", Font.BOLD, 20));
 		lblNewLabel_1.setBounds(30, 13, 105, 38);
 		panel_Left.add(lblNewLabel_1);
 
@@ -222,7 +234,7 @@ public class ShopOrderAddUI extends JFrame {
 		textName.setEnabled(false);
 		textName.setHorizontalAlignment(SwingConstants.CENTER);
 		textName.setFont(new Font("新細明體", Font.BOLD, 20));
-		textName.setBounds(149, 10, 254, 42);
+		textName.setBounds(120, 10, 254, 42);
 		panel_Left.add(textName);
 		textName.setColumns(10);
 
@@ -430,7 +442,7 @@ public class ShopOrderAddUI extends JFrame {
 		btnChange.setBounds(1042, 493, 118, 52);
 		contentPane.add(btnChange);
 		
-		// 登出 按鍵
+		// 提交訂單 按鍵
 		JButton btnCommit = new JButton("提交訂單");
 		btnCommit.addMouseListener(new MouseAdapter() {
 			@Override
@@ -442,17 +454,25 @@ public class ShopOrderAddUI extends JFrame {
 					return;
 				}
 				
+				handlerOK(textAreaOutput,vipMember);
+				
 				String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
 				
 				
 				int meal1 = Integer.parseInt(textFieldProductAmount.getText());
 				
-				
-				ShopOrder shopOrder = null;//new ShopOrder(name,meal1,meal2);
+				String noTemp = AppMainUI.getIsEmployee()? employee.getEmployeeNo():consumer.getConsumerNo();
+				String productAmount = textFieldProductAmount.getText();
+				Integer amount = Integer.parseInt(productAmount);
+				ShopOrder shopOrder = new ShopOrder(shopOrderNo, allProductNoMap.get(selectedProduct), allEmployeeNoMap.get(selectedEmployee), noTemp, amount);
 				
 				shopOrderServiceImpl.addShopOrder(shopOrder);
 				JOptionPane.showMessageDialog(null,  "提交訂單成功", "完成",
 						JOptionPane.INFORMATION_MESSAGE);
+				
+				// 獲取新的訂單編號
+				getShopOrderData();
+				
 			}
 		});
 		btnCommit.setFont(new Font("新細明體", Font.BOLD, 20));
@@ -507,6 +527,15 @@ public class ShopOrderAddUI extends JFrame {
 		btnBack.setFont(new Font("新細明體", Font.BOLD, 20));
 		btnBack.setBounds(844, 60, 157, 30);
 		panel_Top.add(btnBack);
+		
+		JLabel lblNewLabel_1_1_2_1 = new JLabel("訂單編號：");
+		lblNewLabel_1_1_2_1.setForeground(Color.WHITE);
+		lblNewLabel_1_1_2_1.setFont(new Font("新細明體", Font.BOLD, 20));
+		lblNewLabel_1_1_2_1.setBounds(53, 72, 113, 38);
+		lblNewLabel_1_1_2_1.setVisible(false);
+		panel_Top.add(lblNewLabel_1_1_2_1);
+		
+		
 		
 		JLabel lblProductPrice = new JLabel("");
 		lblProductPrice.setForeground(Color.WHITE);
@@ -587,6 +616,13 @@ public class ShopOrderAddUI extends JFrame {
 		lblNewLabel_1_1_2.setBounds(30, 327, 69, 38);
 		panel_Left.add(lblNewLabel_1_1_2);
 		
+		
+		lblShopOrderNo = new JLabel(shopOrderNo);
+		lblShopOrderNo.setForeground(Color.WHITE);
+		lblShopOrderNo.setFont(new Font("新細明體", Font.BOLD, 20));
+		lblShopOrderNo.setBounds(162, 72, 232, 38);
+		lblShopOrderNo.setVisible(false);
+		panel_Top.add(lblShopOrderNo);
 		
 	}
 }

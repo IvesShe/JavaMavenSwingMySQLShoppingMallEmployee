@@ -181,14 +181,14 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 	public String selectMaxShopOrderNo() {
 		// 取得當前時間
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String dateTime = now.format(formatter);
         
 		String sql = "SELECT COUNT(*) FROM shop_order WHERE shop_order_no like ?";
 		
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setString(1, "SHOP" + dateTime + "%"); // 搜尋今天的訂單
+			preparedStatement.setString(1, "S" + dateTime + "%"); // 搜尋今天的訂單
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
 		 	int count = 1;
@@ -196,27 +196,11 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 		    	count = resultSet.getInt(1) + 1; // 訂單數 +1
 		    }
 		    // 產生訂單編號（SHOPYYYYMMDDHHMMSSXXXX）
-            return String.format("SHOP%s%04d", dateTime, count);
+            return String.format("S%s%04d", dateTime, count);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-//		
-//
-//		// 查詢今天已有的訂單數量
-////        String countSQL = "SELECT COUNT(*) FROM orders WHERE shopOrderNo LIKE ?";
-//        try (PreparedStatement countStmt = conn.prepareStatement(countSQL)) {
-//            countStmt.setString(1, "SHOP" + dateTime + "%"); // 搜尋今天的訂單
-//            ResultSet rs = countStmt.executeQuery();
-//            int count = 1;
-//            if (rs.next()) {
-//                count = rs.getInt(1) + 1; // 訂單數 +1
-//            }
-//
-//            // 產生訂單編號（SHOPYYYYMMDDHHMMSSXXXX）
-//            return String.format("SHOP%s%04d", dateTime, count);
-//        }
 		
 		
 		return null;

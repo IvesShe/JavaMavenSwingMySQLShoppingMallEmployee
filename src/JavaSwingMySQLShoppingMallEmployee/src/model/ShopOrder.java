@@ -26,17 +26,14 @@ public class ShopOrder {
 
 
 
-	public ShopOrder(Integer id, String shopOrderNo, String productNo, String employeeNo, String customerNo,
-			Integer amount, Timestamp createdAt, Timestamp updatedAt) {
+	public ShopOrder(String shopOrderNo, String productNo, String employeeNo, String customerNo,
+			Integer amount) {
 		super();
-		this.id = id;
 		this.shopOrderNo = shopOrderNo;
 		this.productNo = productNo;
 		this.employeeNo = employeeNo;
 		this.customerNo = customerNo;
 		this.amount = amount;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
 	}
 
 	
