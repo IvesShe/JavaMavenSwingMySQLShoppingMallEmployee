@@ -16,6 +16,7 @@ public interface ShopOrderService {
 	String findByShopOrderNo(String shopOrderNo);
 	List<ShopOrder> findByEmployeeNo(String employeeNo);
 	List<ShopOrder> findByConsumerNo(String consumerNo);
+	List<ShopOrder> findByProductNo(String productNo);
 	
 	// 改
 	void updateShopOrder(ShopOrder shopOrder);

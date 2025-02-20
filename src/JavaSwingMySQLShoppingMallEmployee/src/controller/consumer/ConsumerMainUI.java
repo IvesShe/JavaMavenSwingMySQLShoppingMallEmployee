@@ -80,11 +80,12 @@ public class ConsumerMainUI extends JFrame {
 			}
 		});
 		btnManager.setFont(new Font("新細明體", Font.PLAIN, 14));
-		btnManager.setBounds(213, 16, 134, 41);
+		btnManager.setBounds(139, 16, 134, 41);
 		panel_1.add(btnManager);
 		
 		JButton btnAdd = new JButton("新增顧客");
-		btnAdd.setBounds(57, 16, 134, 41);
+		btnAdd.setBounds(285, 197, 134, 41);
+		btnAdd.setVisible(false);
 		panel_1.add(btnAdd);
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
@@ -128,6 +129,7 @@ public class ConsumerMainUI extends JFrame {
 		});
 		btnAdd_1.setFont(new Font("新細明體", Font.PLAIN, 20));
 		btnAdd_1.setBounds(56, 81, 134, 41);
+		
 		panel_1.add(btnAdd_1);
 		
 		JButton btnManager_1 = new JButton("修改訂單");

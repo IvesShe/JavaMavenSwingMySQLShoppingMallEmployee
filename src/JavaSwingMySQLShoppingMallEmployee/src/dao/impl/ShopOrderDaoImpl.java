@@ -209,7 +209,7 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 
 	@Override
 	public List<ShopOrder> selectByEmployeeNo(String employeeNo) {
-		String sql = "select * from shop_order where employe_no=?;";
+		String sql = "select * from shop_order where employee_no=?;";
 		List<ShopOrder> allShopOrder = new ArrayList<>();
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -242,6 +242,34 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setString(1, consumerNo);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next())
+			{
+				ShopOrder shopOrder = new ShopOrder();
+				shopOrder.setId(resultSet.getInt("id"));
+				shopOrder.setShopOrderNo(resultSet.getString("shop_order_no"));
+				shopOrder.setProductNo(resultSet.getString("product_no"));
+				shopOrder.setEmployeeNo(resultSet.getString("employee_no"));
+				shopOrder.setCustomerNo(resultSet.getString("consumer_no"));
+				shopOrder.setAmount(resultSet.getInt("amount"));
+				shopOrder.setCreatedAt(resultSet.getTimestamp("created_at"));
+				shopOrder.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+				allShopOrder.add(shopOrder);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return allShopOrder;
+	}
+
+	@Override
+	public List<ShopOrder> selectByProductNo(String productNo) {
+		String sql = "select * from shop_order where product_no=?;";
+		List<ShopOrder> allShopOrder = new ArrayList<>();
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, productNo);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while(resultSet.next())
 			{

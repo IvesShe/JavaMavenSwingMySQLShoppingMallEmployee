@@ -13,7 +13,9 @@ import controller.employee.EmployeeMainUI;
 import model.Consumer;
 import model.Employee;
 import model.Product;
+import model.ShopOrder;
 import service.impl.ProductServiceImpl;
+import service.impl.ShopOrderServiceImpl;
 import util.FileUtils;
 import util.Tool;
 
@@ -41,6 +43,7 @@ public class ProductManagerUI extends JFrame {
 	private JTextField textFieldPrice;
 	private JTextField textFieldDeleteId;
 	private static ProductServiceImpl productServiceImpl = new ProductServiceImpl();
+	private static ShopOrderServiceImpl shopOrderServiceImpl = new ShopOrderServiceImpl();
 	private Employee employee = (Employee)FileUtils.read("employee.txt");
 	private Consumer consumer = (Consumer)FileUtils.read("consumer.txt");
 	private JTextField textFieldUpateId;
@@ -203,6 +206,13 @@ public class ProductManagerUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "此ID產品不存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				// 已在訂單裡的產品不能被刪除
+				List<ShopOrder> shopOrderList = shopOrderServiceImpl.findByProductNo(product.getProductNo());
+				System.out.println(shopOrderList);
+				if(shopOrderList.size()>0) {
+					JOptionPane.showMessageDialog(null, "已在訂單裡的產品不能被刪除，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				productServiceImpl.delteProduct(id);
 				
 				
@@ -298,8 +308,15 @@ public class ProductManagerUI extends JFrame {
 					}
 					
 					if(new ProductServiceImpl().isProductNoBeenUse(productNo))
-					{	// 員工編號已被使用
-						JOptionPane.showMessageDialog(null, "顧客編號已存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+					{	// 產品編號已被使用
+						JOptionPane.showMessageDialog(null, "產品編號已存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					// 已在訂單裡的產品編號不能被修改
+					List<ShopOrder> shopOrderList = shopOrderServiceImpl.findByProductNo(product.getProductNo());
+					System.out.println(shopOrderList);
+					if(shopOrderList.size()>0) {
+						JOptionPane.showMessageDialog(null, "已在訂單裡的產品編號不能被修改，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					product.setProductNo(productNo);

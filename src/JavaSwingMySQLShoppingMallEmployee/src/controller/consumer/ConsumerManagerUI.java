@@ -7,8 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controller.app.AppMainUI;
+import controller.employee.EmployeeMainUI;
 import model.Consumer;
+import model.Employee;
+import model.ShopOrder;
 import service.impl.ConsumerServiceImpl;
+import service.impl.ShopOrderServiceImpl;
 import util.FileUtils;
 import util.Tool;
 
@@ -36,6 +41,8 @@ public class ConsumerManagerUI extends JFrame {
 	private JTextField textFieldPassword;
 	private JTextField textFieldDeleteId;
 	private static ConsumerServiceImpl consumerServiceImpl = new ConsumerServiceImpl();
+	private static ShopOrderServiceImpl shopOrderServiceImpl = new ShopOrderServiceImpl();
+	private Employee employee = (Employee)FileUtils.read("employee.txt");
 	private Consumer consumer = (Consumer)FileUtils.read("consumer.txt");
 	private JTextField textFieldUpateId;
 	private JTextField textFieldConsumerNo;
@@ -122,7 +129,14 @@ public class ConsumerManagerUI extends JFrame {
 		btnBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new ConsumerMainUI().setVisible(true);
+				if(AppMainUI.getIsEmployee())
+				{
+					new EmployeeMainUI().setVisible(true);
+				}
+				else
+				{
+					new ConsumerMainUI().setVisible(true);
+				}
 				dispose();
 			}
 		});
@@ -131,7 +145,8 @@ public class ConsumerManagerUI extends JFrame {
 		panel.add(btnBack);
 		
 		JLabel lblMemberName = new JLabel("");
-		lblMemberName.setText("用戶: "+consumer.getName());
+		String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
+		lblMemberName.setText("用戶: "+name);
 		lblMemberName.setFont(new Font("新細明體", Font.BOLD, 18));
 		lblMemberName.setBounds(22, 15, 298, 23);
 		panel.add(lblMemberName);
@@ -174,11 +189,17 @@ public class ConsumerManagerUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				if(!consumer.getUsername().equals("admin")) 
-				{	// admin帳號才有刪除的權限
-					JOptionPane.showMessageDialog(null, "此帳號無權限刪除。", "錯誤", JOptionPane.ERROR_MESSAGE);
+//				if(!consumer.getUsername().equals("admin")) 
+//				{	// admin帳號才有刪除的權限
+//					JOptionPane.showMessageDialog(null, "此帳號無權限刪除。", "錯誤", JOptionPane.ERROR_MESSAGE);
+//					return;
+//				}
+				if(!AppMainUI.getIsEmployee()) 
+				{	// 員工帳號才有刪除的權限
+					JOptionPane.showMessageDialog(null, "此帳號無權限刪除，請洽服務人員。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				
 				
 				if (textFieldDeleteId.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "ID不能為空，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
@@ -196,6 +217,14 @@ public class ConsumerManagerUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "此ID顧客不存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				
+				// 已在訂單裡的顧客不能被刪除
+				List<ShopOrder> shopOrderList = shopOrderServiceImpl.findByConsumerNo(consumer.getConsumerNo());
+				System.out.println(shopOrderList);
+				if(shopOrderList.size()>0) {
+					JOptionPane.showMessageDialog(null, "已在訂單裡的顧客不能被刪除，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				consumerServiceImpl.delteConsumer(id);
 				
 				
@@ -206,6 +235,13 @@ public class ConsumerManagerUI extends JFrame {
 		btnDelete.setFont(new Font("新細明體", Font.PLAIN, 18));
 		btnDelete.setBounds(249, 51, 119, 23);
 		panel_1_2.add(btnDelete);
+		
+		JLabel lblAdminadmin_1_1 = new JLabel("員工才有刪除的權限");
+		lblAdminadmin_1_1.setForeground(new Color(255, 128, 0));
+		lblAdminadmin_1_1.setFont(new Font("新細明體", Font.BOLD, 16));
+		lblAdminadmin_1_1.setBackground(Color.WHITE);
+		lblAdminadmin_1_1.setBounds(132, 11, 381, 23);
+		panel_1_2.add(lblAdminadmin_1_1);
 		
 //		JLabel lblAdmin = new JLabel("admin帳號才有刪除的權限");
 //		lblAdmin.setForeground(new Color(255, 128, 0));
@@ -310,6 +346,15 @@ public class ConsumerManagerUI extends JFrame {
 						JOptionPane.showMessageDialog(null, "顧客編號已存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
+					
+					// 已在訂單裡的員工編號不能被修改
+					List<ShopOrder> shopOrderList = shopOrderServiceImpl.findByConsumerNo(consumer.getConsumerNo());
+					System.out.println(shopOrderList);
+					if(shopOrderList.size()>0) {
+						JOptionPane.showMessageDialog(null, "已在訂單裡的顧客編號不能被修改，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					
 					consumer.setConsumerNo(consumerNo);
 				}				
 				
@@ -347,12 +392,12 @@ public class ConsumerManagerUI extends JFrame {
 		textFieldUpateId.setBounds(89, 51, 109, 22);
 		panel_1.add(textFieldUpateId);
 		
-		JLabel lblAdminadmin = new JLabel("一般帳號只能查到自己的資料, admin帳號可以查到所有的顧客(帳號admin,密碼123)");
-		lblAdminadmin.setForeground(new Color(255, 128, 0));
-		lblAdminadmin.setBackground(new Color(255, 255, 255));
-		lblAdminadmin.setFont(new Font("新細明體", Font.BOLD, 16));
-		lblAdminadmin.setBounds(122, 9, 644, 23);
-		panel_1.add(lblAdminadmin);
+//		JLabel lblAdminadmin = new JLabel("一般帳號只能查到自己的資料, admin帳號可以查到所有的顧客(帳號admin,密碼123)");
+//		lblAdminadmin.setForeground(new Color(255, 128, 0));
+//		lblAdminadmin.setBackground(new Color(255, 255, 255));
+//		lblAdminadmin.setFont(new Font("新細明體", Font.BOLD, 16));
+//		lblAdminadmin.setBounds(122, 9, 644, 23);
+//		panel_1.add(lblAdminadmin);
 		
 		textFieldConsumerNo = new JTextField();
 		textFieldConsumerNo.setFont(new Font("新細明體", Font.PLAIN, 18));

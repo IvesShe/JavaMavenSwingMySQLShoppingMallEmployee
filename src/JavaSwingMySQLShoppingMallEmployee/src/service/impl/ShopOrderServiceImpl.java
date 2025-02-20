@@ -148,13 +148,18 @@ public class ShopOrderServiceImpl implements ShopOrderService{
 	@Override
 	public List<ShopOrder> findByEmployeeNo(String employeeNo) {
 		
-		return shopOrderDaoImpl.selectByConsumerNo(employeeNo);
+		return shopOrderDaoImpl.selectByEmployeeNo(employeeNo);
 	}
 
 	@Override
 	public List<ShopOrder> findByConsumerNo(String consumerNo) {
 		
 		return shopOrderDaoImpl.selectByConsumerNo(consumerNo);
+	}
+
+	@Override
+	public List<ShopOrder> findByProductNo(String productNo) {
+		return shopOrderDaoImpl.selectByProductNo(productNo);
 	}
 
 }

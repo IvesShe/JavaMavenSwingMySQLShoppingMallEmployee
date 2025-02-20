@@ -8,7 +8,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import model.Employee;
+import model.ShopOrder;
 import service.impl.EmployeeServiceImpl;
+import service.impl.ShopOrderServiceImpl;
 import util.FileUtils;
 import util.Tool;
 
@@ -36,6 +38,7 @@ public class EmployeeManagerUI extends JFrame {
 	private JTextField textFieldPassword;
 	private JTextField textFieldDeleteId;
 	private static EmployeeServiceImpl employeeServiceImpl = new EmployeeServiceImpl();
+	private static ShopOrderServiceImpl shopOrderServiceImpl = new ShopOrderServiceImpl();
 	private Employee employee = (Employee)FileUtils.read("employee.txt");
 	private JTextField textFieldUpateId;
 	private JTextField textFieldEmployeeNo;
@@ -196,6 +199,16 @@ public class EmployeeManagerUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "此ID員工不存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
+				
+				// 已在訂單裡的員工不能被刪除
+				List<ShopOrder> shopOrderList = shopOrderServiceImpl.findByEmployeeNo(employee.getEmployeeNo());
+				System.out.println(shopOrderList);
+				if(shopOrderList.size()>0) {
+					JOptionPane.showMessageDialog(null, "已在訂單裡的員工不能被刪除，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				
 				employeeServiceImpl.delteEmployee(id);
 				
 				
@@ -279,6 +292,8 @@ public class EmployeeManagerUI extends JFrame {
 					return;
 				}
 				
+				
+				
 				String name = null;
 				String password = null;
 				String employeeNo = null;
@@ -310,6 +325,15 @@ public class EmployeeManagerUI extends JFrame {
 						JOptionPane.showMessageDialog(null, "員工編號已存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
+					
+					// 已在訂單裡的員工編號不能被修改
+					List<ShopOrder> shopOrderList = shopOrderServiceImpl.findByEmployeeNo(employee.getEmployeeNo());
+					System.out.println(shopOrderList);
+					if(shopOrderList.size()>0) {
+						JOptionPane.showMessageDialog(null, "已在訂單裡的員工編號不能被修改，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					
 					employee.setEmployeeNo(employeeNo);
 				}				
 				

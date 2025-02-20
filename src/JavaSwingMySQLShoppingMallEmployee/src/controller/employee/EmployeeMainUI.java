@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.consumer.ConsumerManagerUI;
 import controller.product.ProductAddUI;
 import controller.product.ProductManagerUI;
 import controller.shopOrder.ShopOrderManagerUI;
@@ -145,8 +146,20 @@ public class EmployeeMainUI extends JFrame {
 				dispose();
 			}
 		});
-		btnManager_1_1.setBounds(139, 139, 134, 41);
+		btnManager_1_1.setBounds(217, 139, 134, 41);
 		panel_1.add(btnManager_1_1);
 		btnManager_1_1.setFont(new Font("新細明體", Font.PLAIN, 20));
+		
+		JButton btnManager_2 = new JButton("修改顧客資料");
+		btnManager_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new ConsumerManagerUI().setVisible(true);
+				dispose();
+			}
+		});
+		btnManager_2.setFont(new Font("新細明體", Font.PLAIN, 14));
+		btnManager_2.setBounds(56, 139, 134, 41);
+		panel_1.add(btnManager_2);
 	}
 }
