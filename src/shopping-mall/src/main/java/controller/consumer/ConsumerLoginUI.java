@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.app.AppMainUI;
 import model.Consumer;
+import model.Employee;
 import service.impl.ConsumerServiceImpl;
 
 import javax.swing.JLabel;
@@ -137,6 +138,7 @@ public class ConsumerLoginUI extends JFrame {
 					if (consumer!=null) {
 						// 登入成功
 						FileUtils.save(consumer, "consumer.txt");
+						FileUtils.save(new Employee(), "employee.txt");
 						new ConsumerLoginSuccessUI().setVisible(true);
 						dispose(); 
 					} else {
