@@ -12,7 +12,10 @@ import controller.consumer.ConsumerMainUI;
 import controller.employee.EmployeeMainUI;
 import model.Consumer;
 import model.Employee;
+import model.Product;
 import model.ShopOrder;
+import service.impl.EmployeeServiceImpl;
+import service.impl.ProductServiceImpl;
 import service.impl.ShopOrderServiceImpl;
 import util.FileUtils;
 import util.Tool;
@@ -37,16 +40,16 @@ public class ShopOrderManagerUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textFieldName;
-	private JTextField textFieldPassword;
+	private JTextField textFieldProductNo;
+	private JTextField textFieldEmployeeNo;
 	private JTextField textFieldDeleteId;
 	private static ShopOrderServiceImpl shopOrderServiceImpl = new ShopOrderServiceImpl();
+	private static EmployeeServiceImpl employeeServiceImpl = new EmployeeServiceImpl();
+	private static ProductServiceImpl productServiceImpl = new ProductServiceImpl();
 	private Employee employee = (Employee)FileUtils.read("employee.txt");
 	private Consumer consumer = (Consumer)FileUtils.read("consumer.txt");
 	private JTextField textFieldUpateId;
-	private JTextField textFieldShopOrderNo;
-	private JTextField textFieldPhone;
-	private JTextField textFieldAddress;
+	private JTextField textFieldAmount;
 	private JTable table;
 	private DefaultTableModel model;
 
@@ -89,27 +92,27 @@ public class ShopOrderManagerUI extends JFrame {
 		lblNewLabel.setBounds(25, 10, 173, 23);
 		panel_1.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("姓名");
-		lblNewLabel_1.setFont(new Font("新細明體", Font.PLAIN, 18));
+		JLabel lblNewLabel_1 = new JLabel("產品編號");
+		lblNewLabel_1.setFont(new Font("新細明體", Font.PLAIN, 14));
 		lblNewLabel_1.setBounds(230, 51, 64, 23);
 		panel_1.add(lblNewLabel_1);
 		
-		textFieldName = new JTextField();
-		textFieldName.setFont(new Font("新細明體", Font.PLAIN, 18));
-		textFieldName.setColumns(10);
-		textFieldName.setBounds(294, 51, 109, 22);
-		panel_1.add(textFieldName);
+		textFieldProductNo = new JTextField();
+		textFieldProductNo.setFont(new Font("新細明體", Font.PLAIN, 18));
+		textFieldProductNo.setColumns(10);
+		textFieldProductNo.setBounds(294, 51, 109, 22);
+		panel_1.add(textFieldProductNo);
 		
-		JLabel lblNewLabel_2 = new JLabel("密碼");
-		lblNewLabel_2.setFont(new Font("新細明體", Font.PLAIN, 18));
+		JLabel lblNewLabel_2 = new JLabel("員工編號");
+		lblNewLabel_2.setFont(new Font("新細明體", Font.PLAIN, 14));
 		lblNewLabel_2.setBounds(435, 51, 64, 23);
 		panel_1.add(lblNewLabel_2);
 		
-		textFieldPassword = new JTextField();
-		textFieldPassword.setFont(new Font("新細明體", Font.PLAIN, 18));
-		textFieldPassword.setColumns(10);
-		textFieldPassword.setBounds(499, 51, 109, 23);
-		panel_1.add(textFieldPassword);
+		textFieldEmployeeNo = new JTextField();
+		textFieldEmployeeNo.setFont(new Font("新細明體", Font.PLAIN, 18));
+		textFieldEmployeeNo.setColumns(10);
+		textFieldEmployeeNo.setBounds(499, 51, 109, 23);
+		panel_1.add(textFieldEmployeeNo);
 		
 		
 		
@@ -221,6 +224,13 @@ public class ShopOrderManagerUI extends JFrame {
 		btnDelete.setBounds(249, 51, 119, 23);
 		panel_1_2.add(btnDelete);
 		
+		JLabel lblAdminadmin_1_1 = new JLabel("員工才有刪除的權限");
+		lblAdminadmin_1_1.setForeground(new Color(255, 128, 0));
+		lblAdminadmin_1_1.setFont(new Font("新細明體", Font.BOLD, 16));
+		lblAdminadmin_1_1.setBackground(Color.WHITE);
+		lblAdminadmin_1_1.setBounds(132, 8, 381, 23);
+		panel_1_2.add(lblAdminadmin_1_1);
+		
 //		JLabel lblAdmin = new JLabel("admin帳號才有刪除的權限");
 //		lblAdmin.setForeground(new Color(255, 128, 0));
 //		lblAdmin.setFont(new Font("新細明體", Font.BOLD, 16));
@@ -282,7 +292,11 @@ public class ShopOrderManagerUI extends JFrame {
 		btnUpdate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				if(!AppMainUI.getIsEmployee()) 
+				{	// 員工帳號才有刪除的權限
+					JOptionPane.showMessageDialog(null, "此帳號無權限修改，請洽服務人員。", "錯誤", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				if (textFieldUpateId.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "ID不能為空，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -291,71 +305,55 @@ public class ShopOrderManagerUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "ID不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-//				if (textFieldName.getText().isEmpty() && textFieldPassword.getText().isEmpty()) {
-//					JOptionPane.showMessageDialog(null, "1號餐與2號餐至少一者有值才需要修改，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}				
-//				if (!Tool.isNumeric(textFieldName.getText())) {
-//					JOptionPane.showMessageDialog(null, "1號餐不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//				if (!Tool.isNumeric(textFieldPassword.getText())) {
-//					JOptionPane.showMessageDialog(null, "2號餐不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
 				
 				int id = Integer.parseInt(textFieldUpateId.getText());
 				ShopOrder shopOrder = shopOrderServiceImpl.findById(id);
 				if(shopOrder == null) {
-					JOptionPane.showMessageDialog(null, "此ID員工不存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "此ID訂單不存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
-				String name = null;
-				String password = null;
-				String shopOrderNo = null;
-				String phone = null;
-				String address = null;						
+				String productNo = null;
+				String employeeNo = null;
+				Integer amount = null;					
 
 				// 不為空才取值
-				if(!textFieldName.getText().isEmpty())
+				if(!textFieldProductNo.getText().isEmpty())
 				{
-					name = textFieldName.getText();
-//					shopOrder.setName(name);
-				}
-				if(!textFieldPassword.getText().isEmpty())
-				{
-					password = textFieldPassword.getText();
-//					shopOrder.setPassword(password);
-				}	
-				if(!textFieldShopOrderNo.getText().isEmpty())
-				{
-					shopOrderNo = textFieldShopOrderNo.getText();
-					String valMessage = Tool.validateShopOrderNo(shopOrderNo);
-					if(!valMessage.equals("true")) {
-						JOptionPane.showMessageDialog(null, valMessage, "錯誤", JOptionPane.ERROR_MESSAGE);
+					productNo = textFieldProductNo.getText();
+					if(Tool.validateProductNo(productNo)!="true")
+					{
+						JOptionPane.showMessageDialog(null, "產品編號格式不符，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					
-					if(new ShopOrderServiceImpl().isShopOrderNoBeenUse(shopOrderNo))
-					{	// 員工編號已被使用
-						JOptionPane.showMessageDialog(null, "訂單編號已存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+					if(!productServiceImpl.isProductNoBeenUse(productNo)) {
+						JOptionPane.showMessageDialog(null, "此產品不存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-					shopOrder.setShopOrderNo(shopOrderNo);
+					shopOrder.setProductNo(productNo);
+				}
+				if(!textFieldEmployeeNo.getText().isEmpty())
+				{
+					employeeNo = textFieldEmployeeNo.getText();
+					if(Tool.validateEmployeeNo(employeeNo)!="true")
+					{
+						JOptionPane.showMessageDialog(null, "員工編號格式不符，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(!employeeServiceImpl.isEmployeeNoBeenUse(employeeNo)) {
+						JOptionPane.showMessageDialog(null, "此員工不存在，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					shopOrder.setEmployeeNo(employeeNo);
+				}	
+				if(!textFieldAmount.getText().isEmpty())
+				{									
+					amount = Integer.parseInt(textFieldAmount.getText());
+					shopOrder.setAmount(amount);					
 				}				
 				
-				if(!textFieldPhone.getText().isEmpty())
-				{
-					phone = textFieldPhone.getText();
-//					shopOrder.setPhone(phone);
-				}				
 				
-				if(!textFieldAddress.getText().isEmpty())
-				{
-					address = textFieldAddress.getText();
-//					shopOrder.setAddress(address);
-				}				
 				
 				shopOrderServiceImpl.updateShopOrder(shopOrder);
 				
@@ -380,38 +378,23 @@ public class ShopOrderManagerUI extends JFrame {
 		panel_1.add(textFieldUpateId);
 		
 		
-		textFieldShopOrderNo = new JTextField();
-		textFieldShopOrderNo.setFont(new Font("新細明體", Font.PLAIN, 18));
-		textFieldShopOrderNo.setColumns(10);
-		textFieldShopOrderNo.setBounds(89, 89, 109, 22);
-		panel_1.add(textFieldShopOrderNo);
+		textFieldAmount = new JTextField();
+		textFieldAmount.setFont(new Font("新細明體", Font.PLAIN, 18));
+		textFieldAmount.setColumns(10);
+		textFieldAmount.setBounds(89, 89, 109, 22);
+		panel_1.add(textFieldAmount);
 		
-		JLabel lblNewLabel_1_3_1 = new JLabel("編號");
+		JLabel lblNewLabel_1_3_1 = new JLabel("數量");
 		lblNewLabel_1_3_1.setFont(new Font("新細明體", Font.PLAIN, 18));
 		lblNewLabel_1_3_1.setBounds(25, 89, 64, 23);
 		panel_1.add(lblNewLabel_1_3_1);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("電話");
-		lblNewLabel_1_1.setFont(new Font("新細明體", Font.PLAIN, 18));
-		lblNewLabel_1_1.setBounds(230, 89, 64, 23);
-		panel_1.add(lblNewLabel_1_1);
-		
-		textFieldPhone = new JTextField();
-		textFieldPhone.setFont(new Font("新細明體", Font.PLAIN, 18));
-		textFieldPhone.setColumns(10);
-		textFieldPhone.setBounds(294, 89, 109, 22);
-		panel_1.add(textFieldPhone);
-		
-		JLabel lblNewLabel_2_1 = new JLabel("地址");
-		lblNewLabel_2_1.setFont(new Font("新細明體", Font.PLAIN, 18));
-		lblNewLabel_2_1.setBounds(435, 89, 64, 23);
-		panel_1.add(lblNewLabel_2_1);
-		
-		textFieldAddress = new JTextField();
-		textFieldAddress.setFont(new Font("新細明體", Font.PLAIN, 18));
-		textFieldAddress.setColumns(10);
-		textFieldAddress.setBounds(499, 89, 109, 23);
-		panel_1.add(textFieldAddress);
+		JLabel lblAdminadmin_1 = new JLabel("員工才有修改的權限");
+		lblAdminadmin_1.setForeground(new Color(255, 128, 0));
+		lblAdminadmin_1.setFont(new Font("新細明體", Font.BOLD, 16));
+		lblAdminadmin_1.setBackground(Color.WHITE);
+		lblAdminadmin_1.setBounds(123, 10, 381, 23);
+		panel_1.add(lblAdminadmin_1);
 		
 		
 		// JTable輸出		

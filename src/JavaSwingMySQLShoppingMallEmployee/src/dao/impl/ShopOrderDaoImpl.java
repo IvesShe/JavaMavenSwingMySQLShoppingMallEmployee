@@ -126,6 +126,7 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 			preparedStatement.setString(3, shopOrder.getEmployeeNo());
 			preparedStatement.setString(4, shopOrder.getCustomerNo());
 			preparedStatement.setInt(5, shopOrder.getAmount());
+			preparedStatement.setInt(6, shopOrder.getId());
 			preparedStatement.executeUpdate();
 			
 		} catch (SQLException e) {
