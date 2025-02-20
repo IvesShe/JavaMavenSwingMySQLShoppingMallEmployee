@@ -187,10 +187,10 @@ public class ShopOrderManagerUI extends JFrame {
 		btnDelete.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
-				if(!name.equals("admin")) 
-				{	// admin帳號才有刪除的權限
-					JOptionPane.showMessageDialog(null, "此帳號無權限刪除。", "錯誤", JOptionPane.ERROR_MESSAGE);
+//				String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
+				if(!AppMainUI.getIsEmployee()) 
+				{	// 員工帳號才有刪除的權限
+					JOptionPane.showMessageDialog(null, "此帳號無權限刪除，請洽服務人員。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
@@ -234,7 +234,7 @@ public class ShopOrderManagerUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				List<ShopOrder> shopOrderList = new ArrayList<>();
-				String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
+				String noTemp = AppMainUI.getIsEmployee()? employee.getEmployeeNo():consumer.getConsumerNo();
 //				if(!name.equals("admin")) 
 //				{	// 一般帳號只能查到自己的資料
 ////					textAreaOutput.setText(shopOrderServiceImpl.findByUsername(shopOrder.getUsername()));
@@ -247,7 +247,23 @@ public class ShopOrderManagerUI extends JFrame {
 //					shopOrderList = shopOrderServiceImpl.findAllShopOrder();
 //					
 //				}
-				shopOrderList = shopOrderServiceImpl.findAllShopOrder();
+//				shopOrderList = shopOrderServiceImpl.findAllShopOrder();
+				// 顧客只能查到自己的訂單
+				if(!AppMainUI.getIsEmployee()) 
+				{
+					if(AppMainUI.getIsEmployee())
+					{
+						shopOrderList = shopOrderServiceImpl.findByEmployeeNo(noTemp);
+					}
+					else
+					{
+						shopOrderList = shopOrderServiceImpl.findByConsumerNo(noTemp);
+					}
+				}
+				else {
+					// 員工可以查到所有的訂單
+					shopOrderList = shopOrderServiceImpl.findAllShopOrder();
+				}
 				loadTableData(shopOrderList);
 //				List<ShopOrder> shopOrderList = shopOrderServiceImpl.findAllShopOrder();
 	
@@ -363,12 +379,6 @@ public class ShopOrderManagerUI extends JFrame {
 		textFieldUpateId.setBounds(89, 51, 109, 22);
 		panel_1.add(textFieldUpateId);
 		
-		JLabel lblAdminadmin = new JLabel("一般帳號只能查到自己的資料, admin帳號可以查到所有的訂單(帳號admin,密碼123)");
-		lblAdminadmin.setForeground(new Color(255, 128, 0));
-		lblAdminadmin.setBackground(new Color(255, 255, 255));
-		lblAdminadmin.setFont(new Font("新細明體", Font.BOLD, 16));
-		lblAdminadmin.setBounds(122, 9, 644, 23);
-		panel_1.add(lblAdminadmin);
 		
 		textFieldShopOrderNo = new JTextField();
 		textFieldShopOrderNo.setFont(new Font("新細明體", Font.PLAIN, 18));
@@ -412,7 +422,7 @@ public class ShopOrderManagerUI extends JFrame {
         
         // 設定欄位寬度
         table.getColumnModel().getColumn(0).setPreferredWidth(40);  // ID
-        table.getColumnModel().getColumn(1).setPreferredWidth(80);  // 編號
+        table.getColumnModel().getColumn(1).setPreferredWidth(200);  // 編號
         table.getColumnModel().getColumn(2).setPreferredWidth(80); // 
         table.getColumnModel().getColumn(3).setPreferredWidth(80); // 
         table.getColumnModel().getColumn(4).setPreferredWidth(80); // 
@@ -427,6 +437,13 @@ public class ShopOrderManagerUI extends JFrame {
         JScrollPane scrollPaneTable = new JScrollPane(table);
         scrollPaneTable.setBounds(12, 45, 795, 200);
         panel_1_1.add(scrollPaneTable, BorderLayout.CENTER);               
+        
+        JLabel lblAdminadmin = new JLabel("顧客只能查到自己的資料, 員工可以查到所有的資料");
+        lblAdminadmin.setForeground(new Color(255, 128, 0));
+        lblAdminadmin.setFont(new Font("新細明體", Font.BOLD, 16));
+        lblAdminadmin.setBackground(Color.WHITE);
+        lblAdminadmin.setBounds(295, 11, 381, 23);
+        panel_1_1.add(lblAdminadmin);
      
 	}
 	

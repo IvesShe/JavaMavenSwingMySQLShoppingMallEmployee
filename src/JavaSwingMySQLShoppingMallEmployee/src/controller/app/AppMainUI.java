@@ -92,7 +92,7 @@ public class AppMainUI extends JFrame {
 				dispose();
 			}
 		});
-		btnManager.setFont(new Font("新細明體", Font.PLAIN, 30));
+		btnManager.setFont(new Font("新細明體", Font.PLAIN, 20));
 		btnManager.setBounds(113, 79, 181, 41);
 		panel_1.add(btnManager);
 		
@@ -107,7 +107,7 @@ public class AppMainUI extends JFrame {
 				dispose();
 			}
 		});
-		btnAdd.setFont(new Font("新細明體", Font.PLAIN, 30));
+		btnAdd.setFont(new Font("新細明體", Font.PLAIN, 20));
 		
 		JButton btnLogout = new JButton("離開");
 		btnLogout.addMouseListener(new MouseAdapter() {
@@ -118,7 +118,7 @@ public class AppMainUI extends JFrame {
 		});
 		btnLogout.setBounds(113, 141, 181, 41);
 		panel_1.add(btnLogout);
-		btnLogout.setFont(new Font("新細明體", Font.PLAIN, 30));
+		btnLogout.setFont(new Font("新細明體", Font.PLAIN, 20));
 		
 //		JLabel lblMemberName = new JLabel("用戶: <dynamic>");
 //		lblMemberName.setText("用戶: "+consumer.getName());

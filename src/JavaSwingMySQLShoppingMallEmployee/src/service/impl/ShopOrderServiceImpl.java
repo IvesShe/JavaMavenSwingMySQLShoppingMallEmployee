@@ -145,4 +145,16 @@ public class ShopOrderServiceImpl implements ShopOrderService{
 		return shopOrderDaoImpl.selectMaxShopOrderNo();
 	}
 
+	@Override
+	public List<ShopOrder> findByEmployeeNo(String employeeNo) {
+		
+		return shopOrderDaoImpl.selectByConsumerNo(employeeNo);
+	}
+
+	@Override
+	public List<ShopOrder> findByConsumerNo(String consumerNo) {
+		
+		return shopOrderDaoImpl.selectByConsumerNo(consumerNo);
+	}
+
 }

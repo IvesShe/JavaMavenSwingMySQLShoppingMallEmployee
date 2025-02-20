@@ -214,13 +214,6 @@ public class ConsumerLoginUI extends JFrame {
 		// 啟動clock
 		Clock.startAutoUpdateClock(lblTimer);
 		
-		JLabel lblAdminadmin = new JLabel("一般帳號只能查到自己的訂單, admin帳號可以查到所有的訂單(帳號admin,密碼123)");
-		lblAdminadmin.setForeground(new Color(255, 128, 0));
-		lblAdminadmin.setFont(new Font("新細明體", Font.BOLD, 16));
-		lblAdminadmin.setBackground(Color.WHITE);
-		lblAdminadmin.setBounds(141, 163, 644, 23);
-		contentPane.add(lblAdminadmin);
-		
 		JButton btnapp = new JButton("前往APP主畫面");
 		btnapp.addMouseListener(new MouseAdapter() {
 			@Override

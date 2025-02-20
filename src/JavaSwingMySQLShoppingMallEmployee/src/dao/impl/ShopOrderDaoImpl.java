@@ -44,7 +44,7 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 
 	@Override
 	public void add(ShopOrder shopOrder) {
-		String sql = "insert into shop_order(shop_order_no,product_no,employee_no,customer_no,amount) values(?,?,?,?,?);";
+		String sql = "insert into shop_order(shop_order_no,product_no,employee_no,consumer_no,amount) values(?,?,?,?,?);";
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setString(1, shopOrder.getShopOrderNo());
@@ -74,7 +74,7 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 				shopOrder.setShopOrderNo(resultSet.getString("shop_order_no"));
 				shopOrder.setProductNo(resultSet.getString("product_no"));
 				shopOrder.setEmployeeNo(resultSet.getString("employee_no"));
-				shopOrder.setCustomerNo(resultSet.getString("customer_no"));
+				shopOrder.setCustomerNo(resultSet.getString("consumer_no"));
 				shopOrder.setAmount(resultSet.getInt("amount"));
 				shopOrder.setCreatedAt(resultSet.getTimestamp("created_at"));
 				shopOrder.setUpdatedAt(resultSet.getTimestamp("updated_at"));
@@ -102,7 +102,7 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 				shopOrder.setShopOrderNo(resultSet.getString("shop_order_no"));
 				shopOrder.setProductNo(resultSet.getString("product_no"));
 				shopOrder.setEmployeeNo(resultSet.getString("employee_no"));
-				shopOrder.setCustomerNo(resultSet.getString("customer_no"));
+				shopOrder.setCustomerNo(resultSet.getString("consumer_no"));
 				shopOrder.setAmount(resultSet.getInt("amount"));
 				shopOrder.setCreatedAt(resultSet.getTimestamp("created_at"));
 				shopOrder.setUpdatedAt(resultSet.getTimestamp("updated_at"));
@@ -118,7 +118,7 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 
 	@Override
 	public void update(ShopOrder shopOrder) {
-		String  sql = "update shop_order set shop_order_no=?,product_no=?,employee_no=?,customer_no=?,amount=? where id=?;";
+		String  sql = "update shop_order set shop_order_no=?,product_no=?,employee_no=?,consumer_no=?,amount=? where id=?;";
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setString(1, shopOrder.getShopOrderNo());
@@ -163,7 +163,7 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 				shopOrder.setShopOrderNo(resultSet.getString("shop_order_no"));
 				shopOrder.setProductNo(resultSet.getString("product_no"));
 				shopOrder.setEmployeeNo(resultSet.getString("employee_no"));
-				shopOrder.setCustomerNo(resultSet.getString("customer_no"));
+				shopOrder.setCustomerNo(resultSet.getString("consumer_no"));
 				shopOrder.setAmount(resultSet.getInt("amount"));
 				shopOrder.setCreatedAt(resultSet.getTimestamp("created_at"));
 				shopOrder.setUpdatedAt(resultSet.getTimestamp("updated_at"));
@@ -204,6 +204,62 @@ public class ShopOrderDaoImpl implements ShopOrderDao {
 		
 		
 		return null;
+	}
+
+	@Override
+	public List<ShopOrder> selectByEmployeeNo(String employeeNo) {
+		String sql = "select * from shop_order where employe_no=?;";
+		List<ShopOrder> allShopOrder = new ArrayList<>();
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, employeeNo);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next())
+			{
+				ShopOrder shopOrder = new ShopOrder();
+				shopOrder.setId(resultSet.getInt("id"));
+				shopOrder.setShopOrderNo(resultSet.getString("shop_order_no"));
+				shopOrder.setProductNo(resultSet.getString("product_no"));
+				shopOrder.setEmployeeNo(resultSet.getString("employee_no"));
+				shopOrder.setCustomerNo(resultSet.getString("consumer_no"));
+				shopOrder.setAmount(resultSet.getInt("amount"));
+				shopOrder.setCreatedAt(resultSet.getTimestamp("created_at"));
+				shopOrder.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+				allShopOrder.add(shopOrder);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return allShopOrder;
+	}
+
+	@Override
+	public List<ShopOrder> selectByConsumerNo(String consumerNo) {
+		String sql = "select * from shop_order where consumer_no=?;";
+		List<ShopOrder> allShopOrder = new ArrayList<>();
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, consumerNo);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next())
+			{
+				ShopOrder shopOrder = new ShopOrder();
+				shopOrder.setId(resultSet.getInt("id"));
+				shopOrder.setShopOrderNo(resultSet.getString("shop_order_no"));
+				shopOrder.setProductNo(resultSet.getString("product_no"));
+				shopOrder.setEmployeeNo(resultSet.getString("employee_no"));
+				shopOrder.setCustomerNo(resultSet.getString("consumer_no"));
+				shopOrder.setAmount(resultSet.getInt("amount"));
+				shopOrder.setCreatedAt(resultSet.getTimestamp("created_at"));
+				shopOrder.setUpdatedAt(resultSet.getTimestamp("updated_at"));
+				allShopOrder.add(shopOrder);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return allShopOrder;
 	}
 
 }

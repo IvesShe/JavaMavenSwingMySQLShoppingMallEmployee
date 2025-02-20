@@ -13,6 +13,8 @@ public interface ShopOrderDao {
 	ShopOrder selectById(int id);
 	List<ShopOrder> selectByShopOrderNo(String shopOrderNo);
 	String selectMaxShopOrderNo();
+	List<ShopOrder> selectByEmployeeNo(String employeeNo);
+	List<ShopOrder> selectByConsumerNo(String consumerNo);
 //	String countSQL = "SELECT COUNT(*) FROM orders WHERE shopOrderNo LIKE ?";
 	
 	// 更新
