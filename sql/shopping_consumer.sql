@@ -36,7 +36,7 @@ CREATE TABLE `consumer` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`,`consumer_no`),
   UNIQUE KEY `consumer_no_UNIQUE` (`consumer_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `consumer` (
 
 LOCK TABLES `consumer` WRITE;
 /*!40000 ALTER TABLE `consumer` DISABLE KEYS */;
-INSERT INTO `consumer` VALUES (1,'c001','admin','123','顧客管理員','333','999','2025-02-19 13:33:05','2025-02-21 11:40:23'),(3,'c011','ives123','123','顧客艾米斯','444','333','2025-02-19 14:07:16','2025-02-20 16:13:26'),(5,'c024','jay123','123','Jay','','','2025-02-20 15:48:33','2025-02-20 16:10:43'),(6,'c026','tom123','123','Tom','','','2025-02-20 16:15:56','2025-02-20 18:55:02');
+INSERT INTO `consumer` VALUES (1,'c001','first123','123','第一位顧客','333','999','2025-02-19 13:33:05','2025-02-21 18:23:43'),(3,'c011','ives123','123','顧客艾米斯','444','333','2025-02-19 14:07:16','2025-02-20 16:13:26'),(5,'c024','jay123','123','Jay','','','2025-02-20 15:48:33','2025-02-20 16:10:43'),(6,'c026','tom123','123','Tom','','','2025-02-20 16:15:56','2025-02-20 18:55:02'),(7,'c027','black123','123','Black','3','4','2025-02-21 18:23:30','2025-02-21 18:23:30'),(8,'c028','andy123','123','Andy',NULL,NULL,'2025-02-21 18:23:30','2025-02-21 18:23:30'),(9,'c029','mary123','123','Mary','5','6','2025-02-21 18:23:30','2025-02-21 18:23:30'),(10,'c030','jack123','123','Jack',NULL,NULL,'2025-02-21 18:23:30','2025-02-21 18:23:30');
 /*!40000 ALTER TABLE `consumer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-21 16:04:10
+-- Dump completed on 2025-02-21 18:24:11
