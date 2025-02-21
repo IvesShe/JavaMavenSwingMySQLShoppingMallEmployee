@@ -235,13 +235,11 @@ public class EmployeeManagerUI extends JFrame {
 				List<Employee> employeeList = new ArrayList<>();
 				if(!employee.getUsername().equals("admin")) 
 				{	// 一般帳號只能查到自己的資料
-//					textAreaOutput.setText(employeeServiceImpl.findByUsername(employee.getUsername()));
 					employeeList = employeeServiceImpl.findByUsername(employee.getUsername());
 					
 				}
 				else
 				{	// admin帳號可以查到所有的資料
-//					textAreaOutput.setText(employeeServiceImpl.AllEmployee());
 					employeeList = employeeServiceImpl.findAllEmployee();
 					
 				}
@@ -251,8 +249,6 @@ public class EmployeeManagerUI extends JFrame {
 					return;
 				}
 				loadTableData(employeeList);
-//				List<Employee> employeeList = employeeServiceImpl.findAllEmployee();
-				
 				
 				JOptionPane.showMessageDialog(null,  "查詢成功", "完成",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -277,19 +273,7 @@ public class EmployeeManagerUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "ID不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-//				if (textFieldName.getText().isEmpty() && textFieldPassword.getText().isEmpty()) {
-//					JOptionPane.showMessageDialog(null, "1號餐與2號餐至少一者有值才需要修改，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}				
-//				if (!Tool.isNumeric(textFieldName.getText())) {
-//					JOptionPane.showMessageDialog(null, "1號餐不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//				if (!Tool.isNumeric(textFieldPassword.getText())) {
-//					JOptionPane.showMessageDialog(null, "2號餐不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-				
+
 				int id = Integer.parseInt(textFieldUpateId.getText());
 				Employee employee = employeeServiceImpl.findById(id);
 				if(employee == null) {

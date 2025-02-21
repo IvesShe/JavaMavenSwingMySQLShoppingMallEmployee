@@ -230,13 +230,6 @@ public class ShopOrderManagerUI extends JFrame {
 		lblAdminadmin_1_1.setBounds(132, 8, 381, 23);
 		panel_1_2.add(lblAdminadmin_1_1);
 		
-//		JLabel lblAdmin = new JLabel("admin帳號才有刪除的權限");
-//		lblAdmin.setForeground(new Color(255, 128, 0));
-//		lblAdmin.setFont(new Font("新細明體", Font.BOLD, 16));
-//		lblAdmin.setBackground(Color.WHITE);
-//		lblAdmin.setBounds(133, 10, 644, 23);
-//		panel_1_2.add(lblAdmin);
-		
 		JButton btnSelect = new JButton("查詢");
 		btnSelect.addMouseListener(new MouseAdapter() {
 			@Override
@@ -244,19 +237,7 @@ public class ShopOrderManagerUI extends JFrame {
 				
 				List<ShopOrder> shopOrderList = new ArrayList<>();
 				String noTemp = AppMainUI.getIsEmployee()? employee.getEmployeeNo():consumer.getConsumerNo();
-//				if(!name.equals("admin")) 
-//				{	// 一般帳號只能查到自己的資料
-////					textAreaOutput.setText(shopOrderServiceImpl.findByUsername(shopOrder.getUsername()));
-//					shopOrderList = shopOrderServiceImpl.findByShop(name);
-//					
-//				}
-//				else
-//				{	// admin帳號可以查到所有的資料
-////					textAreaOutput.setText(shopOrderServiceImpl.AllShopOrder());
-//					shopOrderList = shopOrderServiceImpl.findAllShopOrder();
-//					
-//				}
-//				shopOrderList = shopOrderServiceImpl.findAllShopOrder();
+				
 				// 顧客只能查到自己的訂單
 				if(!AppMainUI.getIsEmployee()) 
 				{
@@ -279,7 +260,6 @@ public class ShopOrderManagerUI extends JFrame {
 					return;
 				}
 				loadTableData(shopOrderList);
-//				List<ShopOrder> shopOrderList = shopOrderServiceImpl.findAllShopOrder();
 	
 				
 				JOptionPane.showMessageDialog(null,  "查詢成功", "完成",

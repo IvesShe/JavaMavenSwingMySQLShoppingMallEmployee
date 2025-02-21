@@ -111,13 +111,6 @@ public class ShopOrderReportUI extends JFrame {
 		lblNewLabel_3.setBounds(25, 10, 174, 23);
 		panel_1_1.add(lblNewLabel_3);
 		
-//		JLabel lblAdmin = new JLabel("admin帳號才有刪除的權限");
-//		lblAdmin.setForeground(new Color(255, 128, 0));
-//		lblAdmin.setFont(new Font("新細明體", Font.BOLD, 16));
-//		lblAdmin.setBackground(Color.WHITE);
-//		lblAdmin.setBounds(133, 10, 644, 23);
-//		panel_1_2.add(lblAdmin);
-		
 		JButton btnSelect = new JButton("查詢");
 		btnSelect.addMouseListener(new MouseAdapter() {
 			@Override
@@ -125,28 +118,11 @@ public class ShopOrderReportUI extends JFrame {
 				
 				List<ViewShopOrderReport> viewShopOrderReportList = new ArrayList<>();
 				String noTemp = AppMainUI.getIsEmployee()? employee.getEmployeeNo():consumer.getConsumerNo();
-//				if(!name.equals("admin")) 
-//				{	// 一般帳號只能查到自己的資料
-////					textAreaOutput.setText(shopOrderServiceImpl.findByUsername(shopOrder.getUsername()));
-//					viewShopOrderReportList = shopOrderServiceImpl.findByShop(name);
-//					
-//				}
-//				else
-//				{	// admin帳號可以查到所有的資料
-////					textAreaOutput.setText(shopOrderServiceImpl.AllShopOrder());
-//					viewShopOrderReportList = shopOrderServiceImpl.findAllShopOrder();
-//					
-//				}
-//				viewShopOrderReportList = shopOrderServiceImpl.findAllShopOrder();
+
 				// 顧客只能查到自己的訂單
 				if(!AppMainUI.getIsEmployee()) 
 				{
-//					if(AppMainUI.getIsEmployee())
-//					{
-//						viewShopOrderReportList = shopOrderServiceImpl.findByEmployeeNo(noTemp);
-//					}
-//					else
-//					{
+
 					viewShopOrderReportList = viewShopOrderReportServiceImpl.findByConsumerNo(noTemp);
 //					}
 				}
@@ -154,7 +130,7 @@ public class ShopOrderReportUI extends JFrame {
 					// 員工可以查到所有的訂單
 					viewShopOrderReportList = viewShopOrderReportServiceImpl.findAllViewShopOrderReport();
 				}
-//				viewShopOrderReportList = viewShopOrderReportServiceImpl.findAllViewShopOrderReport();
+
 				System.out.println(viewShopOrderReportList);
 				if(viewShopOrderReportList==null) {
 					JOptionPane.showMessageDialog(null,  "查無資料", "完成",
@@ -162,7 +138,7 @@ public class ShopOrderReportUI extends JFrame {
 					return;
 				}
 				loadTableData(viewShopOrderReportList);
-//				List<ShopOrder> viewShopOrderReportList = shopOrderServiceImpl.findAllShopOrder();
+
 	
 				
 				JOptionPane.showMessageDialog(null,  "查詢成功", "完成",

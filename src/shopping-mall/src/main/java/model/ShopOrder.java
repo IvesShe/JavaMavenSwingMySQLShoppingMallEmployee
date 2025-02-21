@@ -137,39 +137,7 @@ public class ShopOrder {
 		
 	    
 	    
-//	    String outputMessage = String.format(
-//	            "---------------------------------------------------------\n" +
-//	            "訂單時間: %s\n" +  
-//	            "您的名字是：%s\n" +
-//	            "1號餐份數：%d\n" +
-//	            "2號餐份數：%d\n\n" +
-//	            "成交金額：\n" +
-//	            "1號餐 %d 元 x %d 份 + 2號餐 %d 元 x %d 份 = %d 元",
-//	            currentTime,  // 顯示當前時間
-//	            this.getName(),
-//	            this.getMealNo1(),
-//	            this.getMealNo2(),
-//	            ShopOrder.getMealNo1Price(),
-//	            this.getMealNo1(),
-//	            ShopOrder.getMealNo2Price(),
-//	            this.getMealNo2(),
-//	            this.getSum()
-//	    );
-//
-//	    if (vipMember) {
-//	        outputMessage += String.format(
-//	                "\n您是VIP會員，享有九折優惠\n" +
-//	                "折扣金額：%d 元\n" +
-//	                "實付金額：%d 元",
-//	                (this.getSum() - (int)(this.getSum() * 0.9)),
-//	                (int)(this.getSum() * 0.9)
-//	        );
-//	    } else {
-//	        outputMessage += "\n您是一般會員，無任何優惠";
-//	    }
-
-//	    outputMessage += "\n---------------------------------------------------------";
-	    return "";//outputMessage;
+	    return "";
 	}
 	
 }

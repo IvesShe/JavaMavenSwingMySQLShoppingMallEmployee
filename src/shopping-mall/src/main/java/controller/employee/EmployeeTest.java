@@ -90,28 +90,3 @@ public class EmployeeTest extends JFrame {
     }
 }
 
-// **🔹 Employee 類別**
-//class Employee {
-//    private int id;
-//    private String code;
-//    private String username;
-//    private String name;
-//    private String phone;
-//    private String address;
-//
-//    public Employee(int id, String code, String username, String name, String phone, String address) {
-//        this.id = id;
-//        this.code = code;
-//        this.username = username;
-//        this.name = name;
-//        this.phone = phone;
-//        this.address = address;
-//    }
-//
-//    public int getId() { return id; }
-//    public String getCode() { return code; }
-//    public String getUsername() { return username; }
-//    public String getName() { return name; }
-//    public String getPhone() { return phone; }
-//    public String getAddress() { return address; }
-//}

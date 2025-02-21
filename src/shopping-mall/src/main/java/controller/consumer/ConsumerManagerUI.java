@@ -189,11 +189,6 @@ public class ConsumerManagerUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-//				if(!consumer.getUsername().equals("admin")) 
-//				{	// admin帳號才有刪除的權限
-//					JOptionPane.showMessageDialog(null, "此帳號無權限刪除。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
 				if(!AppMainUI.getIsEmployee()) 
 				{	// 員工帳號才有刪除的權限
 					JOptionPane.showMessageDialog(null, "此帳號無權限刪除，請洽服務人員。", "錯誤", JOptionPane.ERROR_MESSAGE);
@@ -243,31 +238,12 @@ public class ConsumerManagerUI extends JFrame {
 		lblAdminadmin_1_1.setBounds(132, 11, 381, 23);
 		panel_1_2.add(lblAdminadmin_1_1);
 		
-//		JLabel lblAdmin = new JLabel("admin帳號才有刪除的權限");
-//		lblAdmin.setForeground(new Color(255, 128, 0));
-//		lblAdmin.setFont(new Font("新細明體", Font.BOLD, 16));
-//		lblAdmin.setBackground(Color.WHITE);
-//		lblAdmin.setBounds(133, 10, 644, 23);
-//		panel_1_2.add(lblAdmin);
-		
 		JButton btnSelect = new JButton("查詢");
 		btnSelect.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
 				List<Consumer> consumerList = new ArrayList<>();
-//				if(!consumer.getUsername().equals("admin")) 
-//				{	// 一般帳號只能查到自己的資料
-////					textAreaOutput.setText(consumerServiceImpl.findByUsername(consumer.getUsername()));
-//					consumerList = consumerServiceImpl.findByUsername(consumer.getUsername());
-//					
-//				}
-//				else
-//				{	// admin帳號可以查到所有的資料
-////					textAreaOutput.setText(consumerServiceImpl.AllConsumer());
-//					consumerList = consumerServiceImpl.findAllConsumer();
-//					
-//				}
 				
 				// 顧客只能查到自己的資料
 				if(!AppMainUI.getIsEmployee()) 
@@ -311,18 +287,6 @@ public class ConsumerManagerUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "ID不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-//				if (textFieldName.getText().isEmpty() && textFieldPassword.getText().isEmpty()) {
-//					JOptionPane.showMessageDialog(null, "1號餐與2號餐至少一者有值才需要修改，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}				
-//				if (!Tool.isNumeric(textFieldName.getText())) {
-//					JOptionPane.showMessageDialog(null, "1號餐不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//				if (!Tool.isNumeric(textFieldPassword.getText())) {
-//					JOptionPane.showMessageDialog(null, "2號餐不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
 				
 				int id = Integer.parseInt(textFieldUpateId.getText());
 				Consumer consumer = consumerServiceImpl.findById(id);
@@ -407,13 +371,6 @@ public class ConsumerManagerUI extends JFrame {
 		textFieldUpateId.setColumns(10);
 		textFieldUpateId.setBounds(89, 51, 109, 22);
 		panel_1.add(textFieldUpateId);
-		
-//		JLabel lblAdminadmin = new JLabel("一般帳號只能查到自己的資料, admin帳號可以查到所有的顧客(帳號admin,密碼123)");
-//		lblAdminadmin.setForeground(new Color(255, 128, 0));
-//		lblAdminadmin.setBackground(new Color(255, 255, 255));
-//		lblAdminadmin.setFont(new Font("新細明體", Font.BOLD, 16));
-//		lblAdminadmin.setBounds(122, 9, 644, 23);
-//		panel_1.add(lblAdminadmin);
 		
 		textFieldConsumerNo = new JTextField();
 		textFieldConsumerNo.setFont(new Font("新細明體", Font.PLAIN, 18));

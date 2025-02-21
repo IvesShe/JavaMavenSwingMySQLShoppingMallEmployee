@@ -119,11 +119,5 @@ public class AppMainUI extends JFrame {
 		btnLogout.setBounds(113, 141, 181, 41);
 		panel_1.add(btnLogout);
 		btnLogout.setFont(new Font("新細明體", Font.PLAIN, 20));
-		
-//		JLabel lblMemberName = new JLabel("用戶: <dynamic>");
-//		lblMemberName.setText("用戶: "+consumer.getName());
-//		lblMemberName.setFont(new Font("新細明體", Font.BOLD, 18));
-//		lblMemberName.setBounds(6, 199, 298, 23);
-//		panel_1.add(lblMemberName);
 	}
 }

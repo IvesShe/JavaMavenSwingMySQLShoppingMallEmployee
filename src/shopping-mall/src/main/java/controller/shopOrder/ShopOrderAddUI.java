@@ -123,13 +123,10 @@ public class ShopOrderAddUI extends JFrame {
 		}
 
 		shopOrderAmount = Integer.parseInt(productAmount);
-//		o = new ShopOrder(Name, Integer.parseInt(mealNo1Price),
-//				Integer.parseInt(mealNo2Price));
 		shopOrderName = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
 		
-//		showShopOrder(String productName,Integer productAmount,String productPrice,String customerName,String employeeName,Boolean vipMember) 
 		outputText = Tool.showShopOrder(shopOrderNo,ShopOrderAddUI.selectedProduct,shopOrderAmount ,allProductMap.get(selectedProduct),shopOrderName,ShopOrderAddUI.selectedEmployee,vipMember.isSelected()); 
-//		string showOrder = Tool.showShopOrder();
+
 		output.setText(outputText);	
 	}
 		
@@ -249,17 +246,6 @@ public class ShopOrderAddUI extends JFrame {
 		panel_Right.setBounds(703, 66, 488, 373);
 		contentPane.add(panel_Right);
 
-//		JLabel lblMealNo1Price = new JLabel(ShopOrder.getMealNo1Price() + "/份");
-//		lblMealNo1Price.setForeground(new Color(0, 0, 255));
-//		lblMealNo1Price.setFont(new Font("新細明體", Font.BOLD, 20));
-//		lblMealNo1Price.setBounds(32, 155, 105, 38);
-//		panel_1.add(lblMealNo1Price);
-//
-//		JLabel lblMealNo2Price = new JLabel(ShopOrder.getMealNo2Price() + "/份");
-//		lblMealNo2Price.setForeground(new Color(0, 0, 255));
-//		lblMealNo2Price.setFont(new Font("新細明體", Font.BOLD, 20));
-//		lblMealNo2Price.setBounds(30, 264, 105, 38);
-//		panel_1.add(lblMealNo2Price);
 		
 		JTextArea textAreaOutput = new JTextArea();
 		textAreaOutput.setBounds(23, 24, 295, 340);
@@ -539,7 +525,6 @@ public class ShopOrderAddUI extends JFrame {
 		
 	
 		// 產品列表
-//        String[] products = {"鍵盤", "滑鼠", "搖桿", "滑鼠2", "搖桿2", "滑鼠3", "搖桿3"};		
 		JScrollPane scrollPane_ProductList = new JScrollPane();
 		scrollPane_ProductList.setBounds(31, 113, 254, 201);
 		panel_Left.add(scrollPane_ProductList);
@@ -577,14 +562,10 @@ public class ShopOrderAddUI extends JFrame {
 		lblNewLabel_1_1_1.setBounds(334, 68, 163, 38);
 		panel_Left.add(lblNewLabel_1_1_1);
 		
-//		JScrollPane scrollPane = new JScrollPane();
-//		scrollPane.setBounds(328, 113, 254, 201);
-//		panel_1.add(scrollPane);
-		
+
 		// 服務人員 員工列表
 		JScrollPane scrollPane_EmployeeList = new JScrollPane();
 		scrollPane_EmployeeList.setBounds(328, 113, 254, 201);
-//		scrollPane_1_1.setViewportView(scrollPane_1_1);
 		panel_Left.add(scrollPane_EmployeeList);
 		jListEmployeeList = new JList<>(this.employeeMenuList.toArray(new String[0]));
 		jListEmployeeList.setFont(new Font("新細明體", Font.PLAIN, 20));
@@ -631,7 +612,7 @@ public class ShopOrderAddUI extends JFrame {
 				shopOrderAmount = Integer.parseInt(productAmount);
 				shopOrderName = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
 				
-//				showShopOrder(String productName,Integer productAmount,String productPrice,String customerName,String employeeName,Boolean vipMember) 
+ 
 				ExcelGenerator.generateOrderExcel("訂單.xlsx",shopOrderNo,ShopOrderAddUI.selectedProduct,shopOrderAmount ,allProductMap.get(selectedProduct),shopOrderName,ShopOrderAddUI.selectedEmployee,vipMember.isSelected());
 				
 				

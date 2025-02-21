@@ -224,13 +224,6 @@ public class ProductManagerUI extends JFrame {
 		btnDelete.setBounds(249, 51, 119, 23);
 		panel_1_2.add(btnDelete);
 		
-//		JLabel lblAdmin = new JLabel("admin帳號才有刪除的權限");
-//		lblAdmin.setForeground(new Color(255, 128, 0));
-//		lblAdmin.setFont(new Font("新細明體", Font.BOLD, 16));
-//		lblAdmin.setBackground(Color.WHITE);
-//		lblAdmin.setBounds(133, 10, 644, 23);
-//		panel_1_2.add(lblAdmin);
-		
 		JButton btnSelect = new JButton("查詢");
 		btnSelect.addMouseListener(new MouseAdapter() {
 			@Override
@@ -242,8 +235,6 @@ public class ProductManagerUI extends JFrame {
 					
 				
 				loadTableData(productList);
-//				List<Product> productList = productServiceImpl.findAllProduct();
-	
 				
 				JOptionPane.showMessageDialog(null,  "查詢成功", "完成",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -268,18 +259,7 @@ public class ProductManagerUI extends JFrame {
 					JOptionPane.showMessageDialog(null, "ID不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-//				if (textFieldName.getText().isEmpty() && textFieldPassword.getText().isEmpty()) {
-//					JOptionPane.showMessageDialog(null, "1號餐與2號餐至少一者有值才需要修改，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}				
-//				if (!Tool.isNumeric(textFieldName.getText())) {
-//					JOptionPane.showMessageDialog(null, "1號餐不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
-//				if (!Tool.isNumeric(textFieldPassword.getText())) {
-//					JOptionPane.showMessageDialog(null, "2號餐不能輸入非數字或小於0，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
-//					return;
-//				}
+
 				
 				int id = Integer.parseInt(textFieldUpateId.getText());
 				Product product = productServiceImpl.findById(id);
