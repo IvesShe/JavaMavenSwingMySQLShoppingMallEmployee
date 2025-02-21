@@ -36,6 +36,25 @@ inner join shopping.employee on shopping.shop_order.employee_no=shopping.employe
 inner join shopping.product on shopping.shop_order.product_no=shopping.product.product_no
 order by shopping.shop_order.id;
 
+select
+shopping.shop_order.product_no,
+shopping.product.product_name,
+shopping.shop_order.amount
+from shopping.shop_order
+inner join shopping.product on shopping.shop_order.product_no = shopping.product.product_no;
+
+SELECT 
+    so.product_no, 
+    p.product_name, 
+    SUM(so.amount) as total
+FROM shopping.shop_order AS so
+INNER JOIN shopping.product AS p 
+    ON so.product_no = p.product_no
+GROUP BY so.product_no, p.product_name
+ORDER BY SUM(so.amount) DESC;
+
+
+
 use shopping;
 
 -- 增加外鍵fk_shop_order_product
@@ -77,3 +96,6 @@ update shopping.employee set employee_no='e014' where employee_no='e013';
 -- 外鍵測試consumer
 delete from shopping.consumer where consumer_no='c026';
 update shopping.consumer set consumer_no='c026' where consumer_no='c020';
+
+
+

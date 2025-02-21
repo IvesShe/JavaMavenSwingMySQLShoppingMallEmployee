@@ -47,7 +47,7 @@ public class EmployeeMainUI extends JFrame {
 	 */
 	public EmployeeMainUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 407);
+		setBounds(100, 100, 450, 454);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(128, 128, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -104,14 +104,14 @@ public class EmployeeMainUI extends JFrame {
 				dispose();
 			}
 		});
-		btnLogout.setBounds(139, 199, 134, 41);
+		btnLogout.setBounds(139, 255, 134, 41);
 		panel_1.add(btnLogout);
 		btnLogout.setFont(new Font("新細明體", Font.PLAIN, 20));
 		
 		JLabel lblMemberName = new JLabel("用戶: <dynamic>");
 		lblMemberName.setText("用戶: "+employee.getName());
 		lblMemberName.setFont(new Font("新細明體", Font.BOLD, 18));
-		lblMemberName.setBounds(6, 254, 298, 23);
+		lblMemberName.setBounds(6, 310, 298, 23);
 		panel_1.add(lblMemberName);
 		
 		JButton btnAdd_1 = new JButton("新增產品");
@@ -161,5 +161,10 @@ public class EmployeeMainUI extends JFrame {
 		btnManager_2.setFont(new Font("新細明體", Font.PLAIN, 14));
 		btnManager_2.setBounds(56, 139, 134, 41);
 		panel_1.add(btnManager_2);
+		
+		JButton btnManager_1_2 = new JButton("熱門產品圖表");
+		btnManager_1_2.setFont(new Font("新細明體", Font.PLAIN, 14));
+		btnManager_1_2.setBounds(139, 199, 134, 41);
+		panel_1.add(btnManager_1_2);
 	}
 }
