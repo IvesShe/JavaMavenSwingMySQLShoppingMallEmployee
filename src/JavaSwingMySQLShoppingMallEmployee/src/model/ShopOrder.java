@@ -2,8 +2,6 @@ package model;
 
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class ShopOrder {
 	private Integer id;	
@@ -136,11 +134,7 @@ public class ShopOrder {
 
 
 	public String showOrder(Boolean vipMember) {
-		// 取得當前的系統時間
-	    LocalDateTime now = LocalDateTime.now();
-	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-	    String currentTime = now.format(formatter);
-	    
+		
 //	    String outputMessage = String.format(
 //	            "---------------------------------------------------------\n" +
 //	            "訂單時間: %s\n" +  

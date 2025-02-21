@@ -1,8 +1,6 @@
 package service.impl;
 
-import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 import dao.impl.ShopOrderDaoImpl;
 import model.ShopOrder;
@@ -59,12 +57,7 @@ public class ShopOrderServiceImpl implements ShopOrderService{
 		List<ShopOrder> allShopOrder = shopOrderDaoImpl.selectAll();
 		String show="";
 		for(ShopOrder shopOrder:allShopOrder)
-		{
-			int sum = 0;//shopOrder.getMealNo1() * ShopOrder.getMealNo1Price() +
-			          //shopOrder.getMealNo2() * ShopOrder.getMealNo2Price();
-
-			NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.TAIWAN); // 使用千分位格式
-			String formattedSum = "0";//currencyFormat.format(sum); // 轉換總價
+		{	
 
 			show += String.format(
 				    "id: %-5d Name: %-10s ShopOrderNo: %-6s ProductNo: %-6s EmployeeNo: %-6s CustomerNo: %-6s Amount: %-6d 建立時間: %s 更新時間: %s",
@@ -111,11 +104,6 @@ public class ShopOrderServiceImpl implements ShopOrderService{
 		String show="";
 		for(ShopOrder shopOrder:allShopOrder)
 		{
-			int sum = 0;//shopOrder.getMealNo1() * ShopOrder.getMealNo1Price() +
-			          //shopOrder.getMealNo2() * ShopOrder.getMealNo2Price();
-
-			NumberFormat currencyFormat = NumberFormat.getNumberInstance(Locale.TAIWAN); // 使用千分位格式
-			String formattedSum = "0";//currencyFormat.format(sum); // 轉換總價
 
 			show += String.format(
 				    "id: %-5d Name: %-10s ShopOrderNo: %-6s ProductNo: %-6s EmployeeNo: %-6s CustomerNo: %-6s Amount: %-6d 建立時間: %s 更新時間: %s",

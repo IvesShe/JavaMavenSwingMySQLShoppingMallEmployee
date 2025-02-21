@@ -8,19 +8,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controller.app.AppMainUI;
-import controller.consumer.ConsumerMainUI;
-import controller.employee.EmployeeMainUI;
 import model.Consumer;
 import model.Employee;
-import model.Product;
-import model.ShopOrder;
 import model.ViewShopOrderReport;
-import service.impl.EmployeeServiceImpl;
-import service.impl.ProductServiceImpl;
-import service.impl.ShopOrderServiceImpl;
 import service.impl.ViewShopOrderReportServiceImpl;
 import util.FileUtils;
-import util.Tool;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -28,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -42,9 +33,6 @@ public class ShopOrderReportUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private static ShopOrderServiceImpl shopOrderServiceImpl = new ShopOrderServiceImpl();
-	private static EmployeeServiceImpl employeeServiceImpl = new EmployeeServiceImpl();
-	private static ProductServiceImpl productServiceImpl = new ProductServiceImpl();
 	private static ViewShopOrderReportServiceImpl viewShopOrderReportServiceImpl = new ViewShopOrderReportServiceImpl();
 	private Employee employee = (Employee)FileUtils.read("employee.txt");
 	private Consumer consumer = (Consumer)FileUtils.read("consumer.txt");
@@ -197,9 +185,9 @@ public class ShopOrderReportUI extends JFrame {
         table.getColumnModel().getColumn(1).setPreferredWidth(80);  // 
         table.getColumnModel().getColumn(2).setPreferredWidth(180); // 
         table.getColumnModel().getColumn(3).setPreferredWidth(120); // 
-        table.getColumnModel().getColumn(4).setPreferredWidth(200); // 
+        table.getColumnModel().getColumn(4).setPreferredWidth(150); // 
         table.getColumnModel().getColumn(5).setPreferredWidth(120); // 
-        table.getColumnModel().getColumn(6).setPreferredWidth(150); // 
+        table.getColumnModel().getColumn(6).setPreferredWidth(200); // 
         table.getColumnModel().getColumn(7).setPreferredWidth(60); 
         table.getColumnModel().getColumn(8).setPreferredWidth(100); 
         table.getColumnModel().getColumn(9).setPreferredWidth(100); 

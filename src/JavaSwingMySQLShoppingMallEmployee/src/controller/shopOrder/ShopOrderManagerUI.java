@@ -12,7 +12,6 @@ import controller.consumer.ConsumerMainUI;
 import controller.employee.EmployeeMainUI;
 import model.Consumer;
 import model.Employee;
-import model.Product;
 import model.ShopOrder;
 import service.impl.EmployeeServiceImpl;
 import service.impl.ProductServiceImpl;

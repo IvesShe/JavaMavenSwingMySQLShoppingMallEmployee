@@ -3,7 +3,6 @@ package service;
 import java.util.List;
 
 import model.Product;
-import model.ShopOrder;
 
 public interface ProductService {
 	// 新增產品

@@ -69,8 +69,6 @@ public class ShopOrderAddUI extends JFrame {
 	private String shopOrderNo=null;
 	JLabel lblShopOrderNo = new JLabel(shopOrderNo);
 	
-	private Integer shopOrderSum=0;
-	
 	ShopOrder o = null;
 	public ShopOrderAddUI self = this;
 	
@@ -456,10 +454,7 @@ public class ShopOrderAddUI extends JFrame {
 				
 				handlerOK(textAreaOutput,vipMember);
 				
-				String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
 				
-				
-				int meal1 = Integer.parseInt(textFieldProductAmount.getText());
 				
 				String noTemp = AppMainUI.getIsEmployee()? employee.getEmployeeNo():consumer.getConsumerNo();
 				String productAmount = textFieldProductAmount.getText();
