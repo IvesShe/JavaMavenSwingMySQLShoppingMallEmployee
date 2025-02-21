@@ -6,15 +6,16 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
 
+import controller.employee.EmployeeMainUI;
 import service.impl.DefaultCategoryDatasetServiceImpl;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class ProductSalesChartFrame extends JFrame {
+public class ProductSalesChartUI extends JFrame {
 
     /**
 	 * 
@@ -23,7 +24,7 @@ public class ProductSalesChartFrame extends JFrame {
 	
 	private DefaultCategoryDatasetServiceImpl defaultCategoryDatasetServiceImpl = new DefaultCategoryDatasetServiceImpl();
 
-	public ProductSalesChartFrame() {
+	public ProductSalesChartUI() {
         setTitle("產品銷售報表");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,6 +52,19 @@ public class ProductSalesChartFrame extends JFrame {
         ChartPanel chartPanel = new ChartPanel(barChart);
         chartPanel.setMouseWheelEnabled(true);
         getContentPane().add(chartPanel);
+        chartPanel.setLayout(null);
+        
+        JButton btnNewButton = new JButton("返回管理主頁");
+        btnNewButton.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		new EmployeeMainUI().setVisible(true);
+        		dispose();
+        	}
+        });
+        btnNewButton.setFont(new Font("新細明體", Font.PLAIN, 14));
+        btnNewButton.setBounds(55, 5, 131, 28);
+        chartPanel.add(btnNewButton);
     }
 
     /**
@@ -75,47 +89,10 @@ public class ProductSalesChartFrame extends JFrame {
         chart.getLegend().setItemFont(font);
     }
 
-    /**
-     * 連接 MySQL 並取得數據
-     */
-//    private CategoryDataset getChartData() {
-//        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-//
-//        // 資料庫連線資訊
-//        String url = "jdbc:mysql://localhost:3306/shopping";
-//        String user = "root";  // 你的 MySQL 用戶名
-//        String password = "1234";  // 你的 MySQL 密碼
-//
-//        String query = "SELECT \r\n"
-//        		+ "    so.product_no, \r\n"
-//        		+ "    p.product_name, \r\n"
-//        		+ "    SUM(so.amount) as total\r\n"
-//        		+ "FROM shopping.shop_order AS so\r\n"
-//        		+ "INNER JOIN shopping.product AS p \r\n"
-//        		+ "    ON so.product_no = p.product_no\r\n"
-//        		+ "GROUP BY so.product_no, p.product_name\r\n"
-//        		+ "ORDER BY SUM(so.amount) DESC;";
-//
-//        try (Connection conn = DriverManager.getConnection(url, user, password);
-//             Statement stmt = conn.createStatement();
-//             ResultSet rs = stmt.executeQuery(query)) {
-//
-//            while (rs.next()) {
-//                String productName = rs.getString("product_name");
-//                int totalSold = rs.getInt(3);
-//                dataset.addValue(totalSold, "銷售數量", productName);
-//            }
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return dataset;
-//    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            ProductSalesChartFrame frame = new ProductSalesChartFrame();
+            ProductSalesChartUI frame = new ProductSalesChartUI();
             frame.setVisible(true);
         });
     }

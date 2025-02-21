@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import controller.consumer.ConsumerManagerUI;
 import controller.product.ProductAddUI;
 import controller.product.ProductManagerUI;
+import controller.product.ProductSalesChartUI;
 import controller.shopOrder.ShopOrderManagerUI;
 import model.Employee;
 import util.FileUtils;
@@ -163,6 +164,13 @@ public class EmployeeMainUI extends JFrame {
 		panel_1.add(btnManager_2);
 		
 		JButton btnManager_1_2 = new JButton("熱門產品圖表");
+		btnManager_1_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new ProductSalesChartUI().setVisible(true);
+				dispose();
+			}
+		});
 		btnManager_1_2.setFont(new Font("新細明體", Font.PLAIN, 14));
 		btnManager_1_2.setBounds(139, 199, 134, 41);
 		panel_1.add(btnManager_1_2);

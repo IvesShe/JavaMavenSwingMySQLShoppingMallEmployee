@@ -12,7 +12,7 @@
 		<version>8.0.33</version>
 	</dependency>
 
-  		<!-- Apache POI 基本庫 -->
+  	<!-- Apache POI 基本庫(EXCEL) -->
     <dependency>
         <groupId>org.apache.poi</groupId>
         <artifactId>poi-ooxml</artifactId>
@@ -48,6 +48,7 @@
     	<version>1.5.3</version>
 	</dependency>
 	
+	<!-- JFreeChart -->
 	<dependency>
 	    <groupId>org.jfree</groupId>
 	    <artifactId>jcommon</artifactId>
