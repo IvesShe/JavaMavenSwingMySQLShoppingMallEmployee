@@ -2,32 +2,39 @@ package util;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import controller.shopOrder.ShopOrderAddUI;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class OrderExcelGenerator {
+public class ShopOrderExcelGenerator {
 
-    public static void main(String[] args) {
-        generateOrderExcel("order.xlsx");
-    }
-
-    public static void generateOrderExcel(String filePath) {
+	public static void generateOrderExcel(String filePath
+    		,String shopOrderNo,String productName
+    		,Integer productAmount,Integer productPrice
+    		,String customerName,String employeeName
+    		,Boolean vipMember) {
+		
         // 1. 創建 Excel 工作簿
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("訂單資訊");
 
-        // 2. 訂單資料 (冒號前後拆分為兩欄)
+
         String[][] orderData = {
-            {"訂單編號", "S202502200022"},
-            {"訂單時間", "2025-02-20 19:29:05"},
-            {"您的名字是", "顧客艾米斯"},
-            {"商品名稱", "羅技搖桿"},
-            {"數量", "2"},
-            {"成交金額", "699 元 x 2 = 1398 元"},
-            {"您是VIP會員，享有九折優惠", ""},
-            {"折扣金額", "139 元"},
-            {"實付金額", "1258 元"}
+            {"訂單編號", shopOrderNo},
+            {"顧客姓名", customerName},
+            {"產品名稱", productName},
+            {"產品售價", String.valueOf(productPrice)},
+            {"產品數量", String.valueOf(productAmount)},
+            {"VIP會員", vipMember?"是，打九折":"否，原價"},
+            {"成交金額", vipMember?
+            		String.format("%d 元 x %d x 0.9 = %d 元", productPrice, productAmount, (int)(productAmount*productPrice*0.9))
+            		:String.format("%d 元 x %d = %d 元", productPrice, productAmount, productAmount*productPrice)},
         };
+            
+        
+        
 
         // 3. 將資料寫入 Excel
         for (int i = 0; i < orderData.length; i++) {

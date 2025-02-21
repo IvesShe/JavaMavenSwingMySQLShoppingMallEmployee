@@ -68,6 +68,8 @@ public class ShopOrderAddUI extends JFrame {
 	Map<String, String> allEmployeeNoMap = new HashMap<>();
 	private String shopOrderNo=null;
 	JLabel lblShopOrderNo = new JLabel(shopOrderNo);
+	private Integer shopOrderAmount=null;
+	private String shopOrderName =null;
 	
 	ShopOrder o = null;
 	public ShopOrderAddUI self = this;
@@ -103,7 +105,6 @@ public class ShopOrderAddUI extends JFrame {
 		System.out.println(shopOrderNo);
 
 		if (Name.isEmpty()) {
-			output.setText("名字不能為空，請重新輸入。");
 			JOptionPane.showMessageDialog(null, "名字不能為空，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
@@ -113,23 +114,21 @@ public class ShopOrderAddUI extends JFrame {
 			textFieldProductAmount.setText("1");
 		}
 		if (selectedProduct==null) {
-			output.setText("請選擇產品。");
 			JOptionPane.showMessageDialog(null, "請選擇產品。", null, JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		if (selectedEmployee==null) {
-			output.setText("請選擇服務人員。");
 			JOptionPane.showMessageDialog(null, "請選擇服務人員。", null, JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 
-		Integer amount = Integer.parseInt(productAmount);
+		shopOrderAmount = Integer.parseInt(productAmount);
 //		o = new ShopOrder(Name, Integer.parseInt(mealNo1Price),
 //				Integer.parseInt(mealNo2Price));
-		String name = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
+		shopOrderName = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
 		
 //		showShopOrder(String productName,Integer productAmount,String productPrice,String customerName,String employeeName,Boolean vipMember) 
-		outputText = Tool.showShopOrder(shopOrderNo,ShopOrderAddUI.selectedProduct,amount ,allProductMap.get(selectedProduct),name,ShopOrderAddUI.selectedEmployee,vipMember.isSelected()); 
+		outputText = Tool.showShopOrder(shopOrderNo,ShopOrderAddUI.selectedProduct,shopOrderAmount ,allProductMap.get(selectedProduct),shopOrderName,ShopOrderAddUI.selectedEmployee,vipMember.isSelected()); 
 //		string showOrder = Tool.showShopOrder();
 		output.setText(outputText);	
 	}
@@ -287,13 +286,13 @@ public class ShopOrderAddUI extends JFrame {
 		textReceivedAmount.setHorizontalAlignment(SwingConstants.CENTER);
 		textReceivedAmount.setFont(new Font("新細明體", Font.BOLD, 30));
 		textReceivedAmount.setColumns(10);
-		textReceivedAmount.setBounds(726, 487, 286, 60);
+		textReceivedAmount.setBounds(726, 500, 286, 60);
 		contentPane.add(textReceivedAmount);
 
 		JLabel lblNewLabel_1_2_2 = new JLabel("請輸入收款金額：");
 		lblNewLabel_1_2_2.setForeground(Color.WHITE);
 		lblNewLabel_1_2_2.setFont(new Font("新細明體", Font.BOLD, 20));
-		lblNewLabel_1_2_2.setBounds(727, 444, 290, 38);
+		lblNewLabel_1_2_2.setBounds(727, 456, 290, 38);
 		contentPane.add(lblNewLabel_1_2_2);
 
 		// 產品+ 按鍵
@@ -437,7 +436,7 @@ public class ShopOrderAddUI extends JFrame {
 			}
 		});
 		btnChange.setFont(new Font("新細明體", Font.BOLD, 20));
-		btnChange.setBounds(1042, 493, 118, 52);
+		btnChange.setBounds(1045, 506, 118, 52);
 		contentPane.add(btnChange);
 		
 		// 提交訂單 按鍵
@@ -618,6 +617,31 @@ public class ShopOrderAddUI extends JFrame {
 		lblShopOrderNo.setBounds(162, 72, 232, 38);
 		lblShopOrderNo.setVisible(false);
 		panel_Top.add(lblShopOrderNo);
+		
+		JButton btnExcel = new JButton("輸出EXCEL");
+		btnExcel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (textAreaOutput.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "訂單尚未成立，請先建立訂單。", "錯誤", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				String productAmount = textFieldProductAmount.getText();
+				shopOrderAmount = Integer.parseInt(productAmount);
+				shopOrderName = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
+				
+//				showShopOrder(String productName,Integer productAmount,String productPrice,String customerName,String employeeName,Boolean vipMember) 
+				ShopOrderExcelGenerator.generateOrderExcel("訂單.xlsx",shopOrderNo,ShopOrderAddUI.selectedProduct,shopOrderAmount ,allProductMap.get(selectedProduct),shopOrderName,ShopOrderAddUI.selectedEmployee,vipMember.isSelected());
+				
+				
+				JOptionPane.showMessageDialog(null, "EXCEL產生成功。", null, JOptionPane.INFORMATION_MESSAGE);
+					
+			}
+		});
+		btnExcel.setFont(new Font("新細明體", Font.BOLD, 14));
+		btnExcel.setBounds(1045, 443, 118, 52);
+		contentPane.add(btnExcel);
 		
 	}
 }

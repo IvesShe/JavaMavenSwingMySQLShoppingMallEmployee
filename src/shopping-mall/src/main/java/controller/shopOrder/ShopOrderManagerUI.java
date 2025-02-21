@@ -425,11 +425,11 @@ public class ShopOrderManagerUI extends JFrame {
         scrollPaneTable.setBounds(12, 45, 795, 200);
         panel_1_1.add(scrollPaneTable, BorderLayout.CENTER);               
         
-        JLabel lblAdminadmin = new JLabel("顧客只能查到自己的資料)");
+        JLabel lblAdminadmin = new JLabel("員工能看到全部資料，顧客只能查到自己的資料");
         lblAdminadmin.setForeground(new Color(255, 128, 0));
         lblAdminadmin.setFont(new Font("新細明體", Font.BOLD, 16));
         lblAdminadmin.setBackground(Color.WHITE);
-        lblAdminadmin.setBounds(592, 14, 211, 23);
+        lblAdminadmin.setBounds(464, 14, 359, 23);
         panel_1_1.add(lblAdminadmin);
         
         JButton btnSelect_1 = new JButton("詳細報表(聯表查詢)");
@@ -441,7 +441,7 @@ public class ShopOrderManagerUI extends JFrame {
         	}
         });
         btnSelect_1.setFont(new Font("新細明體", Font.PLAIN, 18));
-        btnSelect_1.setBounds(265, 10, 200, 23);
+        btnSelect_1.setBounds(252, 10, 206, 23);
         panel_1_1.add(btnSelect_1);
      
 	}
