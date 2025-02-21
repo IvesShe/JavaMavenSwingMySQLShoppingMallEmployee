@@ -256,17 +256,33 @@ public class ConsumerManagerUI extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				List<Consumer> consumerList = new ArrayList<>();
-				if(!consumer.getUsername().equals("admin")) 
-				{	// 一般帳號只能查到自己的資料
-//					textAreaOutput.setText(consumerServiceImpl.findByUsername(consumer.getUsername()));
+//				if(!consumer.getUsername().equals("admin")) 
+//				{	// 一般帳號只能查到自己的資料
+////					textAreaOutput.setText(consumerServiceImpl.findByUsername(consumer.getUsername()));
+//					consumerList = consumerServiceImpl.findByUsername(consumer.getUsername());
+//					
+//				}
+//				else
+//				{	// admin帳號可以查到所有的資料
+////					textAreaOutput.setText(consumerServiceImpl.AllConsumer());
+//					consumerList = consumerServiceImpl.findAllConsumer();
+//					
+//				}
+				
+				// 顧客只能查到自己的資料
+				if(!AppMainUI.getIsEmployee()) 
+				{
 					consumerList = consumerServiceImpl.findByUsername(consumer.getUsername());
-					
 				}
 				else
-				{	// admin帳號可以查到所有的資料
-//					textAreaOutput.setText(consumerServiceImpl.AllConsumer());
+				{
 					consumerList = consumerServiceImpl.findAllConsumer();
-					
+				}
+				
+				if(consumerList==null) {
+					JOptionPane.showMessageDialog(null,  "查無資料", "完成",
+							JOptionPane.INFORMATION_MESSAGE);
+					return;
 				}
 				loadTableData(consumerList);
 //				List<Consumer> consumerList = consumerServiceImpl.findAllConsumer();

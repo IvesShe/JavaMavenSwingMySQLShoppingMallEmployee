@@ -274,6 +274,11 @@ public class ShopOrderManagerUI extends JFrame {
 					// 員工可以查到所有的訂單
 					shopOrderList = shopOrderServiceImpl.findAllShopOrder();
 				}
+				if(shopOrderList==null) {
+					JOptionPane.showMessageDialog(null,  "查無資料", "完成",
+							JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
 				loadTableData(shopOrderList);
 //				List<ShopOrder> shopOrderList = shopOrderServiceImpl.findAllShopOrder();
 	
@@ -421,12 +426,24 @@ public class ShopOrderManagerUI extends JFrame {
         scrollPaneTable.setBounds(12, 45, 795, 200);
         panel_1_1.add(scrollPaneTable, BorderLayout.CENTER);               
         
-        JLabel lblAdminadmin = new JLabel("顧客只能查到自己的資料, 員工可以查到所有的資料");
+        JLabel lblAdminadmin = new JLabel("顧客只能查到自己的資料)");
         lblAdminadmin.setForeground(new Color(255, 128, 0));
         lblAdminadmin.setFont(new Font("新細明體", Font.BOLD, 16));
         lblAdminadmin.setBackground(Color.WHITE);
-        lblAdminadmin.setBounds(295, 11, 381, 23);
+        lblAdminadmin.setBounds(592, 14, 211, 23);
         panel_1_1.add(lblAdminadmin);
+        
+        JButton btnSelect_1 = new JButton("詳細報表(聯表查詢)");
+        btnSelect_1.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		new ShopOrderReportUI().setVisible(true);
+        		dispose();
+        	}
+        });
+        btnSelect_1.setFont(new Font("新細明體", Font.PLAIN, 18));
+        btnSelect_1.setBounds(265, 10, 200, 23);
+        panel_1_1.add(btnSelect_1);
      
 	}
 	

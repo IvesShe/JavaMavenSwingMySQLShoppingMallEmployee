@@ -245,9 +245,14 @@ public class EmployeeManagerUI extends JFrame {
 					employeeList = employeeServiceImpl.findAllEmployee();
 					
 				}
+				if(employeeList==null) {
+					JOptionPane.showMessageDialog(null,  "查無資料", "完成",
+							JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
 				loadTableData(employeeList);
 //				List<Employee> employeeList = employeeServiceImpl.findAllEmployee();
-	
+				
 				
 				JOptionPane.showMessageDialog(null,  "查詢成功", "完成",
 						JOptionPane.INFORMATION_MESSAGE);
