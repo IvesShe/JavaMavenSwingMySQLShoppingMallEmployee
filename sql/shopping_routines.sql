@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `shopping` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `shopping`;
 -- MySQL dump 10.13  Distrib 8.0.41, for Win64 (x86_64)
 --
 -- Host: localhost    Database: shopping
@@ -27,13 +25,14 @@ SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
 /*!50001 CREATE VIEW `view_shop_order_report` AS SELECT 
  1 AS `shop_order_no`,
+ 1 AS `consumer_no`,
  1 AS `consumer_name`,
  1 AS `phone`,
  1 AS `address`,
  1 AS `employee_name`,
  1 AS `product_name`,
- 1 AS `amount`,
- 1 AS `total_sum`*/;
+ 1 AS `price`,
+ 1 AS `amount`*/;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -49,7 +48,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_shop_order_report` AS select `shop_order`.`shop_order_no` AS `shop_order_no`,`consumer`.`consumer_name` AS `consumer_name`,`consumer`.`phone` AS `phone`,`consumer`.`address` AS `address`,`employee`.`name` AS `employee_name`,`product`.`product_name` AS `product_name`,`shop_order`.`amount` AS `amount`,(`shop_order`.`amount` * `product`.`price`) AS `total_sum` from (((`shop_order` join `consumer` on((`shop_order`.`consumer_no` = `consumer`.`consumer_no`))) join `employee` on((`shop_order`.`employee_no` = `employee`.`employee_no`))) join `product` on((`shop_order`.`product_no` = `product`.`product_no`))) order by `shop_order`.`id` */;
+/*!50001 VIEW `view_shop_order_report` AS select `shop_order`.`shop_order_no` AS `shop_order_no`,`consumer`.`consumer_no` AS `consumer_no`,`consumer`.`consumer_name` AS `consumer_name`,`consumer`.`phone` AS `phone`,`consumer`.`address` AS `address`,`employee`.`name` AS `employee_name`,`product`.`product_name` AS `product_name`,`product`.`price` AS `price`,`shop_order`.`amount` AS `amount` from (((`shop_order` join `consumer` on((`shop_order`.`consumer_no` = `consumer`.`consumer_no`))) join `employee` on((`shop_order`.`employee_no` = `employee`.`employee_no`))) join `product` on((`shop_order`.`product_no` = `product`.`product_no`))) order by `shop_order`.`id` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -63,4 +62,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-20 18:59:51
+-- Dump completed on 2025-02-21 11:26:31
