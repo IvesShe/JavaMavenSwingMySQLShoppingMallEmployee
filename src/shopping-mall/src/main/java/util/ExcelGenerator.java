@@ -3,12 +3,11 @@ package util;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import controller.shopOrder.ShopOrderAddUI;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class ShopOrderExcelGenerator {
+public class ExcelGenerator {
 
 	public static void generateOrderExcel(String filePath
     		,String shopOrderNo,String productName
@@ -50,7 +49,7 @@ public class ShopOrderExcelGenerator {
         // 5. 寫入 Excel 檔案
         try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
             workbook.write(fileOut);
-            System.out.println("Excel 訂單已成功生成：" + filePath);
+            System.out.println("Excel 訂單已成功生成222：" + filePath);//
         } catch (IOException e) {
             e.printStackTrace();
         }

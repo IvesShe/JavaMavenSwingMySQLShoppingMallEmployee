@@ -632,14 +632,14 @@ public class ShopOrderAddUI extends JFrame {
 				shopOrderName = AppMainUI.getIsEmployee()? employee.getName():consumer.getName();
 				
 //				showShopOrder(String productName,Integer productAmount,String productPrice,String customerName,String employeeName,Boolean vipMember) 
-				ShopOrderExcelGenerator.generateOrderExcel("訂單.xlsx",shopOrderNo,ShopOrderAddUI.selectedProduct,shopOrderAmount ,allProductMap.get(selectedProduct),shopOrderName,ShopOrderAddUI.selectedEmployee,vipMember.isSelected());
+				ExcelGenerator.generateOrderExcel("訂單.xlsx",shopOrderNo,ShopOrderAddUI.selectedProduct,shopOrderAmount ,allProductMap.get(selectedProduct),shopOrderName,ShopOrderAddUI.selectedEmployee,vipMember.isSelected());
 				
 				
 				JOptionPane.showMessageDialog(null, "EXCEL產生成功。", null, JOptionPane.INFORMATION_MESSAGE);
 					
 			}
 		});
-		btnExcel.setFont(new Font("新細明體", Font.BOLD, 14));
+		btnExcel.setFont(new Font("新細明體", Font.BOLD, 14));//
 		btnExcel.setBounds(1045, 443, 118, 52);
 		contentPane.add(btnExcel);
 		
