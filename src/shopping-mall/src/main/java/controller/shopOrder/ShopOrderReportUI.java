@@ -77,7 +77,7 @@ public class ShopOrderReportUI extends JFrame {
 		
 		JLabel lblNewLabel_4 = new JLabel("訂單詳細報表");
 		lblNewLabel_4.setFont(new Font("新細明體", Font.BOLD, 30));
-		lblNewLabel_4.setBounds(344, 10, 193, 40);
+		lblNewLabel_4.setBounds(313, 10, 193, 40);
 		panel.add(lblNewLabel_4);
 		
 		JButton btnBack = new JButton("回訂單管理");
@@ -106,7 +106,7 @@ public class ShopOrderReportUI extends JFrame {
 		panel_1_1.setLayout(null);
 		panel_1_1.setBackground(new Color(128, 128, 128));
 		
-		JLabel lblNewLabel_3 = new JLabel("查詢訂單詳細報表");
+		JLabel lblNewLabel_3 = new JLabel("聯表查詢詳細報表");
 		lblNewLabel_3.setFont(new Font("新細明體", Font.BOLD, 18));
 		lblNewLabel_3.setBounds(25, 10, 174, 23);
 		panel_1_1.add(lblNewLabel_3);
@@ -182,7 +182,7 @@ public class ShopOrderReportUI extends JFrame {
         
         // 設定欄位寬度
         table.getColumnModel().getColumn(0).setPreferredWidth(180);  // 
-        table.getColumnModel().getColumn(1).setPreferredWidth(80);  // 
+        table.getColumnModel().getColumn(1).setPreferredWidth(100);  // 
         table.getColumnModel().getColumn(2).setPreferredWidth(180); // 
         table.getColumnModel().getColumn(3).setPreferredWidth(120); // 
         table.getColumnModel().getColumn(4).setPreferredWidth(150); // 
