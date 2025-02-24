@@ -245,6 +245,74 @@ if(shopOrderList.size()>0) {
 
 ```
 
+# pom.xml
+
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.ivesshe</groupId>
+  <artifactId>shopping-mall</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <dependencies>
+  	<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+	<dependency>
+		<groupId>com.mysql</groupId>
+		<artifactId>mysql-connector-j</artifactId>
+		<version>8.0.33</version>
+	</dependency>
+
+  	<!-- Apache POI 基本庫(EXCEL) -->
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml</artifactId>
+        <version>5.2.3</version>
+    </dependency>
+    
+    <!-- Log4j API -->
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-api</artifactId>
+        <version>2.20.0</version>  <!-- 請使用最新版本 -->
+    </dependency>
+
+    <!-- Log4j 核心（必須） -->
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>2.20.0</version>
+    </dependency>
+
+  	<!-- JUnit 4 -->
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.13.2</version>
+        <scope>test</scope>
+    </dependency>
+    
+
+    <!-- JFreeChart -->    
+    <dependency>
+	    <groupId>org.jfree</groupId>
+	    <artifactId>jfreechart</artifactId>
+    	<version>1.5.3</version>
+	</dependency>
+	
+	
+	<dependency>
+	    <groupId>org.jfree</groupId>
+	    <artifactId>jcommon</artifactId>
+	    <version>1.0.24</version>
+	</dependency>
+
+  
+  </dependencies> 
+</project>
+
+```
+
 
 # APP主頁畫面
 
@@ -328,8 +396,8 @@ if(shopOrderList.size()>0) {
 密碼1234
 
 
-# Model
-<h3> 原始碼在src資料夾，僅供參考</h1>
+# SRC
+<h3> 原始碼在src\shopping-mall資料夾，僅供參考</h1>
 
 
 # 參考資料
