@@ -1,5 +1,5 @@
-# JavaSwingMySQLShoppingMallEmploye
-Java Swing jdbc搭配MySQL 建立簡易商城系統，包含員工管理、會員管理，產品管理、訂單管理
+# JavaMavenSwingMySQLShoppingMallEmploye
+Java Swing jdbc搭配MySQL 建立簡易商城系統，包含員工管理、會員管理，產品管理、訂單管理報表輸出，使用Maven作依賴管理
 
 ## 使用技術
 - java jdk11
@@ -90,6 +90,160 @@ java -jar OrderAppV500.jar
 └── 離開
 ```
 
+# 目錄結構
+
+採MVC架構
+
+![image](./images/20250224105915.jpg)
+
+# SQL表 
+
+## 顧客表
+
+![image](./images/20250224105318.jpg)
+
+## 員工表
+
+![image](./images/20250224105520.jpg)
+
+## 產品表
+
+![image](./images/20250224105413.jpg)
+
+## 訂單表
+
+![image](./images/20250224105434.jpg)
+
+
+
+
+## 訂單詳情表(View)
+
+![image](./images/20250224110848.jpg)
+
+語法
+```sql
+select
+shopping.shop_order.shop_order_no,
+shopping.consumer.consumer_name,
+shopping.consumer.phone,
+shopping.consumer.address,
+shopping.employee.name as employee_name,
+shopping.product.product_name,
+shopping.shop_order.amount,
+shopping.shop_order.amount*shopping.product.price total_sum
+from shopping.shop_order 
+inner join shopping.consumer on shopping.shop_order.consumer_no=shopping.consumer.consumer_no
+inner join shopping.employee on shopping.shop_order.employee_no=shopping.employee.employee_no
+inner join shopping.product on shopping.shop_order.product_no=shopping.product.product_no
+order by shopping.shop_order.id;
+```
+
+
+## 熱門產品報表(JFreeChart資料源)
+
+![image](./images/20250224111214.jpg)
+
+語法
+```sql
+SELECT 
+    so.product_no, 
+    p.product_name, 
+    SUM(so.amount) as total
+FROM shopping.shop_order AS so
+INNER JOIN shopping.product AS p 
+    ON so.product_no = p.product_no
+GROUP BY so.product_no, p.product_name
+ORDER BY SUM(so.amount) DESC;
+```
+
+## 外鍵約束
+
+表採外鍵約束，JAVA程式碼裡也加入邏輯判斷
+
+
+```sql
+-- 增加外鍵fk_shop_order_product
+ALTER TABLE shopping.shop_order 
+ADD CONSTRAINT fk_shop_order_product 
+FOREIGN KEY (product_no) 
+REFERENCES shopping.product(product_no)
+ON DELETE RESTRICT 
+ON UPDATE CASCADE;
+
+-- 增加外鍵fk_shop_order_employee
+ALTER TABLE shopping.shop_order 
+ADD CONSTRAINT fk_shop_order_employee 
+FOREIGN KEY (employee_no) 
+REFERENCES shopping.employee(employee_no)
+ON DELETE RESTRICT 
+ON UPDATE CASCADE;
+
+-- 增加外鍵fk_shop_order_consumer
+ALTER TABLE shopping.shop_order 
+ADD CONSTRAINT fk_shop_order_consumer 
+FOREIGN KEY (consumer_no) 
+REFERENCES shopping.consumer(consumer_no)
+ON DELETE RESTRICT 
+ON UPDATE CASCADE;
+
+```
+
+```java
+// 已在訂單裡的員工編號不能被修改
+List<ShopOrder> shopOrderList = shopOrderServiceImpl.findByConsumerNo(consumer.getConsumerNo());
+System.out.println(shopOrderList);
+if(shopOrderList.size()>0) {
+    JOptionPane.showMessageDialog(null, "已在訂單裡的顧客編號不能被修改，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+// 已在訂單裡的顧客不能被刪除
+List<ShopOrder> shopOrderList = shopOrderServiceImpl.findByConsumerNo(consumer.getConsumerNo());
+System.out.println(shopOrderList);
+if(shopOrderList.size()>0) {
+    JOptionPane.showMessageDialog(null, "已在訂單裡的顧客不能被刪除，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+
+// 已在訂單裡的員工編號不能被修改
+List<ShopOrder> shopOrderList = shopOrderServiceImpl.findByEmployeeNo(employee.getEmployeeNo());
+System.out.println(shopOrderList);
+if(shopOrderList.size()>0) {
+    JOptionPane.showMessageDialog(null, "已在訂單裡的員工編號不能被修改，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+					
+
+// 已在訂單裡的員工不能被刪除
+List<ShopOrder> shopOrderList = shopOrderServiceImpl.findByEmployeeNo(employee.getEmployeeNo());
+System.out.println(shopOrderList);
+if(shopOrderList.size()>0) {
+    JOptionPane.showMessageDialog(null, "已在訂單裡的員工不能被刪除，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+
+// 已在訂單裡的產品編號不能被修改
+List<ShopOrder> shopOrderList = shopOrderServiceImpl.findByProductNo(product.getProductNo());
+System.out.println(shopOrderList);
+if(shopOrderList.size()>0) {
+    JOptionPane.showMessageDialog(null, "已在訂單裡的產品編號不能被修改，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+
+// 已在訂單裡的產品不能被刪除
+List<ShopOrder> shopOrderList = shopOrderServiceImpl.findByProductNo(product.getProductNo());
+System.out.println(shopOrderList);
+if(shopOrderList.size()>0) {
+    JOptionPane.showMessageDialog(null, "已在訂單裡的產品不能被刪除，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
+    return;
+}
+
+
+```
 
 
 # APP主頁畫面
@@ -97,8 +251,6 @@ java -jar OrderAppV500.jar
 ![image](./images/20250224100256.jpg)
 
 # 前台-顧客登入畫面
-
-admin帳號(帳號admin,密碼123)
 
 ![image](./images/20250224100308.jpg)
 
@@ -108,11 +260,11 @@ admin帳號(帳號admin,密碼123)
 
 # 前台-顧客管理主頁
 
-![image](./images/20250224100339.jpg)
+![image](./images/20250224100322.jpg)
 
 # 前台-顧客管理頁面
 
-![image](./images/20250209120418.jpg)
+![image](./images/20250224100339777.jpg)
 
 # 前台-新增訂單頁面
 
@@ -144,7 +296,7 @@ admin帳號(帳號admin,密碼123)
 
 # 後台-員工管理頁面
 
-![image](./images/2025022412025022410055400541.jpg)
+![image](./images/20250224100554.jpg)
 
 # 後台-新增產品頁面
 
@@ -175,17 +327,10 @@ admin帳號(帳號admin,密碼123)
 帳號root
 密碼1234
 
-## 會員表單
-
-![image](./images/20250209120632.jpg)
-
-## 訂單表單
-
-![image](./images/20250209120701.jpg)
 
 # Model
 <h3> 原始碼在src資料夾，僅供參考</h1>
-## Member
+
 
 # 參考資料
 
