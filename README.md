@@ -92,7 +92,7 @@ java -jar OrderAppV500.jar
 
 # 目錄結構
 
-採MVC架構
+採MVC+dao pattern 構
 
 ![image](./images/20250224105915.jpg)
 
