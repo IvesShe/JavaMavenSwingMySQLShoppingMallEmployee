@@ -73,6 +73,8 @@ public class ShopOrderAddUI extends JFrame {
 	
 	ShopOrder o = null;
 	public ShopOrderAddUI self = this;
+	private Integer amount =null;
+	private String productAmount=null;
 	
 
 
@@ -396,7 +398,10 @@ public class ShopOrderAddUI extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String receivedAmount = textReceivedAmount.getText();
-				int sum = 0;//vipMember.isSelected()? (int)(o.getSum() * 0.9):o.getSum();
+				
+				productAmount = textFieldProductAmount.getText();
+				amount = Integer.parseInt(productAmount);
+				int sum = Tool.getShopOrderSum(amount,allProductMap.get(selectedProduct),vipMember.isSelected());//vipMember.isSelected()? (int)(o.getSum() * 0.9):o.getSum();
 				
 				if (receivedAmount.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "收款金額不能為空，請重新輸入。", "錯誤", JOptionPane.ERROR_MESSAGE);
@@ -442,8 +447,8 @@ public class ShopOrderAddUI extends JFrame {
 				
 				
 				String noTemp = AppMainUI.getIsEmployee()? employee.getEmployeeNo():consumer.getConsumerNo();
-				String productAmount = textFieldProductAmount.getText();
-				Integer amount = Integer.parseInt(productAmount);
+				productAmount = textFieldProductAmount.getText();
+				amount = Integer.parseInt(productAmount);
 				ShopOrder shopOrder = new ShopOrder(shopOrderNo, allProductNoMap.get(selectedProduct), allEmployeeNoMap.get(selectedEmployee), noTemp, amount);
 				
 				shopOrderServiceImpl.addShopOrder(shopOrder);
