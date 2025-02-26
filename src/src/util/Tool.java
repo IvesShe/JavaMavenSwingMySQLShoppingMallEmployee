@@ -180,5 +180,19 @@ public class Tool {
 	    
 	    return outputMessage;
 	}
+    
+    public static Integer getShopOrderSum(Integer productAmount,Integer productPrice,Boolean vipMember) 
+    {		
+	    	    
+	    int sum = productPrice * productAmount;	    
+
+		
+	    if (vipMember) {
+	    	sum = (int) (sum * 0.9);  // 計算折後金額（取整數）
+
+	    } 
+	    System.out.println("sum"+sum);
+	    return sum;
+	}
 
 }
